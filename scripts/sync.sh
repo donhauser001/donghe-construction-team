@@ -22,7 +22,8 @@ fi
 
 for target in "${TARGETS[@]}"; do
   mkdir -p "$target"
-  rsync -a --delete --exclude '.git' "$REPO_ROOT/" "$target/"
+  # docs/ 是本仓库自身的工地档案（任务卡 / 施工日志），不属于 skill 内容，不下发
+  rsync -a --delete --exclude '.git' --exclude 'docs' "$REPO_ROOT/" "$target/"
   echo "已同步 → $target"
 done
 

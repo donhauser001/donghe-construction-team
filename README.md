@@ -1,5 +1,7 @@
 # 东合施工队 (Donghe Construction Team)
 
+[English](README.en.md) | **中文**
+
 一套面向 AI coding agent 的**工程闭环 skill**：让 agent 以"施工队"而不是"单兵实现者"的方式承接非平凡的编码工作。包工头（强模型父 agent）负责踏勘、拆卡、派工、审计、验收；施工工人（便宜档子 agent）按任务卡施工；全程以真实运行时的机器证据为完成标准。
 
 当前版本见 `SKILL.md` 标题与 `CHANGELOG.md` 最新条目。

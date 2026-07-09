@@ -36,7 +36,8 @@ def field_value(text: str, name: str) -> str:
 
 
 def section_body(text: str, name: str) -> str:
-    m = re.search(rf"^#+\s*{re.escape(name)}.*?$(.*?)(?=^#+\s|\Z)", text, re.M | re.S)
+    # 只在 H1/H2 处截断，### 子标题（如"允许写/禁止写"）属于段内内容
+    m = re.search(rf"^#{{1,2}}\s*{re.escape(name)}.*?$(.*?)(?=^#{{1,2}}\s|\Z)", text, re.M | re.S)
     return m.group(1) if m else ""
 
 
