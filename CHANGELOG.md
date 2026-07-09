@@ -1,6 +1,35 @@
 # CHANGELOG · 东合施工队
 
-> 双侧镜像（Codex / Cursor）版本号一致。任何改动只在 `~/.codex/skills/donghe-construction-team/` 修改，再 rsync 到 `~/.cursor/skills-cursor/donghe-construction-team/`。
+> **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills-cursor/donghe-construction-team/`。禁止直接改安装位置的文件。
+
+## v0.4.12 · 2026-07-09（版本线合并 / 代码图谱回归 / SSOT 切换 git 仓库 / SKILL 主题化重构 / 模型档位集中化）
+
+> 触发：仓库发布后审查发现，仓库线（v0.4.9 产品施工优先 → v0.4.10 → v0.4.11）与本地 codex 线（v0.4.9 代码图谱辅助施工 · 2026-06-26）已经分叉，**两条线各自占用了 v0.4.9 版本号指两件不同的事**，且仓库线丢失了"代码图谱辅助施工"整节，codex 线缺 playbook 20 / collect_evidence.py / 技术债账本 / v0.4.10-0.4.11；codex 侧 CHANGELOG 停在 v0.4.8，证明"手动 rsync + diff 校验"的双侧同步机制已实际失效。
+> 性质：治理修复 + 结构重构。合并两条版本线，把 SSOT 从"~/.codex 正本 + 手动 rsync"切换为 git 仓库。
+
+### 版本线合并说明
+
+- codex 线的 "v0.4.9 · 代码图谱辅助施工原则"（2026-06-26 · 未记入 codex 侧 CHANGELOG）并入本版，收编为 SKILL.md 第八节；该内容不再单独占用版本号。
+- 仓库线 v0.4.9（产品施工优先 · 2026-05-08）保持原编号不变。
+- 自本版起，`~/.codex` 与 `~/.cursor` 两处均为仓库同步产物，不再是可编辑正本。
+
+### 新增能力
+
+- `scripts/sync.sh`：从仓库单向同步到 Codex / Cursor 两处安装位置（rsync --delete，排除 .git / scripts 之外的仓库专属文件按需保留）。
+- `scripts/lint.sh`：一致性校验——内链存活（SKILL / playbooks / templates 引用的文件必须存在）+ 版本号一致（SKILL frontmatter description、SKILL 标题、元信息、openai.yaml、CHANGELOG 最新条目五处一致）。
+- `README.md` + `LICENSE`（MIT）：仓库工程化补齐。
+
+### 修订
+
+- `SKILL.md`：
+  - **按主题重构**：正文不再按 "v0.4.x · 功能名" 组织，改为十四个主题章节（角色与模型绑定 / 宪法 / 闭环 / 半径 / 并行与审计 / 文档瘦身 / 无守护 / 代码图谱 / 首次进入 / 快速对齐 / 路由表 / 状态机 / 禁词 / 硬话）；版本演化史一律查 CHANGELOG；
+  - frontmatter description 从 1000+ 字符压缩到 3 句；
+  - 永久禁词"完成"改为精确表述："无证据的完成类断言"禁用，"完成"一词本身可用但必须伴随机器证据；
+  - 元信息 SSOT 从 "~/.codex 正本 + 手动 rsync + codex 侧仲裁" 改为 "git 仓库正本 + scripts/sync.sh 同步"。
+- **模型档位集中化**：模型 slug 只在 `playbooks/05-并行编排.md` §四·5·2 档位表一处维护（便宜档 / 中档 / 强档 + 当前推荐 slug）；SKILL.md、`playbooks/03-任务卡规范.md`、`templates/任务卡模板.md` 中的硬编码 slug 改为档位引用（04 / 05 中的历史事故记录与示例保留原样）。
+- `agents/openai.yaml`：default_prompt 从"复述 SKILL 全部规则"瘦身为"最小入口 + 换道触发词"，规则细节以 SKILL / playbook 为唯一出处，消除双重维护。
+
+---
 
 ## v0.4.11 · 2026-07-09（决策不中断 / 技术债账本 / 蓝图自动下放）
 
