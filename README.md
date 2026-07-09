@@ -18,13 +18,14 @@
 
 | 路径 | 内容 |
 |---|---|
-| `SKILL.md` | 总章程（按主题组织的现行规则 + 场景路由表） |
-| `playbooks/` | 20 个场景 SOP（接活契约、任务卡规范、并行编排、无守护模式等） |
-| `templates/` | 任务卡、踏勘报告、施工日志、技术债账本等模板 |
+| `SKILL.md` | 章程（八大铁律 + 路由表 + 治理规则，≤ 120 行） |
+| `playbooks/` | 8 个场景 SOP（接活流程、任务卡与工人、派工与并行、验证与审计、汇报与文档、项目接入与踏勘、多队协同、无守护模式） |
+| `templates/` | 任务卡、踏勘报告、施工日志、技术债账本、无守护套件等模板 |
 | `agents/openai.yaml` | Codex agent 入口（最小 prompt + 换道触发词） |
 | `scripts/collect_evidence.py` | 机器证据采集（git 状态 + 验证命令输出 → Markdown） |
+| `scripts/check_card.py` | 派工闸：任务卡必填字段 / 白名单 / 禁词校验，不过不许派工 |
 | `scripts/sync.sh` | 仓库 → 本地安装位置的单向同步 |
-| `scripts/lint.sh` | 内链存活 + 版本号一致性校验 |
+| `scripts/lint.sh` | 内链存活 + 版本号一致 + 行数预算校验（防规则再膨胀） |
 | `CHANGELOG.md` | 版本演化史（正文不按版本组织，历史一律查这里） |
 
 ## 安装
@@ -48,8 +49,9 @@ scripts/sync.sh
 
 1. 只在本仓库内修改，**禁止直接改安装位置的文件**。
 2. 版本号需同步更新四处：`SKILL.md` 标题、`SKILL.md` 元信息、`agents/openai.yaml`、`CHANGELOG.md` 新条目。
-3. 运行 `scripts/lint.sh` 通过校验。
-4. commit 后运行 `scripts/sync.sh` 下发到本地安装位置。
+3. **一条规则只有一个家**；新增规则必须在 CHANGELOG 写明"删掉 / 合并了什么"，只加不删视为治理缺陷。
+4. 运行 `scripts/lint.sh` 通过校验（含行数预算：SKILL ≤ 120 行、单 playbook ≤ 220 行、总量 ≤ 1600 行）。
+5. commit 后运行 `scripts/sync.sh` 下发到本地安装位置。
 
 ## License
 
