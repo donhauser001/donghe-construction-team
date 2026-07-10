@@ -40,9 +40,16 @@ def in_git_repo() -> bool:
 
 
 def trim(text: str, limit: int) -> str:
+    """Trim the middle, not the tail: failure summaries live at the end of output."""
     if len(text) <= limit:
         return text
-    return text[:limit] + f"\n... trimmed {len(text) - limit} chars ..."
+    head = limit // 3
+    tail = limit - head
+    return (
+        text[:head]
+        + f"\n... trimmed {len(text) - limit} chars (middle) ...\n"
+        + text[-tail:]
+    )
 
 
 def main() -> int:
