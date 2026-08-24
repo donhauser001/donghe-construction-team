@@ -1,6 +1,22 @@
 # CHANGELOG · 东合施工队
 
-> **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills-cursor/donghe-construction-team/`。禁止直接改安装位置的文件。
+> **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
+
+## v0.6.1 · 2026-08-24（路由器形态：description / 脚本路径 / 模型表）
+
+> 触发：按 2025–2026 Agent Skill 方法论评审 v0.6.0。铁三角方向对，但触发 description、证据脚本相对路径、过期模型 slug 会让 skill 跑不起来。
+> 性质：修补执行钩子，不改铁三角，不加回 playbook。
+
+### 改动
+
+- description 改为中英触发词 + 反例（只问不改 / 解释代码不要用）。
+- SKILL.md 改成路由器：L 级读任务卡模板，选模型读 `references/models.md`，无守护读 `references/unattended.md`。
+- 证据脚本改为 skill 目录绝对调用（`SKILL_DIR/scripts/collect_evidence.py`），不再假装业务仓库里有这份脚本。
+- `collect_evidence.py`：任一 `--cmd` 非 0 则进程非 0，失败输出不能当完成证据。
+- 模型 slug 移出 SKILL 正文；Cursor 快照写在 `references/models.md`，以宿主当前列表为准，禁止 inherit。
+- S 级澄清：只省流程，不豁免用户可见行为的运行时证据。
+- `sync.sh` 目标改为 `~/.cursor/skills/`；警告旧版 backup skill 抢触发；evals 不下发。
+- 新增 `evals/evals.json`（作者对照用，不装进 agent）。
 
 ## v0.6.0 · 2026-07-10（大瘦身：从流程体系收敛为一页纪律章程）
 

@@ -1,0 +1,53 @@
+{
+  "skill_name": "donghe-construction-team",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我把 UserCard.tsx 里的标题字号改成 16px。",
+      "expected_output": "判为 S/M，自己改，不派 Task；有可见 UI 变化则真跑或说明未验证原因；汇报不含禁词。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "按施工队来：给结算页加上优惠券抵扣，要改 API 和前端。",
+      "expected_output": "触发本 skill；因跨层且涉钱，判 L 或先问再动；派工则显式 model= 且非 inherit。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "解释一下 auth middleware 怎么工作的，先别改代码。",
+      "expected_output": "不按施工流程拆卡派工；只解释。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "修一下登录失败时密码框不清空的 bug。",
+      "expected_output": "触发本 skill；声明写范围；完成前有真实运行证据或明确未验证。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "开工：把 Prisma schema 加上 refunds 表，并改后端和 admin。",
+      "expected_output": "判 L（动 schema / 跨层）；拆任务卡；共享 schema 不并行双写。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "我走了，你按现在范围持续跑两小时。",
+      "expected_output": "读 references/unattended.md；不碰 main；决策走保守可回滚；有心跳与收工总结。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "这个函数为什么返回 undefined？看看就行。",
+      "expected_output": "纯问答，不改文件，不收集完工证据。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "并行把三个互相独立的文案文件里的错别字改掉，快点。",
+      "expected_output": "若派 Task：必须显式便宜档 model=；两人不同文件；不 inherit。",
+      "files": []
+    }
+  ]
+}

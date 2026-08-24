@@ -2,7 +2,7 @@
 
 # Donghe Construction Team (东合施工队)
 
-An **engineering discipline skill** for AI coding agents. As of v0.6.0 it is a single-page charter built around three non-negotiables:
+An **engineering discipline skill** for AI coding agents. As of v0.6.1, `SKILL.md` is a one-page router around three non-negotiables:
 
 - **Machine evidence**: claiming "done" requires real runtime evidence (generated via `scripts/collect_evidence.py`); "build passes" does not count as feature completion.
 - **Scope discipline**: declare the change scope before touching anything, write only within it, never drive-by-fix unrelated code.
@@ -18,11 +18,14 @@ Current version is in the `SKILL.md` title and the latest `CHANGELOG.md` entry.
 
 | Path | Contents |
 |---|---|
-| `SKILL.md` | All rules (single-page charter) |
+| `SKILL.md` | Charter + on-demand routing |
+| `references/models.md` | Task model tiers (host list wins; never inherit) |
+| `references/unattended.md` | Unattended-run contract |
 | `templates/任务卡模板.md` | Slim task card for L-level dispatch (≤ 40 lines) |
 | `agents/openai.yaml` | Codex agent entry |
-| `scripts/collect_evidence.py` | Machine evidence collection (git status + validation command output → Markdown) |
+| `scripts/collect_evidence.py` | Machine evidence collection (non-zero if a command fails) |
 | `scripts/sync.sh` | One-way sync from repo → local install location |
+| `evals/evals.json` | Author eval prompts (not installed) |
 | `CHANGELOG.md` | Version history |
 
 ## Installation
@@ -38,7 +41,7 @@ scripts/sync.sh
 `sync.sh` defaults to:
 
 - Codex: `~/.codex/skills/donghe-construction-team/`
-- Cursor: `~/.cursor/skills-cursor/donghe-construction-team/`
+- Cursor: `~/.cursor/skills/donghe-construction-team/` (personal skills; never `~/.cursor/skills-cursor/`)
 
 For other locations, edit the `TARGETS` array in the script.
 

@@ -2,7 +2,7 @@
 
 [English](README.en.md) | **中文**
 
-一套面向 AI coding agent 的**工程纪律 skill**。v0.6.0 起收敛为一页章程，核心只有三件事：
+一套面向 AI coding agent 的**工程纪律 skill**。v0.6.1 起 SKILL.md 是一页路由器，核心仍只有三件事：
 
 - **机器证据**：说"完成"必须有真实运行时证据（`scripts/collect_evidence.py` 生成），"build 通过"不算功能完成。
 - **范围纪律**：动手前声明改动范围，只写声明范围内的文件，不顺手改别的。
@@ -16,11 +16,14 @@
 
 | 路径 | 内容 |
 |---|---|
-| `SKILL.md` | 全部规则（一页章程） |
+| `SKILL.md` | 章程 + 按需加载路由 |
+| `references/models.md` | Task 模型档位（按宿主列表，禁止 inherit） |
+| `references/unattended.md` | 无守护模式细则 |
 | `templates/任务卡模板.md` | L 级派工用的瘦身任务卡（≤ 40 行） |
 | `agents/openai.yaml` | Codex agent 入口 |
-| `scripts/collect_evidence.py` | 机器证据采集（git 状态 + 验证命令输出 → Markdown） |
+| `scripts/collect_evidence.py` | 机器证据采集（命令失败则非 0） |
 | `scripts/sync.sh` | 仓库 → 本地安装位置的单向同步 |
+| `evals/evals.json` | 作者对照用例（不同步到安装位置） |
 | `CHANGELOG.md` | 版本演化史 |
 
 ## 安装
@@ -36,7 +39,7 @@ scripts/sync.sh
 `sync.sh` 默认同步到：
 
 - Codex：`~/.codex/skills/donghe-construction-team/`
-- Cursor：`~/.cursor/skills-cursor/donghe-construction-team/`
+- Cursor：`~/.cursor/skills/donghe-construction-team/`（个人 skill；不要写进 `~/.cursor/skills-cursor/`）
 
 如需其它位置，编辑脚本内的 `TARGETS` 数组。
 
