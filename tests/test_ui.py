@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import threading
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -193,6 +194,15 @@ class AdapterBoundaryTests(unittest.TestCase):
 
     def tearDown(self):
         self.temp.cleanup()
+
+    def test_default_browser_resolves_from_skill_package_not_business_project(self):
+        package = self.project.root / 'uninstalled-skill'
+        with mock.patch.object(ui, '__file__', str(package / 'scripts/donghe_ui.py')):
+            result = ui.run(self.project, {'url': 'http://localhost:4318',
+                'authorization': 'package browser path regression',
+                'steps': [{'action': 'assert_visible', 'selector': 'body'}]})
+        self.assertEqual(result['status'], 'unavailable')
+        self.assertIn(str(package / ui.DEFAULT_BINARY), result['error'])
 
     def test_missing_binary_is_unavailable_and_persists_result(self):
         result = ui.run(self.project, {'url': 'http://localhost:4318', 'authorization': '测试缺浏览器',

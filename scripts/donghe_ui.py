@@ -416,7 +416,7 @@ def run(project, spec, binary=None):
     run_rel = f'docs/东合/证据/UI/{run_id}'
     run_dir = _run_directory(project, run_rel)
     root = Path(project.root).resolve()
-    browser_path = Path(binary or root / DEFAULT_BINARY)
+    browser_path = Path(binary) if binary else Path(__file__).resolve().parents[1] / DEFAULT_BINARY
     result = {'runId': run_id, 'status': 'failed', 'startedAt': _now(),
               'url': spec.get('url') if isinstance(spec, dict) else None, 'steps': [],
               'console': [], 'exceptions': [], 'networkViolations': [], 'screenshots': [], 'error': None,

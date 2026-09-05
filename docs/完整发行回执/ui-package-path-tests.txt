@@ -1,0 +1,19 @@
+test_cli_returns_nonzero_for_unavailable_browser (test_ui.AdapterBoundaryTests) ... ok
+test_default_browser_resolves_from_skill_package_not_business_project (test_ui.AdapterBoundaryTests) ... ok
+test_evidence_directory_symlink_cannot_escape_project (test_ui.AdapterBoundaryTests) ... ok
+test_invalid_url_and_contract_leave_failed_evidence (test_ui.AdapterBoundaryTests) ... ok
+test_missing_binary_is_unavailable_and_persists_result (test_ui.AdapterBoundaryTests) ... ok
+test_assertion_failure_is_nonpassing_and_keeps_evidence (test_ui.BrowserAcceptanceTests) ... ok
+test_click_scrolls_long_page_then_keeps_real_cover_check (test_ui.BrowserAcceptanceTests) ... ok
+test_cross_origin_fetch_and_delayed_exception_fail_without_sink_hit (test_ui.BrowserAcceptanceTests) ... ok
+test_cross_origin_websocket_is_blocked_before_handshake (test_ui.BrowserAcceptanceTests) ... ok
+test_explicit_local_api_origin_is_allowed (test_ui.BrowserAcceptanceTests) ... ok
+test_navigation_off_localhost_stops_contract (test_ui.BrowserAcceptanceTests) ... ok
+test_real_click_changes_ui_then_screenshot (test_ui.BrowserAcceptanceTests) ... ok
+test_same_origin_path_navigation_is_allowed (test_ui.BrowserAcceptanceTests) ... ok
+test_screenshot_only_is_captured_not_passed (test_ui.BrowserAcceptanceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 10.217s
+
+OK
