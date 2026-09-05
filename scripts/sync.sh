@@ -1,30 +1,28 @@
 #!/usr/bin/env bash
-# 从仓库（SSOT）单向同步到 Codex / Cursor 本地安装位置。
-# 用法：在仓库根运行 scripts/sync.sh
+# Distribute only committed runtime files; retain old installations outside discovery.
 set -euo pipefail
-
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-TARGETS=(
-  "$HOME/.codex/skills/donghe-construction-team"
-  "$HOME/.cursor/skills-cursor/donghe-construction-team"
-)
-
-if [[ ! -f "$REPO_ROOT/SKILL.md" ]]; then
-  echo "错误：$REPO_ROOT 下找不到 SKILL.md，不是施工队仓库根" >&2
-  exit 1
-fi
-
-if [[ -n "$(git -C "$REPO_ROOT" status --porcelain 2>/dev/null)" ]]; then
-  echo "警告：仓库有未提交改动。SSOT 原则要求先 commit 再同步。" >&2
-  read -r -p "仍要继续同步？[y/N] " answer
-  [[ "$answer" == "y" || "$answer" == "Y" ]] || exit 1
-fi
-
-for target in "${TARGETS[@]}"; do
-  mkdir -p "$target"
-  # docs/ 是本仓库自身的工地档案（任务卡 / 施工日志），不属于 skill 内容，不下发
-  rsync -a --delete --exclude '.git' --exclude 'docs' "$REPO_ROOT/" "$target/"
-  echo "已同步 → $target"
+[[ -z "$(git -C "$REPO_ROOT" status --porcelain)" ]] || { echo 'Commit changes before distribution.' >&2; exit 1; }
+BACKUP_ROOT="${DONGHE_BACKUP_ROOT:-$HOME/.donghe/backups}/$(date +%Y%m%d-%H%M%S)-$$"
+STAGE="$(mktemp -d)"
+trap 'rm -rf "$STAGE"' EXIT
+for item in SKILL.md CHANGELOG.md LICENSE README.md README.en.md agents references playbooks templates scripts assets; do
+  [[ ! -e "$REPO_ROOT/$item" ]] || cp -R "$REPO_ROOT/$item" "$STAGE/"
 done
-
-echo "完成。两处安装位置均为仓库同步产物，请勿直接修改。"
+find "$STAGE" -name __pycache__ -type d -prune -exec rm -rf {} +
+if (( $# )); then TARGETS=("$@"); else TARGETS=("$HOME/.codex/skills/donghe-construction-team" "$HOME/.cursor/skills/donghe-construction-team"); fi
+mkdir -p "$BACKUP_ROOT"
+git -C "$REPO_ROOT" rev-parse HEAD > "$BACKUP_ROOT/source-commit.txt"
+i=0
+for target in "${TARGETS[@]}"; do
+  [[ "$target" = /*/donghe-construction-team && ! -L "$target" ]] || { echo "Invalid target: $target" >&2; exit 1; }
+  i=$((i+1))
+  printf '%s\n' "$target" > "$BACKUP_ROOT/$i.target"
+  if [[ -e "$target" ]]; then cp -a "$target" "$BACKUP_ROOT/$i.previous"; fi
+  mkdir -p "$target"
+  rsync -a --delete "$STAGE/" "$target/"
+  diff -qr "$STAGE" "$target"
+  python3 "$target/scripts/donghe.py" --help >/dev/null
+  echo "Installed: $target"
+done
+echo "Backup and source commit: $BACKUP_ROOT"

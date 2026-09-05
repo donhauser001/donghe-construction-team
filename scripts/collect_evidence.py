@@ -40,9 +40,16 @@ def in_git_repo() -> bool:
 
 
 def trim(text: str, limit: int) -> str:
+    """Trim the middle, not the tail: failure summaries live at the end of output."""
     if len(text) <= limit:
         return text
-    return text[:limit] + f"\n... trimmed {len(text) - limit} chars ..."
+    head = limit // 3
+    tail = limit - head
+    return (
+        text[:head]
+        + f"\n... trimmed {len(text) - limit} chars (middle) ...\n"
+        + text[-tail:]
+    )
 
 
 def main() -> int:
@@ -75,6 +82,7 @@ def main() -> int:
         lines.append("非 Git 仓库，跳过 git status / diff stat。")
     lines.append("```")
 
+    failed = False
     if args.cmd:
         lines.append("")
         lines.append("## 验证命令")
@@ -97,6 +105,8 @@ def main() -> int:
         except Exception as exc:  # noqa: BLE001
             code = 1
             output = f"ERROR: {exc}"
+        if code != 0:
+            failed = True
         end = dt.datetime.now().isoformat(timespec="seconds")
         lines.append(f"- 结束：{end}")
         lines.append(f"- 退出码：{code}")
@@ -114,6 +124,9 @@ def main() -> int:
         print(out)
     else:
         sys.stdout.write(rendered)
+    if failed:
+        print("EVIDENCE_FAILED: one or more --cmd exited non-zero", file=sys.stderr)
+        return 1
     return 0
 
 

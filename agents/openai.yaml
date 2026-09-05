@@ -1,10 +1,6 @@
 interface:
-  display_name: "东合施工队 v0.6.1"
+  display_name: "东合施工队 v0.6.2"
   short_description: "工程施工与进化史：可恢复完工、来源回执、无目标停止"
-  default_prompt: |
-    使用 $donghe-construction-team 承接当前已授权目标。先读 SKILL.md，再按场景只读相应 playbook。
-    项目使用 docs/东合/ 或要求最小闭环试点时，先走 playbooks/09-最小完工闭环.md，使用 CLI 管理任务、验证、完工和只读进化史，不再手工双写旧目录。
-    看验证失败先用 CLI receipt 读取有界摘要，不默认读取完整指纹和长输出。
-    首次接入先核对项目事实源与回滚点。无人值守遵守 playbooks/08：目标完成或无可执行授权任务就停止；不靠重跑测试消耗时长。
+  default_prompt: "使用 $donghe-construction-team 完成已授权任务。按 SKILL.md 路由；进化史项目走 CLI 闭环，失败先读回执摘要，无目标停止。"
 policy:
   allow_implicit_invocation: true

@@ -2,37 +2,29 @@
 
 [English](README.en.md) | **中文**
 
-一套面向 AI coding agent 的**工程闭环 skill**：让 agent 以"施工队"而不是"单兵实现者"的方式承接非平凡的编码工作。包工头（强模型父 agent）负责踏勘、拆卡、派工、审计、验收；施工工人（便宜档子 agent）按任务卡施工；全程以真实运行时的机器证据为完成标准。
+一套面向 AI coding agent 的**工程纪律 skill**。v0.6.1 起 SKILL.md 是一页路由器，核心仍只有三件事：
+
+- **机器证据**：说"完成"必须有真实运行时证据（`scripts/collect_evidence.py` 生成），"build 通过"不算功能完成。
+- **范围纪律**：动手前声明改动范围，只写声明范围内的文件，不顺手改别的。
+- **诚实汇报**：禁用"搞定 / 没问题 / 应该可以 / 暂时 / 先这样"等空头词；盲区和未验证项明说。
+
+任务按 S/M/L 分级：S/M 级 agent 自己干、零流程开销；只有 L 级（跨层 / 动 schema / 涉钱权安 / 真正需要并行）才拆任务卡、派便宜档工人并行施工。
 
 当前版本见 `SKILL.md` 标题与 `CHANGELOG.md` 最新条目。
-
-## v0.6.1 试点
-
-最小工具闭环见 [操作说明](playbooks/09-最小完工闭环.md)。固定产物位于项目 `docs/东合/`，无需创建九类空文档。新增共享文件指纹与历史失败摘要直达，兼容读取已有回执。当前支持有 Python 3 的 macOS/Linux；浏览器只读界面无需前端构建或第三方包。尚未包含运行时自安装、第三方图谱打包与月度归档，不应作为完整产品发行。
-
-## 核心机制
-
-- **S/M/L 改动半径分级**：半径决定流程强度，可升不可降。
-- **任务卡落盘 + 三元绑定**：M/L 级工作必须在项目 `docs/任务卡/` 落盘瘦身任务卡，强制"派给 / 调用模型 / 匹配理由"三字段。
-- **并行编排**：默认 ≤3 工人；六槽作战编制（文书 / 巡检 / 审计 / 3 工人）；用户授权可分波爆发到 8 工人。
-- **工人不空转 / 审计异步**：审计与施工解耦，小问题回炉、大问题转新卡。
-- **机器证据**：完成宣称必须有真实运行时证据，优先用 `scripts/collect_evidence.py` 生成。
-- **无守护自动施工**：已授权队列、无目标停止、有效回执复用、隔离分支可回滚。
-- **代码图谱辅助**：接入 codebase-memory-mcp 类知识图谱时作为结构发现加速器（结果必须回读源码）。
 
 ## 目录结构
 
 | 路径 | 内容 |
 |---|---|
-| `SKILL.md` | 章程（八大铁律 + 路由表 + 治理规则，≤ 120 行） |
-| `playbooks/` | 9 个场景 SOP（接活流程、任务卡与工人、派工与并行、验证与审计、汇报与文档、项目接入与踏勘、多队协同、无守护模式） |
-| `templates/` | 任务卡、踏勘报告、施工日志、技术债账本、无守护套件等模板 |
-| `agents/openai.yaml` | Codex agent 入口（最小 prompt + 换道触发词） |
-| `scripts/collect_evidence.py` | 机器证据采集（git 状态 + 验证命令输出 → Markdown） |
-| `scripts/check_card.py` | 派工闸：任务卡必填字段 / 白名单 / 禁词校验，不过不许派工 |
+| `SKILL.md` | 章程 + 按需加载路由 |
+| `references/models.md` | Task 模型档位（按宿主列表，禁止 inherit） |
+| `references/unattended.md` | 无守护模式细则 |
+| `templates/任务卡模板.md` | L 级派工用的瘦身任务卡（≤ 40 行） |
+| `agents/openai.yaml` | Codex agent 入口 |
+| `scripts/collect_evidence.py` | 机器证据采集（命令失败则非 0） |
 | `scripts/sync.sh` | 仓库 → 本地安装位置的单向同步 |
-| `scripts/lint.sh` | 内链存活 + 版本号一致 + 行数预算校验（防规则再膨胀） |
-| `CHANGELOG.md` | 版本演化史（正文不按版本组织，历史一律查这里） |
+| `evals/evals.json` | 作者对照用例（不同步到安装位置） |
+| `CHANGELOG.md` | 版本演化史 |
 
 ## 安装
 
@@ -47,22 +39,27 @@ scripts/sync.sh
 `sync.sh` 默认同步到：
 
 - Codex：`~/.codex/skills/donghe-construction-team/`
-- Cursor：`~/.cursor/skills-cursor/donghe-construction-team/`
+- Cursor：`~/.cursor/skills/donghe-construction-team/`（个人 skill；不要写进 `~/.cursor/skills-cursor/`）
 
 如需其它位置，编辑脚本内的 `TARGETS` 数组。
 
 ## 修改流程
 
 1. 只在本仓库内修改，**禁止直接改安装位置的文件**。
-2. 版本号需同步更新四处：`SKILL.md` 标题、`SKILL.md` 元信息、`agents/openai.yaml`、`CHANGELOG.md` 新条目。
-3. **一条规则只有一个家**；新增规则必须在 CHANGELOG 写明"删掉 / 合并了什么"，只加不删视为治理缺陷。
-4. 运行 `scripts/lint.sh` 通过校验（含行数预算：SKILL ≤ 120 行、单 playbook ≤ 220 行、总量 ≤ 1600 行）。
-5. commit 后运行 `scripts/sync.sh` 下发到本地安装位置。
-
-## 行为评测（未发布的开发资料）
-
-[可执行夹具与复跑说明](evals/behavior/README.md) · [旧版实测与 Astra/Luna 首轮对照](docs/基线回执/README.md)。评测不改变 v0.5.0 技能规则，尚未同步安装。
+2. 版本号同步更新四处：`SKILL.md` frontmatter description（如涉及）、`SKILL.md` 标题与元信息、`agents/openai.yaml`、`CHANGELOG.md` 新条目。
+3. 保持一页原则：新增规则先想清楚能不能删一条旧的；SKILL.md 超过约 120 行视为膨胀信号。
+4. commit 后运行 `scripts/sync.sh` 下发到本地安装位置。
 
 ## License
 
 [MIT](LICENSE)
+
+## v0.6.2：进化史闭环整合
+
+保留主线轻量纪律，整合已验收的 CLI 和只读进化史。操作入口：[最小闭环](playbooks/09-最小完工闭环.md)。固定产物 `docs/东合/`，完工回写日志与交接、共享指纹、历史失败直达；不要求补建九类空文档。
+
+需 Python 3.9+（macOS/Linux），无第三方 Python 包或前端构建。归档、图谱自动安装、运行时打包尚未实现。
+
+提交后执行 `scripts/sync.sh`，只分发运行所需文件；安装前备份到 `~/.donghe/backups/`，原安装定制也随备份保留。安装结果用目录内容对照和 CLI 启动检查验证。重新开启 agent 会话加载新版。
+
+[32 项核心与 12 项浏览器证据](docs/证据改进回执/README.md)；这些是此前验收，整合后的补充验证见发行回执。
