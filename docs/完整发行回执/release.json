@@ -1,0 +1,142 @@
+{
+  "status": "published",
+  "version": "v0.8.0",
+  "publishedAt": "2026-09-05T12:44:30Z",
+  "releaseUrl": "https://github.com/donhauser001/donghe-construction-team/releases/tag/v0.8.0",
+  "sourceCommit": "6e3774885e571ca7713733d8167793960f2ee4a8",
+  "sourceDirty": false,
+  "package": {
+    "name": "donghe-construction-team-v0.8.0-darwin-arm64.tar.gz",
+    "sha256": "66652ff1c69ac9550c930f204885b59dbe81bbca162b0bcf6c654de3f4c6986a",
+    "bytes": 153279337,
+    "remoteDigestMatched": true
+  },
+  "installation": {
+    "installed": [
+      {
+        "target": "/Users/aiden/.codex/skills/donghe-construction-team",
+        "previous": "/Users/aiden/.donghe/backups/20260905-204250-48da7b28/0.previous"
+      },
+      {
+        "target": "/Users/aiden/.cursor/skills/donghe-construction-team",
+        "previous": "/Users/aiden/.donghe/backups/20260905-204250-48da7b28/1.previous"
+      }
+    ],
+    "backup": "/Users/aiden/.donghe/backups/20260905-204250-48da7b28"
+  },
+  "checks": {
+    "installed-codex-doctor": {
+      "status": "ready",
+      "platform": "darwin-arm64",
+      "python": "3.12.14",
+      "graph": "0.8.1",
+      "browser": "Google Chrome for Testing 152.0.7977.82",
+      "firstUseDownloads": false
+    },
+    "installed-cursor-doctor": {
+      "status": "ready",
+      "platform": "darwin-arm64",
+      "python": "3.12.14",
+      "graph": "0.8.1",
+      "browser": "Google Chrome for Testing 152.0.7977.82",
+      "firstUseDownloads": false
+    },
+    "installed-forms-search": {
+      "mode": "graph",
+      "graphState": "current",
+      "verifiedSourceLocations": 1
+    },
+    "installed-medical-search": {
+      "mode": "graph",
+      "graphState": "current",
+      "verifiedSourceLocations": 1
+    },
+    "installed-forms-reuse": {
+      "state": "current",
+      "generation": "1788610012671710000-88166",
+      "reused": true
+    },
+    "installed-medical-reuse": {
+      "state": "current",
+      "generation": "1788610014505258000-88166",
+      "reused": true
+    },
+    "package-next": {
+      "action": "stop",
+      "reason": "没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务"
+    }
+  },
+  "ui": {
+    "status": "passed",
+    "runId": "cb2777e650c9495885e28eed78fe903f",
+    "resultPath": "docs/东合/证据/UI/cb2777e650c9495885e28eed78fe903f/result.json",
+    "evidenceCopy": "package-ui.json",
+    "screenshot": "package-product.png"
+  },
+  "tests": {
+    "combined": {
+      "passed": 110,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postPackagePathFixUI": {
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "originalProjectProtection": {
+    "passed": true,
+    "scope": "tracked and non-ignored untracked files, HEAD, git status, existing container identity/start; ignored databases not read or hashed",
+    "projects": {
+      "/Users/aiden/Desktop/dhsforms": {
+        "headUnchanged": true,
+        "statusUnchanged": true,
+        "changedFiles": []
+      },
+      "/Users/aiden/Documents/app/超级病历本": {
+        "headUnchanged": true,
+        "statusUnchanged": true,
+        "changedFiles": []
+      },
+      "/Users/aiden/dev/dhs-forms-pilot": {
+        "headUnchanged": true,
+        "statusUnchanged": true,
+        "changedFiles": []
+      }
+    },
+    "runtime": [
+      {
+        "name": "/dhs-wp-app",
+        "sameIdAndStart": true,
+        "running": true
+      },
+      {
+        "name": "/dhs-official-site-postgres-1",
+        "sameIdAndStart": true,
+        "running": true
+      },
+      {
+        "name": "/dhs-portfolio-wordpress-1",
+        "sameIdAndStart": true,
+        "running": true
+      },
+      {
+        "name": "/dhs-portfolio-db-1",
+        "sameIdAndStart": true,
+        "running": true
+      },
+      {
+        "name": "/dhs-wp-db",
+        "sameIdAndStart": true,
+        "running": true
+      }
+    ]
+  },
+  "limits": [
+    "Complete package verified on macOS arm64 only",
+    "Native mobile physical device not tested",
+    "No cloud sync or cross-machine multiwriter support",
+    "Code graph coverage is upstream-supported within explicit source policy"
+  ]
+}

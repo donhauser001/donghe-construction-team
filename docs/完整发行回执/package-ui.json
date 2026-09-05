@@ -1,0 +1,108 @@
+{
+  "browserPolicy": {
+    "additiveCSP": true,
+    "disabledFeatures": [
+      "LocalNetworkAccessChecks",
+      "PrivateNetworkAccessChecks",
+      "PrivateNetworkAccessRespectPreflightResults"
+    ],
+    "isolatedProfile": true,
+    "scope": "controlled localhost acceptance; not production browser network-policy certification"
+  },
+  "console": [],
+  "contract": {
+    "allowExceptions": false,
+    "allowedOrigins": [],
+    "authorization": "用户授权完整技能包的隔离进化史界面验收",
+    "steps": [
+      {
+        "action": "assert_visible",
+        "selector": "#content"
+      },
+      {
+        "action": "click",
+        "selector": "#records-more"
+      },
+      {
+        "action": "assert_visible",
+        "selector": "[data-record-id=\"S054\"]"
+      },
+      {
+        "action": "screenshot",
+        "name": "product.png"
+      }
+    ],
+    "timeout": 45,
+    "url": "http://127.0.0.1:4329/"
+  },
+  "contractSha256": "a41ce6fcc15d60c33a0f17d5cdac54fb57a73837b20fa2e920a547d673a166f4",
+  "error": null,
+  "exceptions": [],
+  "finalUrl": "http://127.0.0.1:4329/",
+  "finishedAt": "2026-09-05T12:42:49.674986+00:00",
+  "networkBoundary": "CDP interception plus additive connect-src CSP; not an operating-system network sandbox",
+  "networkViolations": [],
+  "resultPath": "docs/东合/证据/UI/cb2777e650c9495885e28eed78fe903f/result.json",
+  "runId": "cb2777e650c9495885e28eed78fe903f",
+  "screenshots": [
+    {
+      "path": "product.png",
+      "sha256": "73924d3eb167a9f2e1fbdba299ef8d7a63fd2a109c27d413410bb5c72128639f"
+    }
+  ],
+  "startedAt": "2026-09-05T12:42:48.116798+00:00",
+  "status": "passed",
+  "steps": [
+    {
+      "action": "assert_visible",
+      "detail": {
+        "ok": true
+      },
+      "durationMs": 115,
+      "index": 1,
+      "passed": true,
+      "selector": "#content",
+      "url": "http://127.0.0.1:4329/"
+    },
+    {
+      "action": "click",
+      "detail": {
+        "input": "trusted CDP pointer",
+        "ok": true,
+        "x": 84,
+        "y": 300.234375
+      },
+      "durationMs": 851,
+      "index": 2,
+      "passed": true,
+      "selector": "#records-more",
+      "url": "http://127.0.0.1:4329/"
+    },
+    {
+      "action": "assert_visible",
+      "detail": {
+        "ok": true
+      },
+      "durationMs": 1,
+      "index": 3,
+      "passed": true,
+      "selector": "[data-record-id=\"S054\"]",
+      "url": "http://127.0.0.1:4329/"
+    },
+    {
+      "action": "screenshot",
+      "detail": {
+        "ok": true,
+        "path": "product.png",
+        "sha256": "73924d3eb167a9f2e1fbdba299ef8d7a63fd2a109c27d413410bb5c72128639f"
+      },
+      "durationMs": 120,
+      "index": 4,
+      "name": "product.png",
+      "passed": true,
+      "url": "http://127.0.0.1:4329/"
+    }
+  ],
+  "url": "http://127.0.0.1:4329/"
+}
+
