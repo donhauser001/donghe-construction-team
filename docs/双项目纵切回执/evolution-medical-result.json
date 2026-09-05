@@ -1,0 +1,28 @@
+[
+  {
+    "name": "medical",
+    "id": "MED001",
+    "passed": true,
+    "receiptFormat": 2,
+    "decision": {
+      "action": "stop",
+      "reason": "没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务"
+    },
+    "tasks": [
+      {
+        "id": "MED001",
+        "status": "completed",
+        "verification": "passed"
+      }
+    ],
+    "checks": [
+      "actual new task completed",
+      "summary before raw",
+      "v2 receipt provenance",
+      "handoff contains task",
+      "focus restored",
+      "390px no overflow",
+      "no pageerror"
+    ]
+  }
+]

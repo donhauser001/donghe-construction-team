@@ -1,0 +1,21 @@
+{
+  "reader": "isolated candidate f48f47e with UI history label",
+  "decision": {
+    "action": "stop",
+    "reason": "历史完工记录的当前证据未通过，不能视为新施工授权；停止并显式复核，必要时执行 verify 重开"
+  },
+  "tasks": [
+    {
+      "id": "FORMS001",
+      "declaredStatus": "completed",
+      "status": "active",
+      "verification": "stale"
+    },
+    {
+      "id": "FORMS002",
+      "declaredStatus": "completed",
+      "status": "completed",
+      "verification": "passed"
+    }
+  ]
+}

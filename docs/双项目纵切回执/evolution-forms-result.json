@@ -1,0 +1,33 @@
+[
+  {
+    "name": "forms",
+    "id": "FORMS002",
+    "passed": true,
+    "receiptFormat": 2,
+    "decision": {
+      "action": "stop",
+      "reason": "历史完工记录的当前证据未通过，不能视为新施工授权；停止并显式复核，必要时执行 verify 重开"
+    },
+    "tasks": [
+      {
+        "id": "FORMS001",
+        "status": "active",
+        "verification": "stale"
+      },
+      {
+        "id": "FORMS002",
+        "status": "completed",
+        "verification": "passed"
+      }
+    ],
+    "checks": [
+      "actual new task completed",
+      "summary before raw",
+      "v2 receipt provenance",
+      "handoff contains task",
+      "focus restored",
+      "390px no overflow",
+      "no pageerror"
+    ]
+  }
+]

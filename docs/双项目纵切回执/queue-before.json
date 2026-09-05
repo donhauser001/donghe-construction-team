@@ -1,0 +1,20 @@
+{
+  "reader": "installed v0.6.2",
+  "decision": {
+    "action": "work",
+    "reason": "存在已授权的未完成任务"
+  },
+  "tasks": [
+    {
+      "id": "FORMS001",
+      "status": "active",
+      "verification": "stale"
+    },
+    {
+      "id": "FORMS002",
+      "status": "completed",
+      "verification": "passed"
+    }
+  ],
+  "finding": "Completed history is treated as fresh work after path/input drift; agent stopped rather than rerunning old task."
+}

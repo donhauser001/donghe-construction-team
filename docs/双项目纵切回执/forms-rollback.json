@@ -1,0 +1,12 @@
+{
+  "project": "DHS Forms",
+  "baseline": "016d8715bdbcd93b6200ac2c8be514020660d355",
+  "revertedCommit": "23b749f",
+  "rollbackCommit": "8fe8aef3d187ba6694ed847d3a1a20b377d54ef7",
+  "codeTreeEqualsBaseline": true,
+  "preserved": [
+    "docs/**",
+    ".donghe/**"
+  ],
+  "scope": "independent rollback clone; no original workspace mutation"
+}

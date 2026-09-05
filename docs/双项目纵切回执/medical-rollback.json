@@ -1,0 +1,13 @@
+{
+  "project": "超级病历本",
+  "baseline": "982a680a9e1953bad1282a683542ed7af7e05612",
+  "revertedCommit": "85e2f62",
+  "rollbackCommit": "be6c027c5b9ebe11888246b1471d7fc20b71393c",
+  "codeTreeEqualsBaseline": true,
+  "preserved": [
+    "docs/**",
+    ".donghe/**",
+    "output/**"
+  ],
+  "scope": "independent rollback clone; no original workspace mutation"
+}

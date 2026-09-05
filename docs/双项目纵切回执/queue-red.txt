@@ -1,0 +1,51 @@
+Command (run before the production fix):
+python3 -m unittest tests.test_donghe.CompletionTests.test_completed_task_can_reverify_after_source_drift tests.test_donghe.CompletionTests.test_completed_project_clone_requires_review_instead_of_work tests.test_donghe.CompletionTests.test_status_flip_and_missing_log_do_not_prove_completion tests.test_donghe.CompletionTests.test_new_active_task_remains_authorized_work
+
+Captured output:
+FEFE
+======================================================================
+ERROR: test_completed_project_clone_requires_review_instead_of_work (tests.test_donghe.CompletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aiden/dev/donghe-dual-pilot/skill/tests/test_donghe.py", line 185, in test_completed_project_clone_requires_review_instead_of_work
+    cloned = donghe.Project(clone_root)
+  File "/Users/aiden/dev/donghe-dual-pilot/skill/scripts/donghe.py", line 52, in __init__
+    raise ValueError('project symlinks are not allowed')
+ValueError: project symlinks are not allowed
+
+======================================================================
+ERROR: test_new_active_task_remains_authorized_work (tests.test_donghe.CompletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aiden/dev/donghe-dual-pilot/skill/tests/test_donghe.py", line 243, in test_new_active_task_remains_authorized_work
+    self.assertEqual(state['tasks'][0]['declaredStatus'], 'active')
+KeyError: 'declaredStatus'
+
+======================================================================
+FAIL: test_completed_task_can_reverify_after_source_drift (tests.test_donghe.CompletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aiden/dev/donghe-dual-pilot/skill/tests/test_donghe.py", line 168, in test_completed_task_can_reverify_after_source_drift
+    self.assertEqual(drifted['decision']['action'], 'stop')
+AssertionError: 'work' != 'stop'
+- work
++ stop
+
+
+======================================================================
+FAIL: test_status_flip_and_missing_log_do_not_prove_completion (tests.test_donghe.CompletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aiden/dev/donghe-dual-pilot/skill/tests/test_donghe.py", line 234, in test_status_flip_and_missing_log_do_not_prove_completion
+    self.assertEqual(self.project.status()['decision']['action'], 'stop')
+AssertionError: 'work' != 'stop'
+- work
++ stop
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.154s
+
+FAILED (failures=2, errors=2)
+
+Note: the clone-path error above was a test-fixture path issue corrected before the green run; the two FAIL entries are the old queue behavior counterexamples. The declaredStatus KeyError records the new response field before implementation.

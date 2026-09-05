@@ -1,0 +1,9 @@
+Command:
+python3 -m unittest discover -s tests -p 'test_*.py'
+
+Captured output:
+..................................
+----------------------------------------------------------------------
+Ran 34 tests in 1.818s
+
+OK
