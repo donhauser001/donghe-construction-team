@@ -1,0 +1,88 @@
+{
+  "records": {
+    "records": [
+      {
+        "createdAt": "2026-09-05T11:24:10.836638+00:00",
+        "id": "B-UI",
+        "kind": "blueprint",
+        "relations": [
+          {
+            "target": "I-UI",
+            "type": "derived_from"
+          },
+          {
+            "target": "task:FORMS002",
+            "type": "implements"
+          }
+        ],
+        "schemaVersion": 1,
+        "state": "active",
+        "title": "真实界面与运行证据共同验收",
+        "updatedAt": "2026-09-05T11:24:10.844899+00:00",
+        "feedback": [
+          {
+            "completedAt": "2026-09-05T10:50:54.162391+00:00",
+            "note": "fact propagated through explicit implements/derived_from relations",
+            "receipts": [
+              "docs/东合/证据/FORMS002--browser--20260905T104916243760--8d90730c6ef24cf2bffe64463875c77e/receipt.json",
+              "docs/东合/证据/FORMS002--browser--20260905T105046390098--ca41b4ee015c45aa832ce7954f8ab97f/receipt.json"
+            ],
+            "source": "B-UI",
+            "taskId": "FORMS002",
+            "via": [
+              "B-UI"
+            ]
+          }
+        ],
+        "path": "docs/东合/资料/blueprint/B-UI.md",
+        "summary": "来源：用户授权在 DHS Forms 真实纵切并要求原项目隔离。FORMS002 的辅助技术语义改进是该方向的一个小切片，不代表整个插件验收。"
+      },
+      {
+        "createdAt": "2026-09-05T11:24:10.835582+00:00",
+        "id": "I-UI",
+        "kind": "idea",
+        "relations": [],
+        "schemaVersion": 1,
+        "state": "open",
+        "title": "重视真实界面体验",
+        "updatedAt": "2026-09-05T11:24:10.845555+00:00",
+        "feedback": [
+          {
+            "completedAt": "2026-09-05T10:50:54.162391+00:00",
+            "note": "fact propagated through explicit implements/derived_from relations",
+            "receipts": [
+              "docs/东合/证据/FORMS002--browser--20260905T104916243760--8d90730c6ef24cf2bffe64463875c77e/receipt.json",
+              "docs/东合/证据/FORMS002--browser--20260905T105046390098--ca41b4ee015c45aa832ce7954f8ab97f/receipt.json"
+            ],
+            "source": "B-UI",
+            "taskId": "FORMS002",
+            "via": [
+              "B-UI",
+              "I-UI"
+            ]
+          }
+        ],
+        "path": "docs/东合/资料/idea/I-UI.md",
+        "summary": "来源：用户在本次施工队改造讨论中指出 Agent 容易重后端、轻前端，要求关注真实 UI/UX。这里只记录该方向，不宣称全部问题已解决。"
+      }
+    ],
+    "relations": [
+      {
+        "source": "B-UI",
+        "target": "I-UI",
+        "type": "derived_from"
+      },
+      {
+        "source": "B-UI",
+        "target": "task:FORMS002",
+        "type": "implements"
+      }
+    ],
+    "issues": []
+  },
+  "decision": {
+    "action": "stop",
+    "reason": "历史完工记录的当前证据未通过，不能视为新施工授权；停止并显式复核，必要时执行 verify 重开"
+  },
+  "note": "Existing task evidence read; no business tests rerun; original source untouched"
+}

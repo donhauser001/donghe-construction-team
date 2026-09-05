@@ -21,6 +21,10 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import donghe_archive as archive
+import donghe_records as records
+
 DOC = 'docs/东合'
 STATE = '.donghe/state'
 FENCE = re.compile(r'```donghe-json\n(.*?)\n```', re.S)
@@ -68,7 +72,7 @@ class Project:
                 raise ValueError('symlinks are not allowed: ' + relative)
         if not target.resolve().is_relative_to(self.root):
             raise ValueError('external path')
-        return target
+        return archive.resolve(self, relative)
 
     @contextlib.contextmanager
     def lock(self):
@@ -103,6 +107,7 @@ class Project:
             self.path(STATE + '/operations').mkdir(parents=True, exist_ok=True)
             if self.read(DOC + '/工作交接.md') is None:
                 self.write(DOC + '/工作交接.md', '# 工作交接\n\n尚无已验收任务。\n')
+        self.maintain()
         return self.status()
 
     def task_path(self, task_id):
@@ -344,13 +349,9 @@ class Project:
         return result
 
     def candidates(self, task_id, criterion_id):
-        base = self.path(DOC + '/证据')
-        found = []
-        if not base.exists():
-            return found
-        for p in sorted(base.glob(task_id + '--' + criterion_id + '--*/receipt.json')):
-            found.append(p.relative_to(self.root).as_posix())
-        return found
+        prefix = DOC + '/证据/' + task_id + '--' + criterion_id + '--'
+        return sorted(p for p in archive.logical_files(self, DOC + '/证据')
+                      if p.startswith(prefix) and p.endswith('/receipt.json'))
 
     def inspect(self, task, criterion):
         candidates = self.candidates(task['id'], criterion['id'])
@@ -380,6 +381,8 @@ class Project:
         with self.lock():
             if self.pending():
                 raise ValueError('recover with finish, or abort pending completion first')
+            if self.path(self.task_path(task_id)) != self.root / self.task_path(task_id):
+                raise ValueError('archived task: restore its archive month before reopening')
             task = self.task(task_id)
             source_before = self.read(self.task_path(task_id))
             if not task['authorization']:
@@ -573,7 +576,23 @@ class Project:
                 relative = STATE + '/operations/' + op['id'] + '.json'
                 self.write(relative, encode(op))
                 self.recover(relative, op)
+            records.feedback(self, task_id)
+        self.maintain()
         return self.status()
+
+    def maintain(self):
+        with self.lock():
+            if self.pending():
+                return {'skipped': 'pending completion'}
+            month = dt.date.today().strftime('%Y-%m')
+            path = STATE + '/maintenance.json'
+            prior = json.loads(self.read(path) or '{}')
+            if prior.get('month') == month:
+                return {'checked': month}
+            proposed = archive.plan(self)
+            result = archive.apply(self, proposed)
+            self.write(path, encode({'month': month, 'checkedAt': now()}))
+            return result
 
     def status(self):
         with self.lock():
@@ -584,10 +603,10 @@ class Project:
         recoverable_pending = [(rel, op) for rel, op in pending if op.get('projectRoot') == str(self.root)]
         pending_ids = {op['taskId'] for _, op in pending}
         tasks = []
-        base = self.path(DOC + '/任务卡')
-        if base.exists():
-            for p in sorted(base.glob('*.md')):
-                task = self.task(p.stem)
+        task_paths = archive.logical_files(self, DOC + '/任务卡')
+        if task_paths:
+            for relative in sorted(p for p in task_paths if p.endswith('.md')):
+                task = self.task(Path(relative).stem)
                 criteria = [self.inspect(task, c) for c in task['criteria']]
                 states = {c['state'] for c in criteria}
                 verification = 'invalid' if 'invalid' in states or 'failed' in states else 'stale' if 'stale' in states else 'pending' if 'missing' in states else 'passed'
@@ -596,7 +615,8 @@ class Project:
                     verification = 'invalid'
                 tasks.append({**{k: task[k] for k in ['id', 'title', 'authorization', 'issues', 'events']},
                               'declaredStatus': task['status'], 'status': task_status,
-                              'verification': verification, 'sourcePath': self.task_path(task['id']), 'criteria': criteria})
+                              'verification': verification, 'sourcePath': self.task_path(task['id']),
+                              'archived': self.path(self.task_path(task['id'])) != self.root / self.task_path(task['id']), 'criteria': criteria})
         active = [t for t in tasks if t['declaredStatus'] == 'active' and t['authorization'] and not t['issues']]
         review = [t for t in tasks if t['declaredStatus'] == 'completed' and t['status'] != 'completed']
         if recoverable_pending:
@@ -610,8 +630,11 @@ class Project:
         else:
             decision = {'action': 'stop', 'reason': '没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务'}
         logs = self.path(DOC + '/开发日志')
+        archive_status = archive.plan(self)
+        archive_status.pop('candidates', None)
         return {'projectRoot': str(self.root), 'generatedAt': now(), 'decision': decision, 'tasks': tasks,
-                'handoffPath': DOC + '/工作交接.md', 'logPaths': [p.relative_to(self.root).as_posix() for p in sorted(logs.glob('*.md'))] if logs.exists() else []}
+                'handoffPath': DOC + '/工作交接.md', 'logPaths': sorted(p for p in archive.logical_files(self, DOC + '/开发日志') if p.endswith('.md')),
+                'knowledge': records.catalog(self), 'archive': archive_status}
 
 
 def serve(project, port):
@@ -668,6 +691,18 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='command', required=True)
     for name in ['init', 'status', 'next']:
         sub.add_parser(name)
+    record = sub.add_parser('record')
+    record.add_argument('--spec', required=True)
+    record.add_argument('--update', action='store_true')
+    link = sub.add_parser('link')
+    link.add_argument('source')
+    link.add_argument('target')
+    link.add_argument('--relation', default='relates_to')
+    sub.add_parser('catalog')
+    maintenance = sub.add_parser('archive')
+    maintenance.add_argument('--month')
+    maintenance.add_argument('--apply', action='store_true')
+    maintenance.add_argument('--restore', action='store_true')
     task = sub.add_parser('task')
     task.add_argument('--spec', required=True)
     verify = sub.add_parser('verify')
@@ -689,6 +724,21 @@ def main(argv=None):
             return 0
         if args.command == 'init':
             result = p.init()
+        elif args.command in ['record', 'link', 'catalog', 'archive']:
+            with p.lock():
+                if args.command == 'record':
+                    result = (records.update if args.update else records.create)(p, json.loads(Path(args.spec).read_text()))
+                elif args.command == 'link':
+                    result = records.link(p, args.source, args.target, args.relation)
+                elif args.command == 'catalog':
+                    result = records.catalog(p)
+                elif args.restore:
+                    if not args.month or args.apply:
+                        raise ValueError('restore requires --month and cannot use --apply')
+                    result = archive.restore(p, args.month)
+                else:
+                    proposed = archive.plan(p, args.month)
+                    result = archive.apply(p, proposed) if args.apply else proposed
         elif args.command == 'task':
             result = p.create(json.loads(Path(args.spec).read_text()))
         elif args.command == 'verify':

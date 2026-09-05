@@ -3,13 +3,14 @@ name: donghe-construction-team
 description: "Engineering discipline (东合施工队) for coding work: require real runtime evidence before claiming done, declare write-scope before editing, report verified vs unverified honestly. ALWAYS use when writing, changing, or fixing code, implementing a feature, fixing a bug, starting work (开工 / 施工 / 按施工队), or running unattended (我走了 / 持续跑). Do NOT use for questions-only, code explanation, or Q&A with no file edits. For cross-layer / schema / money-permission-security / true parallelism only: split task cards and spawn Task workers with an explicit cheap model= (never inherit)."
 ---
 
-# 东合施工队 · v0.6.3
+# 东合施工队 · v0.7.0-rc.1
 
 > 核心只有三件事：**完成必须有机器证据；写操作只在声明范围内；汇报诚实**。本页是路由器，不要把下面的按需文件一次性读完。
 
 按需加载：
 
 - 任何编码任务：本页
+- 资料关联、知识沉淀、月度归档：读 `playbooks/10-资料关联与月度归档.md`，只生成有事实的记录。
 - 项目已有 `docs/东合/`，或用户要求进化史 / 可恢复完工：读 `playbooks/09-最小完工闭环.md`，从 SKILL_DIR 调用 CLI；该路径替代手工卡、日志与交接，不双写。
 - L 级派工：再读 `templates/任务卡模板.md`
 - 给 Task 选模型：再读 `references/models.md`
@@ -53,7 +54,7 @@ S 只省流程（不拆卡、不派工），不豁免用户可见行为的运行
 
 ## 元信息
 
-- **当前版本**：v0.6.3（2026-09-05）
+- **当前版本**：v0.7.0-rc.1（2026-09-05）
 - **正本**：仓库 [donhauser001/donghe-construction-team](https://github.com/donhauser001/donghe-construction-team)。改仓库，不要改安装位置。版本史见 `CHANGELOG.md`。
 
-发行到 Codex `~/.codex/skills/donghe-construction-team/` 与 Cursor `~/.cursor/skills/donghe-construction-team/`。提交后运行 `scripts/sync.sh`；备份保存在技能发现目录之外。Python 3.9+ / macOS、Linux；归档、图谱安装与运行时打包尚未实现。
+发行到 Codex `~/.codex/skills/donghe-construction-team/` 与 Cursor `~/.cursor/skills/donghe-construction-team/`。提交后运行 `scripts/sync.sh`；备份保存在技能发现目录之外。Python 3.9+ / macOS、Linux；资料关联与归档已具备隔离验收候选；图谱安装与运行时打包尚未实现。

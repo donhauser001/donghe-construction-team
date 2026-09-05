@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checks": [
+    "real upstream idea feedback",
+    "existing task relation visible",
+    "feedback written in original source",
+    "no business command executed"
+  ]
+}

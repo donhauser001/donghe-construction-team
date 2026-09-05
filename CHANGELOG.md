@@ -2,6 +2,14 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
 
+## v0.7.0-rc.1 · 2026-09-05（资料关系与月度归档候选）
+
+- 新增文件级稳定ID、显式关系、上游完工反馈，界面呈现方向到任务关系；不预建空资料。
+- 合并资料变动与完工收口，替代事后重复抄录；反馈不推断整项方向完成。
+- 新增按月预览/移动/恢复与冷扫描，保留原逻辑路径、证据与共享指纹；替代根目录持续堆积的存放方式。
+- 月度检查嵌入init/finish，无后台常驻，无任务不补活；网页只读。
+- 候选在隔离夹具和真实Forms副本验收，未同步全局技能；发行版仍v0.6.3。
+
 ## v0.6.3 · 2026-09-05（旧完工记录不自动重开）
 
 - 新增任务声明状态与当前证据有效性分离：历史完工证据漂移/克隆路径失配时停下复核，显式 verify 才重开；保留严格完成校验。

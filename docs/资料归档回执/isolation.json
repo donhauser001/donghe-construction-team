@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "scope": "tracked and non-ignored untracked files, HEAD, git status, existing container identity/start; ignored databases not read or hashed",
+  "projects": {
+    "/Users/aiden/Desktop/dhsforms": {
+      "headUnchanged": true,
+      "statusUnchanged": true,
+      "changedFiles": []
+    },
+    "/Users/aiden/Documents/app/超级病历本": {
+      "headUnchanged": true,
+      "statusUnchanged": true,
+      "changedFiles": []
+    },
+    "/Users/aiden/dev/dhs-forms-pilot": {
+      "headUnchanged": true,
+      "statusUnchanged": true,
+      "changedFiles": []
+    }
+  },
+  "runtime": [
+    {
+      "name": "/dhs-wp-app",
+      "sameIdAndStart": true,
+      "running": true
+    },
+    {
+      "name": "/dhs-official-site-postgres-1",
+      "sameIdAndStart": true,
+      "running": true
+    },
+    {
+      "name": "/dhs-portfolio-wordpress-1",
+      "sameIdAndStart": true,
+      "running": true
+    },
+    {
+      "name": "/dhs-portfolio-db-1",
+      "sameIdAndStart": true,
+      "running": true
+    },
+    {
+      "name": "/dhs-wp-db",
+      "sameIdAndStart": true,
+      "running": true
+    }
+  ]
+}
