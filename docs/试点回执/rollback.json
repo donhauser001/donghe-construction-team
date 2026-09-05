@@ -1,0 +1,19 @@
+{
+  "base": "c3cc727aeca47cdb38d0d98871e8dfb85a81368d",
+  "change": "6e26d50a89410019d9ada1b27933c9fb69a68684",
+  "rollbackCommit": "003515ef791d7115957ca8bf7c9e00bdc4196397",
+  "rollbackTree": "7315c68c58a51431b0e5469c3d05f218c4ff1394",
+  "baseTree": "7315c68c58a51431b0e5469c3d05f218c4ff1394",
+  "diffExit": 0,
+  "worktree": "/Users/aiden/dev/dhs-donghe-rollback-check",
+  "fullPilotRollback": {
+    "from": "a0790174",
+    "reverted": [
+      "a0790174",
+      "6e26d50a"
+    ],
+    "result": "5b8f0734710892f4704ee64cf50cb2f43f2d0297",
+    "tree": "7315c68c58a51431b0e5469c3d05f218c4ff1394",
+    "diffExit": 0
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "initial": {
+    "decision": {
+      "action": "work",
+      "reason": "存在已授权的未完成任务"
+    },
+    "generatedAt": "2026-09-05T09:52:10.206295+00:00",
+    "handoffPath": "docs/东合/工作交接.md",
+    "logPaths": [],
+    "projectRoot": "/Users/aiden/dev/dhs-donghe-pilot",
+    "tasks": [
+      {
+        "authorization": "用户 2026-09-05 授权：直接实施最小纵切，在仓库项目试点且可回滚；此前已指定固定名称东合项目进化史。限定现有 project-chronicle，不涉及 R20/R22。",
+        "criteria": [
+          {
+            "id": "behavior",
+            "label": "现有索引、读取、命名与构建行为回归",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": false,
+            "state": "passed"
+          },
+          {
+            "id": "browser",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false,
+            "state": "passed"
+          }
+        ],
+        "events": [
+          {
+            "at": "2026-09-05T09:48:40.463461+00:00",
+            "kind": "created",
+            "label": "任务建立"
+          },
+          {
+            "at": "2026-09-05T09:48:42.741144+00:00",
+            "kind": "verified",
+            "label": "现有索引、读取、命名与构建行为回归：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": false
+          },
+          {
+            "at": "2026-09-05T09:48:48.793756+00:00",
+            "kind": "verified",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false
+          }
+        ],
+        "id": "PILOT001",
+        "issues": [],
+        "sourcePath": "docs/东合/任务卡/PILOT001.md",
+        "status": "active",
+        "title": "统一进化史产品名称并保持来源可读",
+        "verification": "passed"
+      }
+    ]
+  },
+  "reuse": {
+    "argv": [
+      "verify",
+      "PILOT001",
+      "behavior"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"id\": \"behavior\",\n  \"label\": \"现有索引、读取、命名与构建行为回归\",\n  \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n  \"reused\": true,\n  \"state\": \"passed\"\n}\n\n",
+    "stderr": ""
+  },
+  "interruption": {
+    "argv": [
+      "finish",
+      "PILOT001"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "{\n  \"error\": \"injected completion interruption\"\n}\n\n"
+  },
+  "pending": {
+    "decision": {
+      "action": "recover",
+      "reason": "完成事务待恢复；执行 finish PILOT001"
+    },
+    "generatedAt": "2026-09-05T09:52:10.439858+00:00",
+    "handoffPath": "docs/东合/工作交接.md",
+    "logPaths": [],
+    "projectRoot": "/Users/aiden/dev/dhs-donghe-pilot",
+    "tasks": [
+      {
+        "authorization": "用户 2026-09-05 授权：直接实施最小纵切，在仓库项目试点且可回滚；此前已指定固定名称东合项目进化史。限定现有 project-chronicle，不涉及 R20/R22。",
+        "criteria": [
+          {
+            "id": "behavior",
+            "label": "现有索引、读取、命名与构建行为回归",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": true,
+            "state": "passed"
+          },
+          {
+            "id": "browser",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false,
+            "state": "passed"
+          }
+        ],
+        "events": [
+          {
+            "at": "2026-09-05T09:48:40.463461+00:00",
+            "kind": "created",
+            "label": "任务建立"
+          },
+          {
+            "at": "2026-09-05T09:48:42.741144+00:00",
+            "kind": "verified",
+            "label": "现有索引、读取、命名与构建行为回归：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": false
+          },
+          {
+            "at": "2026-09-05T09:48:48.793756+00:00",
+            "kind": "verified",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false
+          },
+          {
+            "at": "2026-09-05T09:52:10.264166+00:00",
+            "kind": "verified",
+            "label": "现有索引、读取、命名与构建行为回归：复用有效证据",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": true
+          },
+          {
+            "at": "2026-09-05T09:52:10.341300+00:00",
+            "kind": "completed",
+            "label": "全部验收点通过，完工回写完成"
+          }
+        ],
+        "id": "PILOT001",
+        "issues": [],
+        "sourcePath": "docs/东合/任务卡/PILOT001.md",
+        "status": "active",
+        "title": "统一进化史产品名称并保持来源可读",
+        "verification": "invalid"
+      }
+    ]
+  },
+  "recovery": {
+    "argv": [
+      "finish",
+      "PILOT001"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"decision\": {\n    \"action\": \"stop\",\n    \"reason\": \"没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务\"\n  },\n  \"generatedAt\": \"2026-09-05T09:52:10.644935+00:00\",\n  \"handoffPath\": \"docs/东合/工作交接.md\",\n  \"logPaths\": [\n    \"docs/东合/开发日志/2026-09-05.md\"\n  ],\n  \"projectRoot\": \"/Users/aiden/dev/dhs-donghe-pilot\",\n  \"tasks\": [\n    {\n      \"authorization\": \"用户 2026-09-05 授权：直接实施最小纵切，在仓库项目试点且可回滚；此前已指定固定名称东合项目进化史。限定现有 project-chronicle，不涉及 R20/R22。\",\n      \"criteria\": [\n        {\n          \"id\": \"behavior\",\n          \"label\": \"现有索引、读取、命名与构建行为回归\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": true,\n          \"state\": \"passed\"\n        },\n        {\n          \"id\": \"browser\",\n          \"label\": \"真实浏览器：固定名称、项目身份、原文打开与关闭\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json\",\n          \"reused\": false,\n          \"state\": \"passed\"\n        }\n      ],\n      \"events\": [\n        {\n          \"at\": \"2026-09-05T09:48:40.463461+00:00\",\n          \"kind\": \"created\",\n          \"label\": \"任务建立\"\n        },\n        {\n          \"at\": \"2026-09-05T09:48:42.741144+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"现有索引、读取、命名与构建行为回归：passed\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": false\n        },\n        {\n          \"at\": \"2026-09-05T09:48:48.793756+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"真实浏览器：固定名称、项目身份、原文打开与关闭：passed\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json\",\n          \"reused\": false\n        },\n        {\n          \"at\": \"2026-09-05T09:52:10.264166+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"现有索引、读取、命名与构建行为回归：复用有效证据\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": true\n        },\n        {\n          \"at\": \"2026-09-05T09:52:10.341300+00:00\",\n          \"kind\": \"completed\",\n          \"label\": \"全部验收点通过，完工回写完成\"\n        }\n      ],\n      \"id\": \"PILOT001\",\n      \"issues\": [],\n      \"sourcePath\": \"docs/东合/任务卡/PILOT001.md\",\n      \"status\": \"completed\",\n      \"title\": \"统一进化史产品名称并保持来源可读\",\n      \"verification\": \"passed\"\n    }\n  ]\n}\n\n",
+    "stderr": ""
+  },
+  "duplicate": {
+    "argv": [
+      "finish",
+      "PILOT001"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"decision\": {\n    \"action\": \"stop\",\n    \"reason\": \"没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务\"\n  },\n  \"generatedAt\": \"2026-09-05T09:52:10.836493+00:00\",\n  \"handoffPath\": \"docs/东合/工作交接.md\",\n  \"logPaths\": [\n    \"docs/东合/开发日志/2026-09-05.md\"\n  ],\n  \"projectRoot\": \"/Users/aiden/dev/dhs-donghe-pilot\",\n  \"tasks\": [\n    {\n      \"authorization\": \"用户 2026-09-05 授权：直接实施最小纵切，在仓库项目试点且可回滚；此前已指定固定名称东合项目进化史。限定现有 project-chronicle，不涉及 R20/R22。\",\n      \"criteria\": [\n        {\n          \"id\": \"behavior\",\n          \"label\": \"现有索引、读取、命名与构建行为回归\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": true,\n          \"state\": \"passed\"\n        },\n        {\n          \"id\": \"browser\",\n          \"label\": \"真实浏览器：固定名称、项目身份、原文打开与关闭\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json\",\n          \"reused\": false,\n          \"state\": \"passed\"\n        }\n      ],\n      \"events\": [\n        {\n          \"at\": \"2026-09-05T09:48:40.463461+00:00\",\n          \"kind\": \"created\",\n          \"label\": \"任务建立\"\n        },\n        {\n          \"at\": \"2026-09-05T09:48:42.741144+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"现有索引、读取、命名与构建行为回归：passed\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": false\n        },\n        {\n          \"at\": \"2026-09-05T09:48:48.793756+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"真实浏览器：固定名称、项目身份、原文打开与关闭：passed\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json\",\n          \"reused\": false\n        },\n        {\n          \"at\": \"2026-09-05T09:52:10.264166+00:00\",\n          \"kind\": \"verified\",\n          \"label\": \"现有索引、读取、命名与构建行为回归：复用有效证据\",\n          \"receiptPath\": \"docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json\",\n          \"reused\": true\n        },\n        {\n          \"at\": \"2026-09-05T09:52:10.341300+00:00\",\n          \"kind\": \"completed\",\n          \"label\": \"全部验收点通过，完工回写完成\"\n        }\n      ],\n      \"id\": \"PILOT001\",\n      \"issues\": [],\n      \"sourcePath\": \"docs/东合/任务卡/PILOT001.md\",\n      \"status\": \"completed\",\n      \"title\": \"统一进化史产品名称并保持来源可读\",\n      \"verification\": \"passed\"\n    }\n  ]\n}\n\n",
+    "stderr": ""
+  },
+  "final": {
+    "decision": {
+      "action": "stop",
+      "reason": "没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务"
+    },
+    "generatedAt": "2026-09-05T09:52:10.958080+00:00",
+    "handoffPath": "docs/东合/工作交接.md",
+    "logPaths": [
+      "docs/东合/开发日志/2026-09-05.md"
+    ],
+    "projectRoot": "/Users/aiden/dev/dhs-donghe-pilot",
+    "tasks": [
+      {
+        "authorization": "用户 2026-09-05 授权：直接实施最小纵切，在仓库项目试点且可回滚；此前已指定固定名称东合项目进化史。限定现有 project-chronicle，不涉及 R20/R22。",
+        "criteria": [
+          {
+            "id": "behavior",
+            "label": "现有索引、读取、命名与构建行为回归",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": true,
+            "state": "passed"
+          },
+          {
+            "id": "browser",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false,
+            "state": "passed"
+          }
+        ],
+        "events": [
+          {
+            "at": "2026-09-05T09:48:40.463461+00:00",
+            "kind": "created",
+            "label": "任务建立"
+          },
+          {
+            "at": "2026-09-05T09:48:42.741144+00:00",
+            "kind": "verified",
+            "label": "现有索引、读取、命名与构建行为回归：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": false
+          },
+          {
+            "at": "2026-09-05T09:48:48.793756+00:00",
+            "kind": "verified",
+            "label": "真实浏览器：固定名称、项目身份、原文打开与关闭：passed",
+            "receiptPath": "docs/东合/证据/PILOT001--browser--20260905T094848770952--7074ed050b5d49f2ae251a4a4b1af0d4/receipt.json",
+            "reused": false
+          },
+          {
+            "at": "2026-09-05T09:52:10.264166+00:00",
+            "kind": "verified",
+            "label": "现有索引、读取、命名与构建行为回归：复用有效证据",
+            "receiptPath": "docs/东合/证据/PILOT001--behavior--20260905T094842737520--0ab61940473641e49cf9a293494b7b56/receipt.json",
+            "reused": true
+          },
+          {
+            "at": "2026-09-05T09:52:10.341300+00:00",
+            "kind": "completed",
+            "label": "全部验收点通过，完工回写完成"
+          }
+        ],
+        "id": "PILOT001",
+        "issues": [],
+        "sourcePath": "docs/东合/任务卡/PILOT001.md",
+        "status": "completed",
+        "title": "统一进化史产品名称并保持来源可读",
+        "verification": "passed"
+      }
+    ]
+  },
+  "checks": [
+    "valid receipt reused without subprocess receipt",
+    "injected mid-finish interruption",
+    "partial closure never complete",
+    "resume finishes all three sources",
+    "duplicate finish changes no documents",
+    "empty authorized queue stops"
+  ]
+}

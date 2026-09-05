@@ -1,0 +1,28 @@
+Parent verification tool output (earlier chunk: first three tests started; this is completion chunk)
+Exit: 0
+ok
+test_command_can_query_status_without_lock_deadlock (test_donghe.CompletionTests) ... ok
+test_completed_task_can_reverify_after_source_drift (test_donghe.CompletionTests) ... ok
+test_concurrent_finish_is_idempotent (test_donghe.CompletionTests) ... ok
+test_directory_membership_and_symlink_inputs (test_donghe.CompletionTests) ... ok
+test_failed_and_timeout_receipts_are_preserved (test_donghe.CompletionTests) ... ok
+test_failures_and_input_mutation_preserved (test_donghe.CompletionTests) ... ok
+test_http_state_source_and_confinement (test_donghe.CompletionTests) ... ok
+test_issues_stop_next (test_donghe.CompletionTests) ... ok
+test_journal_cross_project_and_path_tampering_blocked (test_donghe.CompletionTests) ... ok
+test_no_goal_stops_without_execution (test_donghe.CompletionTests) ... ok
+test_normal_completion_and_duplicate_finish (test_donghe.CompletionTests) ... ok
+test_partial_completion_recovers (test_donghe.CompletionTests) ... ok
+test_paths_and_empty_criteria_rejected (test_donghe.CompletionTests) ... ok
+test_recovery_preserves_conflicting_human_edit (test_donghe.CompletionTests) ... ok
+test_stale_source_blocks_finish (test_donghe.CompletionTests) ... ok
+test_status_flip_and_missing_log_do_not_prove_completion (test_donghe.CompletionTests) ... ok
+test_tamper_detected_and_preserved (test_donghe.CompletionTests) ... ok
+test_task_edit_during_command_is_not_overwritten (test_donghe.CompletionTests) ... ok
+test_unchanged_reuse_does_not_execute (test_donghe.CompletionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.823s
+
+OK
+

@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "metrics": {
+    "width": 60.546875,
+    "height": 23.1875,
+    "whiteSpace": "nowrap",
+    "flexDirection": "column",
+    "documentWidth": 390,
+    "viewport": 390
+  }
+}

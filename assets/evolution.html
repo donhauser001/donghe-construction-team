@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>东合项目进化史</title>
+  <style>
+    :root{--ink:#263d3b;--muted:#677572;--paper:#f5f4ed;--surface:#fffef9;--line:#dce1d6;--teal:#17665b;--teal-soft:#e3eee7;--amber:#815315;--amber-soft:#f7eedb;--red:#9a4638;--red-soft:#fae9e2;--shadow:0 8px 30px #233f3210}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.6}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #b9842c;outline-offset:4px}h1,h2,h3,p{margin:0}button{border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:8px 14px}button:hover{border-color:var(--teal)}.skip{position:absolute;top:-80px;left:12px;background:white;padding:10px;z-index:5}.skip:focus{top:10px}.shell{max-width:1400px;margin:auto;padding:0 48px}.top{display:flex;justify-content:space-between;align-items:center;padding:30px 0 24px;border-bottom:1px solid var(--line);gap:24px}.brand{display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:37px;height:37px;background:var(--ink);color:#f7f2d9;border-radius:11px;font-size:22px}.brand-name{font-size:18px;font-weight:650;letter-spacing:.03em}.brand-caption{font-size:11px;letter-spacing:.15em;color:var(--muted)}.toolbar{display:flex;align-items:center;gap:16px}.auto{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}.auto input{accent-color:var(--teal)}.page-head{padding:35px 0 25px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}.eyebrow{font-size:11px;font-weight:650;letter-spacing:.14em;color:var(--teal);margin-bottom:8px}h1{font-size:31px;font-weight:600;letter-spacing:-.04em}.root-path{font-family:ui-monospace,monospace;font-size:11px;overflow-wrap:anywhere;color:var(--muted);margin-top:7px;max-width:800px}.snapshot{text-align:right;font-size:12px;white-space:nowrap;color:var(--muted)}.snapshot strong{display:block;color:var(--ink);font-size:12px;font-weight:500}.error{border:1px solid #e5bfab;background:var(--red-soft);color:var(--red);padding:14px 18px;border-radius:10px;margin-bottom:20px}.direction{border-radius:14px;background:var(--ink);color:#f7f5e9;display:grid;grid-template-columns:1fr auto;gap:20px;padding:28px 30px;box-shadow:var(--shadow)}.direction .eyebrow{color:#bfd5c8}.direction h2{font-size:23px;font-weight:500}.direction p{font-size:14px;color:#d9e4dc;max-width:820px;margin-top:9px;white-space:pre-wrap;overflow-wrap:anywhere}.direction-label{align-self:start;border:1px solid #768e7e;border-radius:30px;padding:6px 14px;font-size:12px;white-space:nowrap}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:36px;margin:32px 0 56px}.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px}.section-head h2,.aside h2{font-size:17px;font-weight:600}.section-head span{font-size:12px;color:var(--muted)}.journey{position:relative;padding-left:28px}.journey:before{content:"";position:absolute;top:20px;bottom:24px;left:5px;width:1px;background:#c3d0c2}.task{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:12px;box-shadow:var(--shadow);margin-bottom:22px;overflow:visible}.task:before{content:"";position:absolute;left:-28px;top:24px;width:9px;height:9px;border:3px solid var(--paper);background:#ad9a71;border-radius:50%;box-sizing:content-box}.task.passed:before{background:var(--teal)}.task-top{padding:22px 24px 16px}.task-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.task-id{font:12px ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.badge{display:inline-block;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;background:var(--amber-soft);color:var(--amber);white-space:nowrap}.badge.passed{background:var(--teal-soft);color:var(--teal)}.badge.invalid,.badge.failed{background:var(--red-soft);color:var(--red)}.badge.stale{background:var(--amber-soft);color:var(--amber)}h3{font-size:19px;font-weight:600;overflow-wrap:anywhere}.task-status{font-size:12px;color:var(--muted);margin-top:7px}.issues{background:var(--amber-soft);border-left:3px solid #ba9144;padding:12px 16px;margin:4px 24px 18px;font-size:13px;color:#705223}.issues ul{margin:5px 0 0;padding-left:18px}.issues li{overflow-wrap:anywhere}.criteria{padding:0 24px 18px}.criteria-heading{font-size:11px;color:var(--muted);margin-bottom:8px}.criterion{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid #edf0e8;font-size:13px}.criterion:last-child{border:0}.criterion-name{flex:1;overflow-wrap:anywhere}.criterion-icon{color:var(--amber);font-size:12px}.criterion-icon.passed{color:var(--teal)}.criterion-icon.failed,.criterion-icon.invalid{color:var(--red)}.text-button{border:0;padding:2px 0;background:none;color:var(--teal);font-size:12px;text-decoration:underline;text-underline-offset:4px;border-radius:2px}.criterion .text-button{flex-shrink:0}.events{margin:0 24px 18px;padding:12px 0 0;border-top:1px solid var(--line)}.event{display:flex;gap:12px;font-size:11px;margin-bottom:6px;color:var(--muted)}.event time{min-width:110px;font-variant-numeric:tabular-nums}.event span{overflow-wrap:anywhere}.event.failed{color:var(--red)}.task-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 24px;background:#f5f6ef;border-radius:0 0 12px 12px;border-top:1px solid var(--line)}.task-footer .text-button{flex-shrink:0;white-space:nowrap}.task-footer span{font-size:11px;color:var(--muted);overflow-wrap:anywhere}.aside{border-left:1px solid var(--line);padding-left:26px}.aside h2{margin-bottom:16px}.aside-block{margin-bottom:32px}.stat{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding:12px 0;font-size:13px;color:var(--muted)}.stat strong{font-size:24px;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}.note{font-size:12px;color:var(--muted);margin-top:12px}.source-link{display:block;text-align:left;width:100%;background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:12px 0;font-size:13px;color:var(--teal)}.source-link span{display:block;font-size:10px;color:var(--muted);overflow-wrap:anywhere;margin-top:3px}.empty{padding:40px 30px;border:1px dashed #bdcbbd;border-radius:12px;background:#f9faf3}.empty h3{font-size:20px}.empty p{font-size:13px;color:var(--muted);margin-top:10px}.footer{padding:20px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}.loading{padding:50px;text-align:center;color:var(--muted)}dialog{position:fixed;inset:0 0 0 auto;margin:0;height:100dvh;max-height:100dvh;width:min(760px,94vw);max-width:94vw;border:0;border-left:1px solid var(--line);background:var(--surface);color:var(--ink);padding:0;box-shadow:-15px 0 80px #122c342a}dialog::backdrop{background:#172d3460}.drawer-head{position:sticky;top:0;background:var(--surface);padding:22px 26px;border-bottom:1px solid var(--line);display:flex;gap:18px;justify-content:space-between;align-items:start}.drawer-head h2{font-size:18px}.drawer-head p{font:11px/1.6 ui-monospace,monospace;overflow-wrap:anywhere;margin-top:6px;color:var(--muted)}.drawer-head button{flex-shrink:0}.drawer-body{padding:24px 26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.85 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}
+    @media(min-width:1600px){.shell{max-width:1500px;padding:0 65px}}
+    @media(max-width:950px){.shell{padding:0 24px}.layout{grid-template-columns:minmax(0,1fr) 235px;gap:22px}.aside{padding-left:20px}.task-top,.criteria{padding-left:18px;padding-right:18px}.issues,.events{margin-left:18px;margin-right:18px}.task-footer{padding-left:18px;padding-right:18px}}
+    @media(max-width:720px){.shell{padding:0 18px}.top{padding:20px 0;align-items:start;gap:12px}.brand-name{font-size:15px}.brand-caption{font-size:9px}.mark{width:32px;height:32px}.toolbar{gap:7px;flex-direction:column;align-items:flex-end}.toolbar button{padding:5px 10px;font-size:12px}.auto{font-size:10px}.page-head{padding:26px 0 20px;display:block}h1{font-size:26px}.snapshot{text-align:left;margin-top:14px}.snapshot strong{display:inline;margin-left:8px}.direction{padding:22px;grid-template-columns:1fr}.direction h2{font-size:20px}.direction-label{justify-self:start;grid-row:1;padding:3px 9px}.layout{display:flex;flex-direction:column;gap:20px;margin-top:26px}.aside{border:0;border-top:1px solid var(--line);padding:24px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:22px}.aside-block{margin-bottom:10px}.journey{padding-left:19px}.journey:before{left:2px}.task:before{left:-21px}.task-top{padding-top:18px}h3{font-size:17px}.criterion{flex-wrap:wrap;gap:6px}.criterion-name{min-width:55%}.criterion .text-button{margin-left:auto}.task-footer{align-items:start;flex-direction:column}.event{flex-direction:column;gap:0;margin-bottom:9px}.footer{flex-direction:column;gap:4px}.section-head span{font-size:10px}.drawer-head,.drawer-body{padding:20px}.task-meta{align-items:start}.badge{font-size:10px}}
+    @media(prefers-reduced-motion:no-preference){button{transition:border-color .15s,background .15s}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到项目进展</a>
+  <div class="shell">
+    <header class="top">
+      <div class="brand"><span class="mark" aria-hidden="true">合</span><div><div class="brand-name">东合项目进化史</div><div class="brand-caption">DONGHE · PROJECT EVOLUTION</div></div></div>
+      <div class="toolbar"><button id="refresh" type="button">↻ 刷新事实</button><label class="auto"><input type="checkbox" id="auto">每 30 秒刷新</label></div>
+    </header>
+    <main id="main">
+      <div class="page-head"><div><p class="eyebrow">当前项目 / PROJECT</p><h1 id="project-name">正在读取项目</h1><p id="project-root" class="root-path">等待指定项目的事实源</p></div><div class="snapshot">事实快照<strong id="generated">尚未读取</strong></div></div>
+      <div id="error" class="error" role="alert" hidden></div>
+      <div id="loading" class="loading">正在读取任务、验收回执与施工记录…</div>
+      <div id="content" hidden>
+        <section class="direction" aria-labelledby="direction-title"><div><p class="eyebrow">此刻方向</p><h2 id="direction-title"></h2><p id="direction-reason"></p></div><span class="direction-label" id="direction-label"></span></section>
+        <div class="layout">
+          <section aria-labelledby="journey-title"><div class="section-head"><h2 id="journey-title">项目如何走到这里</h2><span>任务 → 验收 → 证据</span></div><div id="journey" class="journey"></div></section>
+          <aside class="aside" aria-label="验收概览与事实源">
+            <section class="aside-block"><h2>验收概览</h2><div class="stat"><span>已完成且验证通过</span><strong id="completed-count">—</strong></div><div class="stat"><span>进行中的任务</span><strong id="active-count">—</strong></div><div class="stat"><span>仍需验证或处理</span><strong id="attention-count">—</strong></div><p class="note">完成声明与验证结果分开显示。缺失、陈旧或无效的回执不计为通过。</p></section>
+            <section class="aside-block"><h2>回到事实源</h2><div id="sources"></div><p class="note">点击查看原始记录。此界面只读，所有状态来自指定项目。</p></section>
+          </aside>
+        </div>
+      </div>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <footer class="footer"><span>每一步进展，都应有可追溯的依据。</span><span>东合 · 只读事实视图</span></footer>
+  </div>
+  <dialog id="source-dialog" aria-labelledby="source-title"><header class="drawer-head"><div><h2 id="source-title">原始记录</h2><p id="source-path"></p></div><button id="close-source" type="button" aria-label="关闭原始记录">关闭 ×</button></header><div class="drawer-body"><p id="source-status" role="status"></p><pre id="source-content"></pre></div></dialog>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const verificationLabels = {passed:'验证通过',pending:'待验证',stale:'证据已陈旧',invalid:'证据无效'};
+    const criterionLabels = {passed:'已通过',missing:'缺少回执',failed:'验证失败',stale:'证据已陈旧',invalid:'证据无效'};
+    let refreshing = false, timer = null, sourceRequest = 0, lastTrigger = null;
+    function el(tag, cls, value){const node=document.createElement(tag);if(cls)node.className=cls;if(value!==undefined)node.textContent=String(value);return node;}
+    function array(value){return Array.isArray(value)?value:[];}
+    function date(value){if(!value)return '时间未记录';const d=new Date(value);return Number.isNaN(d.getTime())?String(value):d.toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});}
+    function isPassed(task){return task.verification==='passed';}
+    function sourceButton(path,label,cls='text-button'){
+      const b=el('button',cls,label);b.type='button';b.addEventListener('click',()=>openSource(path,b));return b;
+    }
+    async function openSource(path,trigger){
+      const request=++sourceRequest;lastTrigger=trigger;$('source-path').textContent=path;$('source-content').textContent='';$('source-status').textContent='正在读取原始记录…';
+      if(!$('source-dialog').open)$('source-dialog').showModal();
+      try{const r=await fetch('/api/source?path='+encodeURIComponent(path),{cache:'no-store'});if(!r.ok)throw new Error('读取失败（HTTP '+r.status+'）');const data=await r.json();if(request!==sourceRequest)return;if(typeof data.content!=='string')throw new Error('记录内容格式异常');$('source-status').textContent='';$('source-content').textContent=data.content||'（文件为空）';}
+      catch(e){if(request===sourceRequest)$('source-status').textContent='无法读取此记录：'+e.message;}
+    }
+    $('close-source').addEventListener('click',()=>$('source-dialog').close());
+    $('source-dialog').addEventListener('close',()=>{sourceRequest++;if(lastTrigger?.isConnected)lastTrigger.focus();else $('refresh').focus();});
+    function taskCard(task){
+      const card=el('article','task '+(isPassed(task)?'passed':''));
+      const top=el('div','task-top'),meta=el('div','task-meta');
+      meta.append(el('span','task-id',task.id||'未编号任务'),el('span','badge '+(verificationLabels[task.verification]?task.verification:'pending'),verificationLabels[task.verification]||'验证状态未知'));
+      top.append(meta,el('h3','',task.title||'未命名任务'));
+      top.append(el('p','task-status',task.status==='completed'?'任务声明：已完成'+(isPassed(task)?' · 独立验证通过':' · 尚不能认定验收通过'):task.status==='active'?'任务声明：进行中':'任务状态：未知'));
+      card.append(top);
+      const issues=array(task.issues);if(issues.length){const block=el('div','issues');block.append(el('strong','', '当前阻碍 / 待处理'));const ul=el('ul');issues.forEach(issue=>ul.append(el('li','',issue)));block.append(ul);card.append(block);}
+      const criteria=el('div','criteria'),items=array(task.criteria);criteria.append(el('p','criteria-heading','验收点 · '+items.filter(c=>c.state==='passed').length+' / '+items.length+' 有效通过'));
+      if(!items.length)criteria.append(el('p','note','没有可展示的验收点；不能据此推定通过。'));
+      items.forEach(c=>{const row=el('div','criterion'),state=criterionLabels[c.state]?c.state:'invalid';row.append(el('span','criterion-icon '+state,state==='passed'?'●':'○'),el('span','criterion-name',(c.id?c.id+' · ':'')+(c.label||'未命名验收点')),el('span','badge '+state,criterionLabels[state]));if(c.receiptPath)row.append(sourceButton(c.receiptPath,c.reused?'复用回执 ↗':'查看回执 ↗'));criteria.append(row);});card.append(criteria);
+      const events=array(task.events);if(events.length){const history=el('div','events');history.append(el('p','criteria-heading','留下的足迹'));events.forEach(event=>{const row=el('div','event '+(event.kind==='failed'?'failed':'')),time=el('time','',date(event.at));if(event.at)time.setAttribute('datetime',event.at);row.append(time,el('span','',event.label||'未命名事件'));history.append(row);});card.append(history);}
+      const bottom=el('div','task-footer');let auth=task.authorization;if(typeof auth==='object'&&auth!==null)auth=JSON.stringify(auth);bottom.append(el('span','',auth?'授权依据：'+auth:'授权依据未提供'));if(task.sourcePath)bottom.append(sourceButton(task.sourcePath,'任务原文 ↗'));card.append(bottom);return card;
+    }
+    function render(state){
+      const root=state.projectRoot||'未提供项目路径';$('project-root').textContent=root;$('project-name').textContent=root.split(/[\\/]/).filter(Boolean).pop()||'当前项目';$('generated').textContent=date(state.generatedAt);
+      const tasks=array(state.tasks),action=state.decision?.action;
+      const titles={stop:'已停止 · 等待明确的下一步',work:'沿当前任务继续推进',recover:'先恢复可信状态，再继续'};
+      $('direction-title').textContent=titles[action]||'方向尚未确认';$('direction-label').textContent={stop:'停止',work:'施工中',recover:'需要恢复'}[action]||'未知状态';$('direction-reason').textContent=state.decision?.reason||'没有方向依据，请检查原始记录。';
+      $('completed-count').textContent=tasks.filter(t=>t.status==='completed'&&isPassed(t)).length;$('active-count').textContent=tasks.filter(t=>t.status==='active').length;$('attention-count').textContent=tasks.filter(t=>!isPassed(t)||array(t.issues).length>0).length;
+      const journey=$('journey');journey.replaceChildren();journey.classList.toggle('journey',tasks.length>0);
+      if(!tasks.length){const empty=el('div','empty');empty.append(el('h3','',action==='stop'?'尚无任务，当前已停止':'尚无可展示的任务'),el('p','',action==='stop'?'没有任务不代表项目已完成。等待明确任务与验收依据后，进化轨迹将从这里开始。':'未读取到任务记录。请先检查上方方向与原始记录，不能据此认定项目完成。'));journey.append(empty);}else tasks.forEach(t=>journey.append(taskCard(t)));
+      const sources=$('sources');sources.replaceChildren();if(state.handoffPath){const b=sourceButton(state.handoffPath,'当前交接 ↗','source-link');b.append(el('span','',state.handoffPath));sources.append(b);}array(state.logPaths).forEach((path,i)=>{const b=sourceButton(path,'施工记录 '+(i+1)+' ↗','source-link');b.append(el('span','',path));sources.append(b);});if(!sources.children.length)sources.append(el('p','note','尚未提供交接与施工记录路径。'));
+      $('content').hidden=false;
+    }
+    async function refresh(){
+      if(refreshing)return;refreshing=true;$('refresh').disabled=true;$('refresh').textContent='读取中…';
+      try{const r=await fetch('/api/state',{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();if(!data||typeof data.projectRoot!=='string'||!Array.isArray(data.tasks)||!data.decision)throw new Error('事实数据格式异常');render(data);$('error').hidden=true;$('announcement').textContent='事实快照已更新。';}
+      catch(e){$('error').textContent=($('content').hidden?'未能读取项目事实。':'刷新失败，当前显示的是上次成功读取的快照。')+' '+e.message+'。请确认本地服务可用后重试。';$('error').hidden=false;$('announcement').textContent='读取失败。';if($('content').hidden){$('project-name').textContent='项目暂不可读取';$('project-root').textContent='等待本地服务返回指定项目';}}
+      finally{$('loading').hidden=true;refreshing=false;$('refresh').disabled=false;$('refresh').textContent='↻ 刷新事实';}
+    }
+    $('refresh').addEventListener('click',refresh);
+    $('auto').addEventListener('change',()=>{clearInterval(timer);timer=$('auto').checked?setInterval(()=>{if(!document.hidden&&!$('source-dialog').open)refresh();},30000):null;});
+    refresh();
+  </script>
+</body>
+</html>

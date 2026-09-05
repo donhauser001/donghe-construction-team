@@ -2,6 +2,12 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills-cursor/donghe-construction-team/`。禁止直接改安装位置的文件。
 
+## v0.6.0 · 2026-09-05（最小完工与进化史试点）
+
+新增标准目录 CLI、输入指纹回执、可恢复完工和只读进化史。验收范围见试点回执，不宣称全平台安装与完整资料治理已交付。
+删除无人值守的跑满时间、强制补卡、自动下放未授权方向规则；合并入口重复指令。
+旧版 v0.5.0 实测与冻结源继续留在 evals/behavior/，不追改旧回执。
+
 ## v0.5.0 · 2026-07-09（全面瘦身改造：20 playbook → 8 / SKILL 减为章程 / 派工闸脚本化 / 行数预算治理）
 
 > 触发：用户要求把 skill 改造为"好用、高效、不冗余、不浪费、听话"。诊断出三个结构性病根：① 规则只增不减（约 7200 行 playbook + 大量跨文件重复），每次会话的阅读成本随版本单调上涨；② 大量规则靠模型自觉，无强制机制（如工人"自检自己的模型 slug"实际不可执行）；③ 重流程对小任务不成比例。

@@ -1,0 +1,59 @@
+{
+  "url": "http://127.0.0.1:4318",
+  "checkedAt": "2026-09-05T09:53:02.387Z",
+  "checks": [
+    {
+      "name": "real-api-task-and-project-visible",
+      "passed": true,
+      "tasks": [
+        {
+          "id": "PILOT001",
+          "status": "completed",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "name": "real-receipt-opens-and-close-restores-focus",
+      "passed": true,
+      "exitCode": 0
+    },
+    {
+      "name": "real-task-source-matches-api-and-escape-closes",
+      "passed": true
+    },
+    {
+      "name": "real-handoff-source-matches-api",
+      "passed": true
+    },
+    {
+      "name": "mobile-390px-no-horizontal-overflow-and-source-drawer",
+      "passed": true,
+      "viewport": 390,
+      "body": 390,
+      "document": 390
+    },
+    {
+      "name": "isolated-fixture-empty-is-stopped-not-complete",
+      "passed": true
+    },
+    {
+      "name": "isolated-fixture-failed-stale-invalid-never-count-as-passed-and-safe-text",
+      "passed": true
+    },
+    {
+      "name": "isolated-fixture-refresh-failure-explicitly-labels-retained-snapshot",
+      "passed": true
+    },
+    {
+      "name": "no-browser-pageerror",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "/Users/aiden/dev/donghe-first-slice/output/playwright/evolution-desktop.png",
+    "/Users/aiden/dev/donghe-first-slice/output/playwright/evolution-mobile.png"
+  ],
+  "pageErrors": [],
+  "passed": true
+}

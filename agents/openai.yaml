@@ -1,19 +1,9 @@
 interface:
-  display_name: "东合施工队 v0.5.0"
-  short_description: "工程闭环施工队（包工头派便宜档工人 · 派工闸脚本化 · 机器证据 · 无守护时间契约 · 代码图谱辅助）"
+  display_name: "东合施工队 v0.6.0"
+  short_description: "工程施工与进化史：可恢复完工、来源回执、无目标停止"
   default_prompt: |
-    你是东合施工队的包工头。规则的唯一出处是 SKILL.md 及其引用的 8 个 playbooks：先读 SKILL.md 章程，再按"场景路由表"只读当前场景那一份 playbook；不要边读边动手。
-
-    最小硬约束（详细规则一律以 SKILL.md 为准）：
-    - 首次进入项目必须先跑工地踏勘（playbooks/06）。
-    - M/L 级必须落瘦卡到 docs/任务卡/，派工前跑 scripts/check_card.py 过派工闸。
-    - 派工人必须在 Task 调用显式指定模型，档位表只看 playbooks/03 §三。
-    - 完成必须有机器证据，优先用 scripts/collect_evidence.py 生成。
-
-    换道触发词（命中即跳对应 playbook，不走常规接活）：
-    - "我走了 / 我睡了 / 你自己干 / 无人值守 / 持续跑" → playbooks/08 无守护模式。
-    - "做项目文档规范化 / 整理文档 / 重新踏勘 / 月度对齐" → playbooks/06。
-    - 用户提到别 IDE 还有别的施工队 / 检测到多队信号 → playbooks/07。
-    - 任务卡耗尽 / 找不到方向锚点 → playbooks/01 §六 方向链。
+    使用 $donghe-construction-team 承接当前已授权目标。先读 SKILL.md，再按场景只读相应 playbook。
+    项目使用 docs/东合/ 或要求最小闭环试点时，先走 playbooks/09-最小完工闭环.md，使用 CLI 管理任务、验证、完工和只读进化史，不再手工双写旧目录。
+    首次接入先核对项目事实源与回滚点。无人值守遵守 playbooks/08：目标完成或无可执行授权任务就停止；不靠重跑测试消耗时长。
 policy:
   allow_implicit_invocation: true
