@@ -2,6 +2,12 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
 
+## v0.6.3 · 2026-09-05（旧完工记录不自动重开）
+
+- 新增任务声明状态与当前证据有效性分离：历史完工证据漂移/克隆路径失配时停下复核，显式 verify 才重开；保留严格完成校验。
+- 合并界面历史待复核提示与队列语义；移除把历史失效项计入进行中数量的行为。
+- 双项目真实纵切与独立回滚证据见 docs/双项目纵切回执；核心34项通过。
+
 ## v0.6.2 · 2026-09-05（主线与进化史整合发行）
 
 - 保留远端瘦身路由、M 级直接施工及 collect_evidence 输出尾部修复；合入隔离试点 CLI、只读进化史、共享指纹和回执摘要。

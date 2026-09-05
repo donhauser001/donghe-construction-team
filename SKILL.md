@@ -3,7 +3,7 @@ name: donghe-construction-team
 description: "Engineering discipline (东合施工队) for coding work: require real runtime evidence before claiming done, declare write-scope before editing, report verified vs unverified honestly. ALWAYS use when writing, changing, or fixing code, implementing a feature, fixing a bug, starting work (开工 / 施工 / 按施工队), or running unattended (我走了 / 持续跑). Do NOT use for questions-only, code explanation, or Q&A with no file edits. For cross-layer / schema / money-permission-security / true parallelism only: split task cards and spawn Task workers with an explicit cheap model= (never inherit)."
 ---
 
-# 东合施工队 · v0.6.2
+# 东合施工队 · v0.6.3
 
 > 核心只有三件事：**完成必须有机器证据；写操作只在声明范围内；汇报诚实**。本页是路由器，不要把下面的按需文件一次性读完。
 
@@ -53,7 +53,7 @@ S 只省流程（不拆卡、不派工），不豁免用户可见行为的运行
 
 ## 元信息
 
-- **当前版本**：v0.6.2（2026-09-05）
+- **当前版本**：v0.6.3（2026-09-05）
 - **正本**：仓库 [donhauser001/donghe-construction-team](https://github.com/donhauser001/donghe-construction-team)。改仓库，不要改安装位置。版本史见 `CHANGELOG.md`。
 
 发行到 Codex `~/.codex/skills/donghe-construction-team/` 与 Cursor `~/.cursor/skills/donghe-construction-team/`。提交后运行 `scripts/sync.sh`；备份保存在技能发现目录之外。Python 3.9+ / macOS、Linux；归档、图谱安装与运行时打包尚未实现。
