@@ -95,7 +95,7 @@
       const top=el('div','task-top'),meta=el('div','task-meta');
       meta.append(el('span','task-id',task.id||'未编号任务'),el('span','badge '+(verificationLabels[task.verification]?task.verification:'pending'),verificationLabels[task.verification]||'验证状态未知'));
       top.append(meta,el('h3','',task.title||'未命名任务'));
-      top.append(el('p','task-status',task.status==='completed'?'任务声明：已完成'+(isPassed(task)?' · 独立验证通过':' · 尚不能认定验收通过'):task.status==='active'?'任务声明：进行中':'任务状态：未知'));
+      top.append(el('p','task-status',task.declaredStatus==='completed'&&task.status!=='completed'?'历史完工记录 · 当前证据待复核':task.status==='completed'?'任务声明：已完成'+(isPassed(task)?' · 独立验证通过':' · 尚不能认定验收通过'):task.status==='active'?'任务声明：进行中':'任务状态：未知'));
       card.append(top);
       const issues=array(task.issues);if(issues.length){const block=el('div','issues');block.append(el('strong','', '当前阻碍 / 待处理'));const ul=el('ul');issues.forEach(issue=>ul.append(el('li','',issue)));block.append(ul);card.append(block);}
       const criteria=el('div','criteria'),items=array(task.criteria);criteria.append(el('p','criteria-heading','验收点 · '+items.filter(c=>c.state==='passed').length+' / '+items.length+' 有效通过'));
@@ -109,7 +109,7 @@
       const tasks=array(state.tasks),action=state.decision?.action;
       const titles={stop:'已停止 · 等待明确的下一步',work:'沿当前任务继续推进',recover:'先恢复可信状态，再继续'};
       $('direction-title').textContent=titles[action]||'方向尚未确认';$('direction-label').textContent={stop:'停止',work:'施工中',recover:'需要恢复'}[action]||'未知状态';$('direction-reason').textContent=state.decision?.reason||'没有方向依据，请检查原始记录。';
-      $('completed-count').textContent=tasks.filter(t=>t.status==='completed'&&isPassed(t)).length;$('active-count').textContent=tasks.filter(t=>t.status==='active').length;$('attention-count').textContent=tasks.filter(t=>!isPassed(t)||array(t.issues).length>0).length;
+      $('completed-count').textContent=tasks.filter(t=>t.status==='completed'&&isPassed(t)).length;$('active-count').textContent=tasks.filter(t=>t.status==='active'&&t.declaredStatus!=='completed').length;$('attention-count').textContent=tasks.filter(t=>!isPassed(t)||array(t.issues).length>0).length;
       const journey=$('journey');journey.replaceChildren();journey.classList.toggle('journey',tasks.length>0);
       if(!tasks.length){const empty=el('div','empty');empty.append(el('h3','',action==='stop'?'尚无任务，当前已停止':'尚无可展示的任务'),el('p','',action==='stop'?'没有任务不代表项目已完成。等待明确任务与验收依据后，进化轨迹将从这里开始。':'未读取到任务记录。请先检查上方方向与原始记录，不能据此认定项目完成。'));journey.append(empty);}else tasks.forEach(t=>journey.append(taskCard(t)));
       const sources=$('sources');sources.replaceChildren();if(state.handoffPath){const b=sourceButton(state.handoffPath,'当前交接 ↗','source-link');b.append(el('span','',state.handoffPath));sources.append(b);}array(state.logPaths).forEach((path,i)=>{const b=sourceButton(path,'施工记录 '+(i+1)+' ↗','source-link');b.append(el('span','',path));sources.append(b);});if(!sources.children.length)sources.append(el('p','note','尚未提供交接与施工记录路径。'));
