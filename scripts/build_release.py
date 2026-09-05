@@ -93,6 +93,11 @@ def main():
                     if entry.is_file() and ('LICENSE' in entry.name or 'THIRD_PARTY' in entry.name):
                         shutil.copy2(entry, package/'runtime/codegraph'/entry.name)
         for cache in package.rglob('__pycache__'): shutil.rmtree(cache)
+        # Standard tar extraction applies the user's umask: ship canonical modes
+        # rather than upstream group-writable bits that would fail verification.
+        for path in package.rglob('*'):
+            if path.is_file() and not path.is_symlink():
+                path.chmod(0o755 if path.stat().st_mode & 0o111 else 0o644)
         manifest = {'schemaVersion':1, 'platform':lock['platform'], 'sourceCommit':source_commit, 'dirty':dirty, 'components':lock, 'files':{}}
         for path in sorted(package.rglob('*')):
             rel = path.relative_to(package).as_posix()
