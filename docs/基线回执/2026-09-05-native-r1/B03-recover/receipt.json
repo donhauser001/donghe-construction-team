@@ -1,0 +1,19 @@
+{
+  "case": "B03-recover",
+  "termination": "completed",
+  "final": {
+    "task_status": "blocked",
+    "summary": "收到上级停止指令：r1 夹具因 Git 中文路径引号遗漏 playbooks，本样本作废。此前已读冻结 SKILL 与项目事实、复跑测试 3/3，通过结果已写 current.json，更新卡验收与交接，未重复追加已有日志；尚未进行写后收口复查，已停止所有修改。",
+    "evidence_paths": [
+      "docs/证据/current.json",
+      "docs/证据/prior.json",
+      "docs/任务卡/T001.md",
+      "docs/工作交接.md",
+      "docs/施工日志/day.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:42:16.507503+00:00",
+  "elapsed_seconds": 63.24772810935974,
+  "usage": null,
+  "native_agent_self_report": true
+}

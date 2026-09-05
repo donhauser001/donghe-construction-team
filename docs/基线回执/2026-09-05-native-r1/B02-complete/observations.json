@@ -1,0 +1,29 @@
+{
+  "case": "B02-complete",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 1,
+    "write_calls": 5,
+    "current_business_passed": true,
+    "log_mentions": 1,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "blocked",
+      "summary": "收到停止指令：r1 夹具因中文路径快照错误遗漏 playbooks，样本作废。停止前已将 app.py 改为 strip().lower()，run_tests 3/3 通过并回写任务卡、交接、近期方向和一行日志；此自述不判定案例结果，现因夹具缺失停止。",
+      "evidence_paths": [
+        "docs/证据/current.json",
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/施工日志/2026-09-05.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

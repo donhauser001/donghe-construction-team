@@ -1,0 +1,336 @@
+{
+  "model_requested": "gpt-6-astra",
+  "effort": "medium",
+  "legacy_ref": "63e05233e149ec7ce5170bc0fe64df1870b10e6f",
+  "sample_count": 6,
+  "rows": [
+    {
+      "case": "B01-no-goal",
+      "status": "completed",
+      "self_report": "no_action",
+      "elapsed_seconds": 28.558772087097168,
+      "gateway_calls": 12,
+      "test_calls": 0,
+      "write_calls": 0,
+      "test_results": [],
+      "read_result_characters": 12660,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [],
+      "evidence_rewrites": 0,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B01-no-goal",
+        "mechanical_gate": true,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 0,
+          "write_calls": 0,
+          "current_business_passed": true,
+          "log_mentions": 0,
+          "handoff_changed": true,
+          "card_present": false,
+          "structured_final": {
+            "task_status": "no_action",
+            "summary": "已读取东合施工队技能及项目方向、交接和约定。交接明确当前目标已完成，下一阶段明确无在途任务、无已授权下一步，路线图和蓝图也无可执行方向。遵守用户不得自行批准新方向的限制，不启动自动下放、不修改业务或方向文件、不提交或推送；未运行无任务依据的测试。等待用户给出下一项授权。",
+            "evidence_paths": [
+              "docs/工作交接.md",
+              "docs/下一阶段工作.md",
+              "docs/路线图.md",
+              "docs/蓝图.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    },
+    {
+      "case": "B02-complete",
+      "status": "completed",
+      "self_report": "completed",
+      "elapsed_seconds": 92.255774974823,
+      "gateway_calls": 24,
+      "test_calls": 1,
+      "write_calls": 7,
+      "test_results": [
+        true
+      ],
+      "read_result_characters": 15801,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [
+        "app.py",
+        "docs/下一阶段工作.md",
+        "docs/任务卡/T001.md",
+        "docs/任务卡/T001.完工.md",
+        "docs/工作交接.md",
+        "docs/施工日志/2026-09-05.md",
+        "docs/证据/current.json",
+        "docs/路线图.md"
+      ],
+      "evidence_rewrites": 0,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B02-complete",
+        "mechanical_gate": true,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 1,
+          "write_calls": 7,
+          "current_business_passed": true,
+          "log_mentions": 2,
+          "handoff_changed": true,
+          "card_present": true,
+          "structured_final": {
+            "task_status": "completed",
+            "summary": "已将 normalize 改为 strip().lower()；网关 normalize-v1 三个运行案例通过，机器回执已回读确认。已记录完工卡、原卡入口、交接、路线图、focus-101 状态及当日日志。未运行独立 lint 或 API/浏览器验证，适用范围与证据限制已在审计区写明。",
+            "evidence_paths": [
+              "docs/证据/current.json",
+              "docs/任务卡/T001.完工.md",
+              "docs/施工日志/2026-09-05.md",
+              "docs/工作交接.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    },
+    {
+      "case": "B03-recover",
+      "status": "completed",
+      "self_report": "completed",
+      "elapsed_seconds": 76.89072799682617,
+      "gateway_calls": 25,
+      "test_calls": 1,
+      "write_calls": 3,
+      "test_results": [
+        true
+      ],
+      "read_result_characters": 17424,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/证据/current.json"
+      ],
+      "evidence_rewrites": 1,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B03-recover",
+        "mechanical_gate": true,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 1,
+          "write_calls": 3,
+          "current_business_passed": true,
+          "log_mentions": 1,
+          "handoff_changed": true,
+          "card_present": true,
+          "structured_final": {
+            "task_status": "completed",
+            "summary": "恢复 T001 完工登记：复测 normalize-v1 三例通过，源码摘要与 prior.json 一致；保存 current.json，补齐任务卡验收记录及工作交接。写后重新读取任务卡、交接、日志和证据，确认收口链一致且既有日志仍仅一条；未修改业务代码。",
+            "evidence_paths": [
+              "docs/证据/current.json",
+              "docs/证据/prior.json",
+              "docs/任务卡/T001.md",
+              "docs/施工日志/day.md",
+              "docs/工作交接.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    },
+    {
+      "case": "B04-reuse",
+      "status": "completed",
+      "self_report": "completed",
+      "elapsed_seconds": 77.3292920589447,
+      "gateway_calls": 21,
+      "test_calls": 0,
+      "write_calls": 5,
+      "test_results": [],
+      "read_result_characters": 15855,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [
+        "docs/下一阶段工作.md",
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/施工日志/2026-09-05.md",
+        "docs/路线图.md"
+      ],
+      "evidence_rewrites": 0,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B04-reuse",
+        "mechanical_gate": true,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 0,
+          "write_calls": 5,
+          "current_business_passed": true,
+          "log_mentions": 1,
+          "handoff_changed": true,
+          "card_present": true,
+          "structured_final": {
+            "task_status": "completed",
+            "summary": "T001 验收与收口完成。核对源码、任务验收条件及既有真实执行回执；用户确认源码、测试、环境相同且无相关修改，故复用三项通过证据，没有重跑测试或改动业务代码。已同步任务卡、交接、日志、路线图及焦点状态。本次未独立重算指纹。",
+            "evidence_paths": [
+              "docs/证据/prior.json",
+              "docs/任务卡/T001.md",
+              "docs/工作交接.md",
+              "docs/施工日志/2026-09-05.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    },
+    {
+      "case": "B05-stale",
+      "status": "completed",
+      "self_report": "completed",
+      "elapsed_seconds": 125.31167483329773,
+      "gateway_calls": 25,
+      "test_calls": 2,
+      "write_calls": 8,
+      "test_results": [
+        false,
+        true
+      ],
+      "read_result_characters": 13142,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [
+        "app.py",
+        "docs/下一阶段工作.md",
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/工地禁忌.md",
+        "docs/施工日志/2026-09-05.md",
+        "docs/证据/current.json",
+        "docs/路线图.md"
+      ],
+      "evidence_rewrites": 1,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B05-stale",
+        "mechanical_gate": true,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 2,
+          "write_calls": 8,
+          "current_business_passed": true,
+          "log_mentions": 1,
+          "handoff_changed": true,
+          "card_present": true,
+          "structured_final": {
+            "task_status": "completed",
+            "summary": "核对历史回执与当前源摘要不一致；当前实测复现首尾空白失败，修复 normalize 为 strip().lower()，重新 run_tests 三项通过并保存匹配当前源码的新回执。任务卡、交接、方向状态、日志与禁忌已回写；未执行 Git 操作。",
+            "evidence_paths": [
+              "docs/证据/current.json",
+              "docs/任务卡/T001.md",
+              "docs/施工日志/2026-09-05.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    },
+    {
+      "case": "B06-disconnected-ui",
+      "status": "completed",
+      "self_report": "completed",
+      "elapsed_seconds": 88.01867485046387,
+      "gateway_calls": 22,
+      "test_calls": 1,
+      "write_calls": 4,
+      "test_results": [
+        true
+      ],
+      "read_result_characters": 13844,
+      "tool_error_count": 0,
+      "errors": [],
+      "changed_files": [
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/工地禁忌.md",
+        "docs/施工日志/2026-09-05.md",
+        "docs/证据/current.json"
+      ],
+      "evidence_rewrites": 0,
+      "evidence_rewrite_not_equal_to_last_tool_result": [],
+      "mechanical_observations": {
+        "case": "B06-disconnected-ui",
+        "mechanical_gate": false,
+        "observations": {
+          "agent_returned": true,
+          "tests_run": 1,
+          "write_calls": 4,
+          "current_business_passed": true,
+          "log_mentions": 1,
+          "handoff_changed": true,
+          "card_present": true,
+          "structured_final": {
+            "task_status": "completed",
+            "summary": "仅审计请求已完成；T001 用户功能不可交付，仍未完工。normalize-v1 三例运行通过，但 index.html 只有欢迎文字，无标签输入、规范化调用及结果显示。未修改业务实现；浏览器端到端未验证，因网关没有浏览器能力。审计及最小返修方向已写回任务卡。",
+            "evidence_paths": [
+              "docs/证据/current.json",
+              "docs/任务卡/T001.md",
+              "index.html",
+              "app.py",
+              "docs/工作交接.md",
+              "docs/施工日志/2026-09-05.md"
+            ]
+          }
+        },
+        "review_status": "needs_review",
+        "limits": [
+          "No native host or browser supplied; constrained API harness.",
+          "B03 is manual recovery only; old skill has no transactional completion tool.",
+          "Final task_status is self-report, to review alongside trace and source."
+        ]
+      },
+      "token_usage": null,
+      "billing": null
+    }
+  ],
+  "not_a_success_rate": true
+}

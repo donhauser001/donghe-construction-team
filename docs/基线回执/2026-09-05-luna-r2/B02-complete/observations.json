@@ -1,0 +1,29 @@
+{
+  "case": "B02-complete",
+  "mechanical_gate": false,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 1,
+    "write_calls": 5,
+    "current_business_passed": true,
+    "log_mentions": 0,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "完成 T001 标签规范化：normalize 先去除首尾空白再转小写；网关 run_tests 的 3 个样例全部通过；任务卡完成审计并更新工作交接。",
+      "evidence_paths": [
+        "app.py",
+        "docs/任务卡/T001.md",
+        "docs/证据/current.json",
+        "docs/工作交接.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

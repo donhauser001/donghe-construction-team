@@ -1,0 +1,23 @@
+{
+  "case": "B05-stale",
+  "user_prompt": "使用东合施工队，核对并完成 T001。已有一份历史通过回执，但其后 app.py 有未提交修改，请根据当前事实处理。",
+  "dispatch_policy": {
+    "fresh_context": true,
+    "model_requested": "gpt-5.6-luna",
+    "reasoning_effort": "medium",
+    "tools": [
+      "list_files",
+      "read_file",
+      "write_file",
+      "run_tests"
+    ],
+    "no_other_case_access": true,
+    "max_gateway_calls": 30,
+    "wall_seconds": 240,
+    "finish_fields": [
+      "task_status",
+      "summary",
+      "evidence_paths"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "case": "B03-recover",
+  "mechanical_gate": false,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 2,
+    "write_calls": 5,
+    "current_business_passed": true,
+    "log_mentions": 2,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "已恢复 T001 完工登记并完成收口复核：重跑网关测试通过，补写当前证据，补齐卡内验收与监理审计，施工日志追加恢复记录，工作交接更新为已完成收口。",
+      "evidence_paths": [
+        "docs/任务卡/T001.md",
+        "docs/证据/current.json",
+        "docs/施工日志/day.md",
+        "docs/工作交接.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

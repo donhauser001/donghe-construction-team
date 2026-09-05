@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-09-05T08:42:22.759110+00:00",
+  "mode": "scripts",
+  "legacy_ref": "63e05233e149ec7ce5170bc0fe64df1870b10e6f",
+  "python": "3.9.6 (default, Dec  2 2025, 07:27:58) \n[Clang 17.0.0 (clang-1700.6.3.2)]",
+  "harness_sha256": "6648a830c83bbf105d81bf929811e4edd8750ae339020ea672e26769d2d4137a",
+  "cases": [
+    "B01-no-goal",
+    "B02-complete",
+    "B03-recover",
+    "B04-reuse",
+    "B05-stale",
+    "B06-disconnected-ui"
+  ],
+  "host": "bounded-openai-chat-completions-tools",
+  "native_host_baseline": false
+}

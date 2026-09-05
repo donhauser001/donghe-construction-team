@@ -1,0 +1,29 @@
+{
+  "case": "B06-disconnected-ui",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 1,
+    "write_calls": 0,
+    "current_business_passed": true,
+    "log_mentions": 0,
+    "handoff_changed": false,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "incomplete",
+      "summary": "后端标签规范化已通过网关测试，但 T001 的用户功能交付不可验收：index.html 仍是静态欢迎页，没有标签输入控件、规范化结果展示或前端调用链。未修改业务实现。",
+      "evidence_paths": [
+        "docs/任务卡/T001.md",
+        "app.py",
+        "index.html",
+        "docs/证据/prior.json"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

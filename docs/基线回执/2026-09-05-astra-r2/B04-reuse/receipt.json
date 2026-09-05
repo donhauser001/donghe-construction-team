@@ -1,0 +1,18 @@
+{
+  "case": "B04-reuse",
+  "termination": "completed",
+  "final": {
+    "task_status": "completed",
+    "summary": "T001 验收与收口完成。核对源码、任务验收条件及既有真实执行回执；用户确认源码、测试、环境相同且无相关修改，故复用三项通过证据，没有重跑测试或改动业务代码。已同步任务卡、交接、日志、路线图及焦点状态。本次未独立重算指纹。",
+    "evidence_paths": [
+      "docs/证据/prior.json",
+      "docs/任务卡/T001.md",
+      "docs/工作交接.md",
+      "docs/施工日志/2026-09-05.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:47:46.932279+00:00",
+  "elapsed_seconds": 77.3292920589447,
+  "usage": null,
+  "native_agent_self_report": true
+}

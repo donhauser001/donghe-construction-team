@@ -1,0 +1,22 @@
+{
+  "codex_cli": {
+    "result": "cannot_start",
+    "observed_exit": 137,
+    "bundled_binary_present": false
+  },
+  "claude_cli": {
+    "version": "2.1.2",
+    "result": "authentication_error",
+    "http_status": 401,
+    "reason": "OAuth expired",
+    "usage_input": 0,
+    "usage_output": 0,
+    "cost_usd": 0
+  },
+  "existing_openai_endpoint": {
+    "result": "connection_timeout",
+    "timeout_seconds": 30
+  },
+  "classification": "environment failures, excluded from skill/model quality counts",
+  "credentials_or_endpoint_saved": false
+}

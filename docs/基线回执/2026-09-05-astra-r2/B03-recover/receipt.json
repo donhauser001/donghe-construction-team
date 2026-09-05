@@ -1,0 +1,19 @@
+{
+  "case": "B03-recover",
+  "termination": "completed",
+  "final": {
+    "task_status": "completed",
+    "summary": "恢复 T001 完工登记：复测 normalize-v1 三例通过，源码摘要与 prior.json 一致；保存 current.json，补齐任务卡验收记录及工作交接。写后重新读取任务卡、交接、日志和证据，确认收口链一致且既有日志仍仅一条；未修改业务代码。",
+    "evidence_paths": [
+      "docs/证据/current.json",
+      "docs/证据/prior.json",
+      "docs/任务卡/T001.md",
+      "docs/施工日志/day.md",
+      "docs/工作交接.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:45:35.616557+00:00",
+  "elapsed_seconds": 76.89072799682617,
+  "usage": null,
+  "native_agent_self_report": true
+}

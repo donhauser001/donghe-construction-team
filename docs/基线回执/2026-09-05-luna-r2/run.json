@@ -1,0 +1,18 @@
+{
+  "legacy_ref": "63e05233e149ec7ce5170bc0fe64df1870b10e6f",
+  "host": "Codex native subagent via audited gateway",
+  "gateway_sha256": "32fcdef4e056b7543b226ddfa173d69f0367e520357ba0050d774b3e1dbf8a6c",
+  "harness_sha256": "6648a830c83bbf105d81bf929811e4edd8750ae339020ea672e26769d2d4137a",
+  "samples_per_case": 1,
+  "max_tool_calls": 30,
+  "seconds": 240,
+  "requested_model": "gpt-5.6-luna",
+  "usage": "unavailable",
+  "limits": [
+    "Native shell remains available; gateway confinement is audited, not OS enforced.",
+    "No browser, delegation, or transaction completion command in fixture."
+  ],
+  "reasoning_effort": "medium",
+  "sample_policy": "one independent context per case, no success-only retries",
+  "fixture_policy": "identical initial fixture generation; receipt clock differs"
+}

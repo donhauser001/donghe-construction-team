@@ -1,0 +1,11 @@
+{
+  "git_ref": "63e05233e149ec7ce5170bc0fe64df1870b10e6f",
+  "files": {
+    "SKILL.md": "ae87378f4ebc187408175d8151dc421b881ed2ce86c95b697b22c55c17e32f62",
+    "agents/openai.yaml": "59a7720dd79d0cf697db9811a9dbbd0baaec9f3661b425d93e7011f3e75cafc0",
+    "scripts/check_card.py": "07975a243512ca04d3ba595a2d6b06cad3e7678e0fa10ae32b785bf7d57bb5a0",
+    "scripts/collect_evidence.py": "cd78860cabf76e8ace95a9d585b3be980322bbf8d5d2e75e63d868e9eb9d02ad",
+    "scripts/lint.sh": "05d9aed451168c4d8fc9bc01c8c30971498f610d351390651882d7575d02f2fa",
+    "scripts/sync.sh": "893d5128f28cbe657ab7725aa552aafb93545e61bef9fa497cb35e056d729792"
+  }
+}

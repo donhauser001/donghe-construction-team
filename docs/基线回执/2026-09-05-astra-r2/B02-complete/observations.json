@@ -1,0 +1,29 @@
+{
+  "case": "B02-complete",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 1,
+    "write_calls": 7,
+    "current_business_passed": true,
+    "log_mentions": 2,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "已将 normalize 改为 strip().lower()；网关 normalize-v1 三个运行案例通过，机器回执已回读确认。已记录完工卡、原卡入口、交接、路线图、focus-101 状态及当日日志。未运行独立 lint 或 API/浏览器验证，适用范围与证据限制已在审计区写明。",
+      "evidence_paths": [
+        "docs/证据/current.json",
+        "docs/任务卡/T001.完工.md",
+        "docs/施工日志/2026-09-05.md",
+        "docs/工作交接.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "valid": false,
+  "reason": "Harness git ls-tree quoted Chinese paths; frozen playbooks omitted. All r1 behavioral results excluded, including successful ones.",
+  "fixed_by": "NUL-delimited git ls-tree plus Chinese snapshot regression test",
+  "replacement_runs": [
+    "2026-09-05-astra-r2",
+    "2026-09-05-luna-r2"
+  ]
+}

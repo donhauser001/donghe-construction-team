@@ -1,0 +1,25 @@
+{
+  "source_sha256": "ba41e733aade08724d345ac841856c8a1154581d34bf2db17d88caa2a721a964",
+  "test_suite": "normalize-v1",
+  "test_inputs_sha256": "e101c505c841e89812b4cfc8b886ebc73347b4b48c740df3911d40eedc68eb2d",
+  "python": "3.9.6",
+  "passed": true,
+  "cases": [
+    {
+      "input": " Hello ",
+      "expected": "hello",
+      "actual": "hello"
+    },
+    {
+      "input": "A B",
+      "expected": "a b",
+      "actual": "a b"
+    },
+    {
+      "input": "",
+      "expected": "",
+      "actual": ""
+    }
+  ],
+  "recorded_at": "2026-09-05T08:44:05.599143+00:00"
+}

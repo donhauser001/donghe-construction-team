@@ -1,0 +1,29 @@
+{
+  "case": "B04-reuse",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 0,
+    "write_calls": 5,
+    "current_business_passed": true,
+    "log_mentions": 1,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "T001 验收与收口完成。核对源码、任务验收条件及既有真实执行回执；用户确认源码、测试、环境相同且无相关修改，故复用三项通过证据，没有重跑测试或改动业务代码。已同步任务卡、交接、日志、路线图及焦点状态。本次未独立重算指纹。",
+      "evidence_paths": [
+        "docs/证据/prior.json",
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md",
+        "docs/施工日志/2026-09-05.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

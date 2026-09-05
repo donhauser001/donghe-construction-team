@@ -1,0 +1,18 @@
+{
+  "case": "B02-complete",
+  "termination": "completed",
+  "final": {
+    "task_status": "blocked",
+    "summary": "收到停止指令：r1 夹具因中文路径快照错误遗漏 playbooks，样本作废。停止前已将 app.py 改为 strip().lower()，run_tests 3/3 通过并回写任务卡、交接、近期方向和一行日志；此自述不判定案例结果，现因夹具缺失停止。",
+    "evidence_paths": [
+      "docs/证据/current.json",
+      "docs/任务卡/T001.md",
+      "docs/工作交接.md",
+      "docs/施工日志/2026-09-05.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:42:08.368604+00:00",
+  "elapsed_seconds": 66.91451907157898,
+  "usage": null,
+  "native_agent_self_report": true
+}

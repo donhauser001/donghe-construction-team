@@ -1,0 +1,18 @@
+{
+  "case": "B06-disconnected-ui",
+  "termination": "completed",
+  "final": {
+    "task_status": "incomplete",
+    "summary": "后端标签规范化已通过网关测试，但 T001 的用户功能交付不可验收：index.html 仍是静态欢迎页，没有标签输入控件、规范化结果展示或前端调用链。未修改业务实现。",
+    "evidence_paths": [
+      "docs/任务卡/T001.md",
+      "app.py",
+      "index.html",
+      "docs/证据/prior.json"
+    ]
+  },
+  "finished_at": "2026-09-05T08:50:46.507131+00:00",
+  "elapsed_seconds": 23.138176679611206,
+  "usage": null,
+  "native_agent_self_report": true
+}

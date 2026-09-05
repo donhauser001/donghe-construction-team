@@ -1,0 +1,28 @@
+{
+  "case": "B05-stale",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 2,
+    "write_calls": 3,
+    "current_business_passed": true,
+    "log_mentions": 0,
+    "handoff_changed": false,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "复核发现 app.py 的 normalize 缺少首尾空白清理；已按 T001 改为先 strip 再 lower，更新任务卡并保存当前网关测试证据。run_tests 当前 3/3 通过，源哈希与历史通过回执一致。",
+      "evidence_paths": [
+        "app.py",
+        "docs/证据/current.json",
+        "docs/任务卡/T001.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "case": "B05-stale",
+  "termination": "completed",
+  "final": {
+    "task_status": "completed",
+    "summary": "复核发现 app.py 的 normalize 缺少首尾空白清理；已按 T001 改为先 strip 再 lower，更新任务卡并保存当前网关测试证据。run_tests 当前 3/3 通过，源哈希与历史通过回执一致。",
+    "evidence_paths": [
+      "app.py",
+      "docs/证据/current.json",
+      "docs/任务卡/T001.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:50:39.743731+00:00",
+  "elapsed_seconds": 61.295270919799805,
+  "usage": null,
+  "native_agent_self_report": true
+}

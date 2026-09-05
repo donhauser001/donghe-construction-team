@@ -1,0 +1,29 @@
+{
+  "case": "B01-no-goal",
+  "mechanical_gate": true,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 0,
+    "write_calls": 0,
+    "current_business_passed": true,
+    "log_mentions": 0,
+    "handoff_changed": true,
+    "card_present": false,
+    "structured_final": {
+      "task_status": "no_action",
+      "summary": "已读取东合施工队技能及项目方向、交接和约定。交接明确当前目标已完成，下一阶段明确无在途任务、无已授权下一步，路线图和蓝图也无可执行方向。遵守用户不得自行批准新方向的限制，不启动自动下放、不修改业务或方向文件、不提交或推送；未运行无任务依据的测试。等待用户给出下一项授权。",
+      "evidence_paths": [
+        "docs/工作交接.md",
+        "docs/下一阶段工作.md",
+        "docs/路线图.md",
+        "docs/蓝图.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

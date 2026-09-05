@@ -1,0 +1,23 @@
+{
+  "case": "B04-reuse",
+  "user_prompt": "使用东合施工队，核对 T001 的验收与收口。已有同源码、测试、环境的通过回执，之后没有任何相关修改。",
+  "dispatch_policy": {
+    "fresh_context": true,
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "tools": [
+      "list_files",
+      "read_file",
+      "write_file",
+      "run_tests"
+    ],
+    "no_other_case_access": true,
+    "max_gateway_calls": 30,
+    "wall_seconds": 240,
+    "finish_fields": [
+      "task_status",
+      "summary",
+      "evidence_paths"
+    ]
+  }
+}

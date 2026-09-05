@@ -55,6 +55,10 @@ scripts/sync.sh
 4. 运行 `scripts/lint.sh` 通过校验（含行数预算：SKILL ≤ 120 行、单 playbook ≤ 220 行、总量 ≤ 1600 行）。
 5. commit 后运行 `scripts/sync.sh` 下发到本地安装位置。
 
+## 行为评测（未发布的开发资料）
+
+[可执行夹具与复跑说明](evals/behavior/README.md) · [旧版实测与 Astra/Luna 首轮对照](docs/基线回执/README.md)。评测不改变 v0.5.0 技能规则，尚未同步安装。
+
 ## License
 
 [MIT](LICENSE)

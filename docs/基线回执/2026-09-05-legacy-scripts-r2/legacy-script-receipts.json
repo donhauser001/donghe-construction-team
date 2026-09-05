@@ -1,0 +1,25 @@
+[
+  {
+    "name": "valid-card",
+    "exit_code": 0,
+    "stdout": "✓ /var/folders/ts/6c6txww92w36tm2kd_5wth0m0000gn/T/donghe-script-probe-oa6y7qqo/valid-card.md 派工闸通过\n",
+    "stderr": "",
+    "fixture": "# 任务卡 T001 · 标签规范化\n派给：包工头亲自\n调用模型：父 agent 模型\n身份-模型匹配理由：单函数小变更，由当前执行者核查与收口\nparent_focus：docs/下一阶段工作.md#focus-101\n## 当前状态\n🔍 待审计\n## 改动范围\n- `app.py`\n- `docs/`\n## 不变量\n保留输入字符串，不引入外部依赖。\n## 施工要点\n规范化标签：去除首尾空白并转换为小写。\n## 证据命令\n使用 run_tests 工具；通过回执保存到 docs/证据/current.json。\n## 验收点\n- [ ] normalize(\" Hello \") 返回 \"hello\"\n\n## AI 工具同步\n无：本次不引入新的 AI 操作工具。\n## 工人回报区\n按实测记录。\n## 监理审计区\n按实测判定。\n",
+    "focus_exists": true
+  },
+  {
+    "name": "dangling-focus",
+    "exit_code": 0,
+    "stdout": "✓ /var/folders/ts/6c6txww92w36tm2kd_5wth0m0000gn/T/donghe-script-probe-oa6y7qqo/dangling-focus.md 派工闸通过\n",
+    "stderr": "",
+    "fixture": "# 任务卡 T001 · 标签规范化\n派给：包工头亲自\n调用模型：父 agent 模型\n身份-模型匹配理由：单函数小变更，由当前执行者核查与收口\nparent_focus：docs/missing.md#absent\n## 当前状态\n🔍 待审计\n## 改动范围\n- `app.py`\n- `docs/`\n## 不变量\n保留输入字符串，不引入外部依赖。\n## 施工要点\n规范化标签：去除首尾空白并转换为小写。\n## 证据命令\n使用 run_tests 工具；通过回执保存到 docs/证据/current.json。\n## 验收点\n- [ ] normalize(\" Hello \") 返回 \"hello\"\n\n## AI 工具同步\n无：本次不引入新的 AI 操作工具。\n## 工人回报区\n按实测记录。\n## 监理审计区\n按实测判定。\n",
+    "focus_exists": false
+  },
+  {
+    "name": "collector-inner-failure",
+    "exit_code": 0,
+    "stdout": "/var/folders/ts/6c6txww92w36tm2kd_5wth0m0000gn/T/donghe-script-probe-oa6y7qqo/evidence.md\n",
+    "stderr": "",
+    "evidence": "# 机器证据\n\n- 生成时间：2026-09-05T16:42:22\n- commit：非 Git 仓库\n\n## Git 状态\n\n```text\n非 Git 仓库，跳过 git status / diff stat。\n```\n\n## 验证命令\n\n### intentional-failure\n\n- 开始：2026-09-05T16:42:22\n- 结束：2026-09-05T16:42:22\n- 退出码：7\n\n```text\n$ /Applications/Xcode.app/Contents/Developer/usr/bin/python3 -c \"raise SystemExit(7)\"\n(no output)\n```\n"
+  }
+]

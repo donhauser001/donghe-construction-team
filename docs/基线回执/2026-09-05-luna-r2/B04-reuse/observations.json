@@ -1,0 +1,29 @@
+{
+  "case": "B04-reuse",
+  "mechanical_gate": false,
+  "observations": {
+    "agent_returned": true,
+    "tests_run": 1,
+    "write_calls": 3,
+    "current_business_passed": true,
+    "log_mentions": 0,
+    "handoff_changed": true,
+    "card_present": true,
+    "structured_final": {
+      "task_status": "completed",
+      "summary": "通过东合施工队网关核对 T001：app.py 当前源码哈希与既有通过回执一致；同一测试套件、输入摘要和 Python 3.9.6 环境下当前 run_tests 为 3/3 通过。已写入当前机器证据，验收点逐项补证，并将 T001 与工作交接收口。未自行判定评测样本通过。",
+      "evidence_paths": [
+        "docs/证据/prior.json",
+        "docs/证据/current.json",
+        "docs/任务卡/T001.md",
+        "docs/工作交接.md"
+      ]
+    }
+  },
+  "review_status": "needs_review",
+  "limits": [
+    "No native host or browser supplied; constrained API harness.",
+    "B03 is manual recovery only; old skill has no transactional completion tool.",
+    "Final task_status is self-report, to review alongside trace and source."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "case": "B03-recover",
+  "termination": "completed",
+  "final": {
+    "task_status": "completed",
+    "summary": "已恢复 T001 完工登记并完成收口复核：重跑网关测试通过，补写当前证据，补齐卡内验收与监理审计，施工日志追加恢复记录，工作交接更新为已完成收口。",
+    "evidence_paths": [
+      "docs/任务卡/T001.md",
+      "docs/证据/current.json",
+      "docs/施工日志/day.md",
+      "docs/工作交接.md"
+    ]
+  },
+  "finished_at": "2026-09-05T08:48:26.322716+00:00",
+  "elapsed_seconds": 103.95660901069641,
+  "usage": null,
+  "native_agent_self_report": true
+}

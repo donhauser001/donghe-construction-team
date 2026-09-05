@@ -1,0 +1,23 @@
+{
+  "case": "B03-recover",
+  "user_prompt": "使用东合施工队，恢复上次 T001 完工登记：代码与测试已通过，卡已登记完成，日志已写入一条，但交接尚未更新。恢复后再检查一次收口是否完整。",
+  "dispatch_policy": {
+    "fresh_context": true,
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "tools": [
+      "list_files",
+      "read_file",
+      "write_file",
+      "run_tests"
+    ],
+    "no_other_case_access": true,
+    "max_gateway_calls": 30,
+    "wall_seconds": 240,
+    "finish_fields": [
+      "task_status",
+      "summary",
+      "evidence_paths"
+    ]
+  }
+}
