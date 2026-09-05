@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "platform": "darwin-arm64",
+  "python": {
+    "version": "3.12.14",
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20260901/cpython-3.12.14%2B20260901-aarch64-apple-darwin-install_only_stripped.tar.gz",
+    "sha256": "81a359f1cfadd4da11766534c5913791cea55f26e1bb902cacd2a531bb1e4b2b",
+    "source": "https://github.com/astral-sh/python-build-standalone/tree/20260901"
+  },
+  "codegraph": {
+    "version": "0.8.1",
+    "url": "https://github.com/DeusData/codebase-memory-mcp/releases/download/v0.8.1/codebase-memory-mcp-darwin-arm64.tar.gz",
+    "sha256": "fbd047509852021b5446a11141bcb0a3d1dcaebf6e5112460960f29f052c1c58",
+    "source": "https://github.com/DeusData/codebase-memory-mcp/tree/v0.8.1"
+  },
+  "browser": {
+    "version": "152.0.7977.82",
+    "url": "https://storage.googleapis.com/chrome-for-testing-public/152.0.7977.82/mac-arm64/chrome-headless-shell-mac-arm64.zip",
+    "sha256": "1615f063c894aa824fd55c89f8f05e9904f63cce0c95d0cbce7394d77884fba5",
+    "source": "https://googlechromelabs.github.io/chrome-for-testing/",
+    "checksumProvenance": "author SHA256 of fixed official HTTPS asset; no upstream signed SHA256 published"
+  }
+}

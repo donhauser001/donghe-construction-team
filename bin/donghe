@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+DONGHE_PACKAGE_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+if [ -x "$DONGHE_PACKAGE_ROOT/runtime/python/bin/python3" ]; then
+  exec "$DONGHE_PACKAGE_ROOT/runtime/python/bin/python3" -I -B "$DONGHE_PACKAGE_ROOT/scripts/donghe.py" "$@"
+fi
+printf '%s\n' 'This source checkout has no bundled runtime. Install the platform release package, or use python3 scripts/donghe.py for development.' >&2
+exit 1

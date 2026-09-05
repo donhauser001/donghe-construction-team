@@ -2,6 +2,13 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
 
+## v0.8.0 · 2026-09-05
+
+- macOS arm64完整包：Python、图谱、Chrome锁版本随包，双端安装事务回滚。
+- 代际索引、新鲜度、搜索降级与调用链回读；输入未变更不重建。
+- 旧资料有据接入、来源陈旧提示、有界目录查询及界面来源入口。
+- 包内真实Web验收与失败留证，保留原生平台实测边界。
+
 ## v0.7.0 · 2026-09-05（资料关系与月度归档候选）
 
 - 新增文件级稳定ID、显式关系、上游完工反馈，界面呈现方向到任务关系；不预建空资料。

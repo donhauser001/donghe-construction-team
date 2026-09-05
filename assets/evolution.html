@@ -29,9 +29,9 @@
       <div id="content" hidden>
         <section class="direction" aria-labelledby="direction-title"><div><p class="eyebrow">此刻方向</p><h2 id="direction-title"></h2><p id="direction-reason"></p></div><span class="direction-label" id="direction-label"></span></section>
         <section id="relations-panel" class="relations-panel" aria-labelledby="relations-title" hidden>
-          <div class="section-head"><h2 id="relations-title">方向如何成为行动</h2><label>资料类型 <select id="record-filter" aria-label="筛选资料类型"><option value="">全部</option value="idea">未来池</option><option value="blueprint">蓝图</option><option value="roadmap">路线图</option><option value="next">近期方向</option><option value="debt">技术债</option><option value="knowledge">知识</option></select></label></div>
+          <div class="section-head"><h2 id="relations-title">方向如何成为行动</h2><label>资料类型 <select id="record-filter" aria-label="筛选资料类型"><option value="">全部</option><option value="idea">未来池</option><option value="blueprint">蓝图</option><option value="roadmap">路线图</option><option value="next">近期方向</option><option value="debt">技术债</option><option value="knowledge">知识</option></select></label></div>
           <p class="note">这里只呈现源文档明确记录的关系；一项任务通过，不代表整条方向已兑现。</p>
-          <p id="archive-note" class="note"></p><div id="record-issues" role="status"></div><div id="record-chains" class="record-chains"></div>
+          <p id="archive-note" class="note"></p><div id="record-issues" role="status"></div><div id="record-chains" class="record-chains"></div><button id="records-more" type="button" hidden>加载更多资料</button>
         </section>
         <div class="layout">
           <section aria-labelledby="journey-title"><div class="section-head"><h2 id="journey-title">项目如何走到这里</h2><span>任务 → 验收 → 证据</span></div><div id="journey" class="journey"></div></section>
@@ -59,10 +59,10 @@
     function sourceButton(path,label,cls='text-button'){
       const b=el('button',cls,label);b.type='button';b.addEventListener('click',()=>openSource(path,b));return b;
     }
-    async function openSource(path,trigger){
+    async function openSource(path,trigger,registeredId=null){
       const request=++sourceRequest;if(!$('source-dialog').open)lastTrigger=trigger;$('source-title').textContent='原始记录';$('receipt-content').hidden=true;$('receipt-content').replaceChildren();$('source-content').hidden=false;$('source-path').textContent=path;$('source-content').textContent='';$('source-status').textContent='正在读取原始记录…';
       if(!$('source-dialog').open)$('source-dialog').showModal();
-      try{const r=await fetch('/api/source?path='+encodeURIComponent(path),{cache:'no-store'});if(!r.ok)throw new Error('读取失败（HTTP '+r.status+'）');const data=await r.json();if(request!==sourceRequest)return;if(typeof data.content!=='string')throw new Error('记录内容格式异常');$('source-status').textContent='';$('source-content').textContent=data.content||'（文件为空）';}
+      try{const r=await fetch(registeredId?'/api/registered-source?id='+encodeURIComponent(registeredId):'/api/source?path='+encodeURIComponent(path),{cache:'no-store'});if(!r.ok)throw new Error('读取失败（HTTP '+r.status+'）');const data=await r.json();if(request!==sourceRequest)return;if(typeof data.content!=='string')throw new Error('记录内容格式异常');$('source-status').textContent=data.stale?'来源已变化：当前原文与接入时摘要不同，请显式复核。':'';$('source-content').textContent=data.content||'（文件为空）';if(!registeredId&&path.includes('/证据/UI/')&&path.endsWith('/result.json')){try{const run=JSON.parse(data.content);const images=$('receipt-content');images.replaceChildren();for(const shot of array(run.screenshots)){const name=typeof shot==='string'?shot:shot.path;const base=String(name||'').split('/').pop();if(!base||!base.endsWith('.png'))continue;const img=el('img','');img.alt='本次界面验收截图';img.style.maxWidth='100%';img.src='/api/asset?path='+encodeURIComponent(path.slice(0,path.lastIndexOf('/')+1)+base);images.append(img);}images.hidden=!images.children.length;}catch(_){}}}
       catch(e){if(request===sourceRequest)$('source-status').textContent='无法读取此记录：'+e.message;}
     }
     function receiptButton(path,label){const b=el('button','text-button',label);b.type='button';b.addEventListener('click',()=>openReceipt(path,b));return b;}
@@ -112,22 +112,24 @@
     }
     let latestState=null;
     function renderRecords(state){
-      const data=state.knowledge||{}, items=array(data.records),edges=array(data.relations),issues=[...array(data.issues),...array(state.archive?.issues)];
+      const data=state.knowledge||{}, items=array(data.records),edges=array(data.relations),issues=[...array(data.issues),...array(state.archive?.issues),...array(state.maintenance?.issues),...array(state.sourceRegistry?.issues)];
       $('relations-panel').hidden=!items.length&&!issues.length&&!state.archive?.count;
       const labels={idea:'未来池',blueprint:'蓝图',roadmap:'路线图',next:'近期方向',debt:'技术债',knowledge:'知识'};
       const relationLabels={derived_from:'源自',implements:'落实',relates_to:'关联',supersedes:'替代'};
       const nodes=new Map(items.map(r=>[r.id,r]));array(state.tasks).forEach(t=>nodes.set('task:'+t.id,{...t,path:t.sourcePath,kind:'task'}));
       $('archive-note').textContent=state.archive?.count?'有 '+state.archive.count+' 项历史文件可按月归档；已归档资料仍在关系与来源中可读。':'按月保留历史，归档不删除原文；当前没有待归档文件。';
       $('record-issues').replaceChildren();issues.forEach(i=>$('record-issues').append(el('p','record-issue',typeof i==='string'?i:JSON.stringify(i))));
+      $('records-more').hidden=!data.hasMore;
       const host=$('record-chains');host.replaceChildren();
       items.filter(r=>!$('record-filter').value||r.kind===$('record-filter').value).forEach(r=>{
         const card=el('article','record-card');card.dataset.recordId=r.id;
         card.append(el('p','record-kind',(labels[r.kind]||r.kind)+' · '+r.id+' · '+({open:'已记录',active:'推进中',closed:'已关闭'}[r.state]||r.state)+(r.archived?' · 已归档':'')),el('h3','',r.title),el('p','note',r.summary||''));
         if(r.path)card.append(sourceButton(r.path,'资料原文 ↗'));
+        if(state.sourceRegistry?.sources?.[r.id]){const b=el('button','text-button','接入前的原始来源 ↗');b.type='button';b.addEventListener('click',()=>openSource(state.sourceRegistry.sources[r.id].path,b,r.id));card.append(b);}
         edges.filter(e=>e.source===r.id||e.target===r.id).forEach(e=>{
           const outgoing=e.source===r.id, target=outgoing?e.target:e.source, node=nodes.get(target), row=el('div','record-edge');
           row.append(el('span','',outgoing?(relationLabels[e.type]||e.type)+' → ':'← '+(relationLabels[e.type]||e.type)+' · '));
-          if(node?.path)row.append(sourceButton(node.path,node.title+' ↗'));else row.append(el('span','',target+' · 来源待核对'));
+          if(node?.path)row.append(sourceButton(node.path,node.title+' ↗'));else if(!target.startsWith('task:')){const b=el('button','text-button',target+' · 查看关联来源 ↗');b.type='button';b.addEventListener('click',async()=>{try{const response=await fetch('/api/record?id='+encodeURIComponent(target));if(!response.ok)throw new Error('关联来源缺失');const item=await response.json();await openSource(item.path,b);}catch(error){$('record-issues').textContent=error.message;}});row.append(b);}else row.append(el('span','',target+' · 来源待核对'));
           if(node?.kind==='task')row.append(el('p','note',node.verification==='passed'&&node.status==='completed'?'关联任务已验收；不自动改变上游资料状态':'关联任务尚不能认定当前验收通过'));
           card.append(row);
         });
@@ -138,14 +140,14 @@
     }
     function render(state){
       latestState=state;renderRecords(state);
-      const root=state.projectRoot||'未提供项目路径';$('project-root').textContent=root;$('project-name').textContent=root.split(/[\\/]/).filter(Boolean).pop()||'当前项目';$('generated').textContent=date(state.generatedAt);
+      const root=state.projectRoot||'未提供项目路径';$('project-root').textContent=root;$('project-name').textContent='东合项目进化史';$('generated').textContent=date(state.generatedAt);
       const tasks=array(state.tasks),action=state.decision?.action;
       const titles={stop:'已停止 · 等待明确的下一步',work:'沿当前任务继续推进',recover:'先恢复可信状态，再继续'};
       $('direction-title').textContent=titles[action]||'方向尚未确认';$('direction-label').textContent={stop:'停止',work:'施工中',recover:'需要恢复'}[action]||'未知状态';$('direction-reason').textContent=state.decision?.reason||'没有方向依据，请检查原始记录。';
       $('completed-count').textContent=tasks.filter(t=>t.status==='completed'&&isPassed(t)).length;$('active-count').textContent=tasks.filter(t=>t.status==='active'&&t.declaredStatus!=='completed').length;$('attention-count').textContent=tasks.filter(t=>!isPassed(t)||array(t.issues).length>0).length;
       const journey=$('journey');journey.replaceChildren();journey.classList.toggle('journey',tasks.length>0);
       if(!tasks.length){const empty=el('div','empty');empty.append(el('h3','',action==='stop'?'尚无任务，当前已停止':'尚无可展示的任务'),el('p','',action==='stop'?'没有任务不代表项目已完成。等待明确任务与验收依据后，进化轨迹将从这里开始。':'未读取到任务记录。请先检查上方方向与原始记录，不能据此认定项目完成。'));journey.append(empty);}else tasks.forEach(t=>journey.append(taskCard(t)));
-      const sources=$('sources');sources.replaceChildren();if(state.handoffPath){const b=sourceButton(state.handoffPath,'当前交接 ↗','source-link');b.append(el('span','',state.handoffPath));sources.append(b);}array(state.logPaths).forEach((path,i)=>{const b=sourceButton(path,'施工记录 '+(i+1)+' ↗','source-link');b.append(el('span','',path));sources.append(b);});if(!sources.children.length)sources.append(el('p','note','尚未提供交接与施工记录路径。'));
+      const sources=$('sources');sources.replaceChildren();if(state.handoffPath){const b=sourceButton(state.handoffPath,'当前交接 ↗','source-link');b.append(el('span','',state.handoffPath));sources.append(b);}array(state.logPaths).forEach((path,i)=>{const b=sourceButton(path,'施工记录 '+(i+1)+' ↗','source-link');b.append(el('span','',path));sources.append(b);});array(state.uiRunPaths).forEach((path,i)=>sources.append(sourceButton(path,'界面运行记录 '+(i+1)+' ↗','source-link')));if(!sources.children.length)sources.append(el('p','note','尚未提供交接与施工记录路径。'));
       $('content').hidden=false;
     }
     async function refresh(){
@@ -154,7 +156,9 @@
       catch(e){$('error').textContent=($('content').hidden?'未能读取项目事实。':'刷新失败，当前显示的是上次成功读取的快照。')+' '+e.message+'。请确认本地服务可用后重试。';$('error').hidden=false;$('announcement').textContent='读取失败。';if($('content').hidden){$('project-name').textContent='项目暂不可读取';$('project-root').textContent='等待本地服务返回指定项目';}}
       finally{$('loading').hidden=true;refreshing=false;$('refresh').disabled=false;$('refresh').textContent='↻ 刷新事实';}
     }
-    $('record-filter').addEventListener('change',()=>{if(latestState)renderRecords(latestState);});
+    async function loadRecords(more=false){if(!latestState)return;const offset=more?(latestState.knowledge.nextOffset||0):0;try{const response=await fetch('/api/catalog?kind='+encodeURIComponent($('record-filter').value)+'&offset='+offset);if(!response.ok)throw new Error('资料读取失败');const page=await response.json();if(more){page.records=[...array(latestState.knowledge.records),...page.records];const edges=[...array(latestState.knowledge.relations),...page.relations];page.relations=edges.filter((e,i)=>edges.findIndex(x=>JSON.stringify(x)===JSON.stringify(e))===i);}latestState.knowledge=page;renderRecords(latestState);}catch(error){$('record-issues').textContent=error.message;}}
+    $('record-filter').addEventListener('change',()=>loadRecords());
+    $('records-more').addEventListener('click',()=>loadRecords(true));
     $('refresh').addEventListener('click',refresh);
     $('auto').addEventListener('change',()=>{clearInterval(timer);timer=$('auto').checked?setInterval(()=>{if(!document.hidden&&!$('source-dialog').open)refresh();},30000):null;});
     refresh();

@@ -138,6 +138,13 @@ def _month(value):
 
 
 def _candidate_month(relative, path):
+    if relative.startswith(DOC + '/证据/UI/') and relative.endswith('/result.json'):
+        try:
+            run = json.loads(path.read_text())
+            if run.get('status') in {'passed', 'failed', 'unavailable', 'captured'}:
+                return _month(run.get('finishedAt'))
+        except (ValueError, OSError, AttributeError):
+            return None
     if relative.startswith(DOC + "/资料/") and relative.endswith(".md"):
         meta = _json_fence(path, META_FENCE)
         if isinstance(meta, dict) and meta.get("state") == "closed":
@@ -178,6 +185,14 @@ def plan(project, month=None):
         tasks[relative] = record_month
     for relative, record_month in sorted(tasks.items()):
         candidates.append({"source": relative, "target": f"{ARCHIVE}/{record_month}/{relative}", "sha256": _hash(_safe(project, relative))})
+        if relative.startswith(DOC + '/证据/UI/') and relative.endswith('/result.json'):
+            for attachment in logical_files(project, str(Path(relative).parent)):
+                if attachment == relative:
+                    continue
+                attachment_path = resolve(project, attachment)
+                if attachment_path.relative_to(Path(project.root)).as_posix().startswith(ARCHIVE + '/'):
+                    continue
+                candidates.append({'source': attachment, 'target': f'{ARCHIVE}/{record_month}/{attachment}', 'sha256': _hash(attachment_path)})
         if relative.startswith(DOC + "/任务卡/"):
             task_id = Path(relative).stem
             receipt_prefix = DOC + "/证据/" + task_id + "--"

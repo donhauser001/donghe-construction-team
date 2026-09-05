@@ -24,6 +24,10 @@ from urllib.parse import parse_qs, urlparse
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import donghe_archive as archive
 import donghe_records as records
+import donghe_adopt as adoption
+import donghe_graph as graph
+import donghe_catalog as catalog
+import donghe_ui as ui
 
 DOC = 'docs/东合'
 STATE = '.donghe/state'
@@ -108,6 +112,7 @@ class Project:
             if self.read(DOC + '/工作交接.md') is None:
                 self.write(DOC + '/工作交接.md', '# 工作交接\n\n尚无已验收任务。\n')
         self.maintain()
+        self.update_graph()
         return self.status()
 
     def task_path(self, task_id):
@@ -578,7 +583,28 @@ class Project:
                 self.recover(relative, op)
             records.feedback(self, task_id)
         self.maintain()
+        self.update_graph()
         return self.status()
+
+    def update_graph(self):
+        # Package-owned component only; never install or discover a global tool.
+        if not graph.DEFAULT_BINARY.is_file():
+            return {'state': 'unavailable', 'reason': 'source checkout has no packaged graph'}
+        with self.lock():
+            marker = STATE + '/graph-check.json'
+            fingerprint = None
+            try:
+                fingerprint = graph.source_fingerprint(self)
+                previous = json.loads(self.read(marker) or '{}')
+                if previous.get('failedFingerprint') == fingerprint:
+                    return previous
+                result = graph.refresh(self)
+                result = {k: result[k] for k in ['state', 'fresh', 'reused', 'generation', 'fingerprint'] if k in result}
+            except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as exc:
+                result = {'state': 'unavailable', 'error': str(exc), 'failedFingerprint': fingerprint}
+            result['checkedAt'] = now()
+            self.write(marker, encode(result))
+            return result
 
     def maintain(self):
         with self.lock():
@@ -642,10 +668,17 @@ class Project:
         logs = self.path(DOC + '/开发日志')
         archive_status = archive.plan(self)
         archive_status.pop('candidates', None)
+        source_registry = {'sources': {}, 'issues': []}
+        try:
+            source_registry['sources'] = adoption._load_manifest(self)['sources']
+        except ValueError as exc:
+            source_registry['issues'] = [str(exc)]
         return {'projectRoot': str(self.root), 'generatedAt': now(), 'decision': decision, 'tasks': tasks,
                 'handoffPath': DOC + '/工作交接.md', 'logPaths': sorted(p for p in archive.logical_files(self, DOC + '/开发日志') if p.endswith('.md')),
                 'knowledge': records.catalog(self), 'archive': archive_status,
-                'maintenance': json.loads(self.read(STATE + '/maintenance.json') or '{}')}
+                'maintenance': json.loads(self.read(STATE + '/maintenance.json') or '{}'),
+                'sourceRegistry': source_registry,
+                'uiRunPaths': sorted(path for path in archive.logical_files(self, DOC + '/证据/UI') if path.endswith('/result.json'))[-20:]}
 
 
 def serve(project, port):
@@ -654,10 +687,37 @@ def serve(project, port):
             parsed = urlparse(self.path)
             try:
                 if parsed.path == '/api/state':
-                    content, kind = encode(project.status()).encode(), 'application/json; charset=utf-8'
+                    state = project.status()
+                    page = catalog.query(project)
+                    state['knowledge'] = {**page, 'relations': page['edges']}
+                    content, kind = encode(state).encode(), 'application/json; charset=utf-8'
+                elif parsed.path == '/api/catalog':
+                    params = parse_qs(parsed.query)
+                    page = catalog.query(project, params.get('kind', [None])[0] or None, params.get('q', [''])[0],
+                                         int(params.get('offset', ['0'])[0]), int(params.get('limit', ['50'])[0]))
+                    content, kind = encode({**page, 'relations': page['edges']}).encode(), 'application/json; charset=utf-8'
+                elif parsed.path == '/api/record':
+                    record_id = parse_qs(parsed.query).get('id', [''])[0]
+                    item = next((r for r in records.catalog(project)['records'] if r['id'] == record_id), None)
+                    if item is None:
+                        raise ValueError('record does not exist')
+                    content, kind = encode(item).encode(), 'application/json; charset=utf-8'
                 elif parsed.path == '/api/receipt':
                     rel = parse_qs(parsed.query).get('path', [''])[0]
                     content, kind = encode(project.receipt_summary(rel)).encode(), 'application/json; charset=utf-8'
+                elif parsed.path == '/api/registered-source':
+                    source_id = parse_qs(parsed.query).get('id', [''])[0]
+                    content, kind = encode(adoption.source(project, source_id)).encode(), 'application/json; charset=utf-8'
+                elif parsed.path == '/api/asset':
+                    rel = parse_qs(parsed.query).get('path', [''])[0]
+                    if not rel.startswith(DOC + '/证据/UI/') or not rel.endswith('.png'):
+                        raise ValueError('asset outside UI evidence')
+                    asset = project.path(rel)
+                    if asset.stat().st_size > 20 * 1024 * 1024:
+                        raise ValueError('asset exceeds read budget')
+                    content, kind = asset.read_bytes(), 'image/png'
+                    if not content.startswith(b'\x89PNG\r\n\x1a\n'):
+                        raise ValueError('invalid PNG evidence')
                 elif parsed.path == '/api/source':
                     rel = parse_qs(parsed.query).get('path', [''])[0]
                     if not rel.startswith(DOC + '/'):
@@ -700,7 +760,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project', required=True)
     sub = parser.add_subparsers(dest='command', required=True)
-    for name in ['init', 'status', 'next']:
+    for name in ['init', 'status', 'next', 'doctor']:
         sub.add_parser(name)
     record = sub.add_parser('record')
     record.add_argument('--spec', required=True)
@@ -709,7 +769,29 @@ def main(argv=None):
     link.add_argument('source')
     link.add_argument('target')
     link.add_argument('--relation', default='relates_to')
-    sub.add_parser('catalog')
+    catalog_cmd = sub.add_parser('catalog')
+    catalog_cmd.add_argument('--kind')
+    catalog_cmd.add_argument('--query', default='')
+    catalog_cmd.add_argument('--offset', type=int, default=0)
+    catalog_cmd.add_argument('--limit', type=int, default=50)
+    scan = sub.add_parser('scan')
+    scan.add_argument('--directory', action='append')
+    scan.add_argument('--limit', type=int, default=100)
+    adopt = sub.add_parser('adopt')
+    adopt.add_argument('--spec', required=True)
+    source = sub.add_parser('source')
+    source.add_argument('id')
+    web_ui = sub.add_parser('ui')
+    web_ui.add_argument('--spec', required=True)
+    feedback = sub.add_parser('feedback', help='replay declared completion feedback without rerunning business tests')
+    feedback.add_argument('task_id')
+    codegraph = sub.add_parser('graph')
+    codegraph.add_argument('operation', choices=['status', 'refresh', 'search', 'trace'])
+    codegraph.add_argument('query', nargs='?')
+    codegraph.add_argument('--limit', type=int, default=20)
+    codegraph.add_argument('--depth', type=int, default=3)
+    codegraph.add_argument('--direction', choices=['inbound', 'outbound', 'both'], default='both')
+    codegraph.add_argument('--retry', action='store_true', help='explicitly retry a previously failed index after investigating the cause')
     maintenance = sub.add_parser('archive')
     maintenance.add_argument('--month')
     maintenance.add_argument('--apply', action='store_true')
@@ -735,6 +817,39 @@ def main(argv=None):
             return 0
         if args.command == 'init':
             result = p.init()
+        elif args.command == 'doctor':
+            import install_release
+            package = Path(__file__).resolve().parents[1]
+            manifest = install_release.verify(package)
+            graph._binary()
+            browser = package / 'runtime/browser/chrome-headless-shell-mac-arm64/chrome-headless-shell'
+            probe = subprocess.run([str(browser), '--version'], capture_output=True, text=True, timeout=10, check=True)
+            if manifest['components']['browser']['version'] not in probe.stdout:
+                raise ValueError('browser version differs from package lock')
+            result = {'status': 'ready', 'platform': manifest['platform'], 'python': sys.version.split()[0],
+                      'graph': graph.PINNED_VERSION, 'browser': probe.stdout.strip(), 'firstUseDownloads': False}
+        elif args.command == 'ui':
+            result = ui.run(p, json.loads(Path(args.spec).read_text()))
+        elif args.command in ['scan', 'adopt', 'source', 'feedback', 'graph']:
+            with p.lock():
+                if args.command == 'scan':
+                    result = adoption.scan(p, args.limit, args.directory)
+                elif args.command == 'adopt':
+                    result = adoption.adopt(p, json.loads(Path(args.spec).read_text()))
+                elif args.command == 'source':
+                    result = adoption.source(p, args.id)
+                elif args.command == 'feedback':
+                    result = records.feedback(p, args.task_id)
+                elif args.operation == 'status':
+                    result = graph.status(p)
+                elif args.operation == 'refresh':
+                    result = graph.refresh(p, retry=args.retry)
+                    p.write(STATE + '/graph-check.json', encode({'state': result['state'], 'generation': result.get('generation'),
+                                                               'fingerprint': result.get('fingerprint'), 'checkedAt': now()}))
+                elif args.operation == 'search':
+                    result = graph.search(p, args.query, args.limit)
+                else:
+                    result = graph.trace(p, args.query, args.direction, args.depth)
         elif args.command in ['record', 'link', 'catalog', 'archive']:
             with p.lock():
                 if args.command == 'record':
@@ -742,7 +857,7 @@ def main(argv=None):
                 elif args.command == 'link':
                     result = records.link(p, args.source, args.target, args.relation)
                 elif args.command == 'catalog':
-                    result = records.catalog(p)
+                    result = catalog.query(p, args.kind, args.query, args.offset, args.limit)
                 elif args.restore:
                     if not args.month or args.apply:
                         raise ValueError('restore requires --month and cannot use --apply')
@@ -765,7 +880,7 @@ def main(argv=None):
             if args.command == 'next':
                 result = result['decision']
         print(encode(result))
-        return 1 if (args.command == 'verify' and result['state'] != 'passed') or (args.command == 'receipt' and result['integrity'] != 'valid') else 0
+        return 1 if (args.command == 'verify' and result['state'] != 'passed') or (args.command == 'receipt' and result['integrity'] != 'valid') or (args.command == 'ui' and result.get('status') != 'passed') else 0
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
         print(encode({'error': str(exc)}), file=sys.stderr)
         return 1

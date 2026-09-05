@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "real medical roadmap source opens",
+    "current source digest",
+    "server kind filter",
+    "fixed product title",
+    "no pageerror"
+  ]
+}

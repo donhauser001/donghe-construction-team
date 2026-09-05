@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "initial": 50,
+  "afterMore": 58,
+  "kindFilter": 1,
+  "mobileWidth": 390,
+  "noOverflow": true,
+  "noPageErrors": true,
+  "regression": "fixed malformed idea option closing tag found by real browser"
+}

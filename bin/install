@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+DONGHE_PACKAGE_ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+exec "$DONGHE_PACKAGE_ROOT/runtime/python/bin/python3" -I -B "$DONGHE_PACKAGE_ROOT/scripts/install_release.py" "$@"

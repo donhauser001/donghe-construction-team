@@ -1,0 +1,124 @@
+test_adopt_is_evidenced_idempotent_and_has_no_git_dependency (test_adopt.AdoptionTests) ... ok
+test_manifest_write_interruption_recovers_without_duplicate_record (test_adopt.AdoptionTests) ... ok
+test_missing_unsafe_and_unregistered_sources_are_rejected (test_adopt.AdoptionTests) ... ok
+test_registered_symlink_or_tampered_manifest_cannot_browse_root (test_adopt.AdoptionTests) ... ok
+test_scan_is_bounded_and_excludes_managed_secret_and_symlink_sources (test_adopt.AdoptionTests) ... ok
+test_scan_rejects_malicious_directories_and_marks_oversize_skipped (test_adopt.AdoptionTests) ... ok
+test_source_change_requires_update_and_readback_marks_stale (test_adopt.AdoptionTests) ... ok
+test_apply_preserves_bytes_cold_reads_and_is_idempotent (test_archive.ArchiveTest) ... ok
+test_cold_restore_without_journal_reports_transport_only (test_archive.ArchiveTest) ... ok
+test_conflict_and_changed_source_are_rejected_without_overwrite (test_archive.ArchiveTest) ... ok
+test_corrupt_pending_journal_cannot_move_ungoverned_file (test_archive.ArchiveTest) ... ok
+test_duplicate_logical_path_and_symlink_escape_are_rejected (test_archive.ArchiveTest) ... ok
+test_future_and_current_month_are_rejected (test_archive.ArchiveTest) ... ok
+test_interrupted_apply_retries_only_the_same_prepared_operation (test_archive.ArchiveTest) ... ok
+test_interrupted_restore_resumes_prepared_operation (test_archive.ArchiveTest) ... ok
+test_legacy_deterministic_archive_journal_remains_readable (test_archive.ArchiveTest) ... ok
+test_live_and_archived_directories_merge_without_directory_conflict (test_archive.ArchiveTest) ... ok
+test_plan_is_read_only_and_selects_closed_records_and_receipts (test_archive.ArchiveTest) ... ok
+test_repeated_archive_restore_cycles_keep_distinct_history (test_archive.ArchiveTest) ... ok
+test_restore_refuses_live_conflict (test_archive.ArchiveTest) ... ok
+test_restore_rejects_archive_bytes_changed_since_recorded_move (test_archive.ArchiveTest) ... ok
+test_restore_reverses_month_and_keeps_operation_evidence (test_archive.ArchiveTest) ... ok
+test_second_cycle_interruptions_resume_without_overwriting_history (test_archive.ArchiveTest) ... ok
+test_filter_pagination_and_incident_edges (test_catalog.CatalogQueryTest) ... ok
+test_synthetic_thousand_record_cold_query_and_pages (test_catalog.CatalogQueryTest) ... ok
+test_validation_issue_bound_and_output_summary (test_catalog.CatalogQueryTest) ... ok
+test_abort_after_evidence_drift_then_reverify (test_donghe.CompletionTests) ... ok
+test_abort_conflict_preserves_user_edit (test_donghe.CompletionTests) ... ok
+test_backend_pass_ui_missing_blocks (test_donghe.CompletionTests) ... ok
+test_command_can_query_status_without_lock_deadlock (test_donghe.CompletionTests) ... ok
+test_completed_project_clone_requires_review_instead_of_work (test_donghe.CompletionTests) ... ok
+test_completed_task_can_reverify_after_source_drift (test_donghe.CompletionTests) ... ok
+test_concurrent_finish_is_idempotent (test_donghe.CompletionTests) ... ok
+test_directory_membership_and_symlink_inputs (test_donghe.CompletionTests) ... ok
+test_failed_and_timeout_receipts_are_preserved (test_donghe.CompletionTests) ... ok
+test_failures_and_input_mutation_preserved (test_donghe.CompletionTests) ... ok
+test_http_state_source_and_confinement (test_donghe.CompletionTests) ... ok
+test_issues_stop_next (test_donghe.CompletionTests) ... ok
+test_journal_cross_project_and_path_tampering_blocked (test_donghe.CompletionTests) ... ok
+test_legacy_receipt_and_completion_are_read_without_rewrite (test_donghe.CompletionTests) ... ok
+test_missing_input_records_null_references_and_failure (test_donghe.CompletionTests) ... ok
+test_missing_receipt_and_hash_valid_malformed_blob_fail_closed (test_donghe.CompletionTests) ... ok
+test_new_active_task_remains_authorized_work (test_donghe.CompletionTests) ... ok
+test_no_goal_stops_without_execution (test_donghe.CompletionTests) ... ok
+test_normal_completion_and_duplicate_finish (test_donghe.CompletionTests) ... ok
+test_object_publish_is_concurrent_and_does_not_repair_corruption (test_donghe.CompletionTests) ... ok
+test_partial_completion_recovers (test_donghe.CompletionTests) ... ok
+test_paths_and_empty_criteria_rejected (test_donghe.CompletionTests) ... ok
+test_receipt_cli_returns_bounded_summary_and_invalid_exit (test_donghe.CompletionTests) ... ok
+test_recovery_preserves_conflicting_human_edit (test_donghe.CompletionTests) ... ok
+test_self_consistent_manifest_does_not_accept_malformed_core_types (test_donghe.CompletionTests) ... ok
+test_shared_tamper_invalidates_every_reference_without_cache (test_donghe.CompletionTests) ... ok
+test_stale_source_blocks_finish (test_donghe.CompletionTests) ... ok
+test_status_flip_and_missing_log_do_not_prove_completion (test_donghe.CompletionTests) ... ok
+test_summary_previews_are_bounded_and_streams_are_checked (test_donghe.CompletionTests) ... ok
+test_tamper_detected_and_preserved (test_donghe.CompletionTests) ... ok
+test_task_edit_during_command_is_not_overwritten (test_donghe.CompletionTests) ... ok
+test_unchanged_reuse_does_not_execute (test_donghe.CompletionTests) ... ok
+test_unknown_versions_and_unsafe_or_missing_references_rejected (test_donghe.CompletionTests) ... ok
+test_v2_shares_objects_across_receipts_and_phases (test_donghe.CompletionTests) ... ok
+test_invalid_metadata_does_not_fail_init_or_accepted_finish (test_governance_integration.GovernanceIntegration) ... ok
+test_read_only_status_does_not_archive_and_once_monthly_check (test_governance_integration.GovernanceIntegration) ... ok
+test_task_feedback_archive_cold_read_and_restore (test_governance_integration.GovernanceIntegration) ... ok
+test_coverage_limit_and_secret_exclusion (test_graph.GraphTest) ... ok
+test_dart_is_policy_selected_and_secret_config_is_not (test_graph.GraphTest) ... ok
+test_failed_refresh_keeps_current_and_records_failure (test_graph.GraphTest) ... ok
+test_fallback_reports_budget_and_file_truncation (test_graph.GraphTest) ... ok
+test_fingerprint_tracks_content_deletion_and_excludes_generated_state (test_graph.GraphTest) ... ok
+test_missing_and_stale_search_are_explicit_bounded_fallbacks (test_graph.GraphTest) ... ok
+test_missing_binary_on_fresh_graph_degrades_instead_of_raising (test_graph.GraphTest) ... ok
+test_nested_and_dangling_state_symlinks_are_rejected (test_graph.GraphTest) ... ok
+test_real_index_search_stale_refresh_and_worktree_isolation (test_graph.GraphTest) ... ok
+test_refresh_rejects_source_drift_and_empty_upstream_cache (test_graph.GraphTest) ... ok
+test_retry_parameter_is_strict (test_graph.GraphTest) ... ok
+test_symlink_source_is_rejected (test_graph.GraphTest) ... ok
+test_tampered_generation_and_state_symlink_are_rejected (test_graph.GraphTest) ... ok
+test_uninventoried_or_unbound_database_cannot_make_graph_fresh (test_graph.GraphTest) ... ok
+test_upstream_exclusion_response_is_preserved_and_not_blindly_retried (test_graph.GraphTest) ... ok
+test_wal_is_checkpointed_before_database_inventory (test_graph.GraphTest) ... ok
+test_all_targets_are_prepared_before_any_switch (test_install_release.InstallReleaseTests) ... ok
+test_backup_root_symlink_and_overlap_are_rejected (test_install_release.InstallReleaseTests) ... ok
+test_second_commit_failure_rolls_back_all_targets_and_keeps_failed_installs (test_install_release.InstallReleaseTests) ... ok
+test_success_preserves_previous_for_manual_recovery (test_install_release.InstallReleaseTests) ... ok
+test_verify_rejects_executable_mode_drift (test_install_release.InstallReleaseTests) ... ok
+test_finished_ui_evidence_archives_with_images_and_recovers (test_product_integration.ProductIntegration) ... ok
+test_old_project_scan_adopt_source_without_new_work (test_product_integration.ProductIntegration) ... ok
+test_same_failed_graph_inputs_do_not_loop_and_changes_retry (test_product_integration.ProductIntegration) ... ok
+test_archived_feedback_skips_existing_but_requires_restore_when_missing (test_records.RecordTests) ... ok
+test_bad_metadata_missing_targets_and_cycles_are_diagnosed (test_records.RecordTests) ... ok
+test_create_read_catalog_and_global_duplicate (test_records.RecordTests) ... ok
+test_feedback_propagates_only_through_explicit_derived_from (test_records.RecordTests) ... ok
+test_feedback_requires_completed_and_relation (test_records.RecordTests) ... ok
+test_feedback_uses_completed_fact_and_is_idempotent (test_records.RecordTests) ... ok
+test_link_reverse_index_and_idempotence (test_records.RecordTests) ... ok
+test_schema_and_timestamps_are_strict (test_records.RecordTests) ... ok
+test_task_target_validation_and_unsafe_values (test_records.RecordTests) ... ok
+test_update_preserves_identity_creation_and_feedback (test_records.RecordTests) ... ok
+test_cli_returns_nonzero_for_unavailable_browser (test_ui.AdapterBoundaryTests) ... ok
+test_evidence_directory_symlink_cannot_escape_project (test_ui.AdapterBoundaryTests) ... ok
+test_invalid_url_and_contract_leave_failed_evidence (test_ui.AdapterBoundaryTests) ... ok
+test_missing_binary_is_unavailable_and_persists_result (test_ui.AdapterBoundaryTests) ... ok
+test_assertion_failure_is_nonpassing_and_keeps_evidence (test_ui.BrowserAcceptanceTests) ... ok
+test_click_scrolls_long_page_then_keeps_real_cover_check (test_ui.BrowserAcceptanceTests) ... ok
+test_cross_origin_fetch_and_delayed_exception_fail_without_sink_hit (test_ui.BrowserAcceptanceTests) ... ok
+test_cross_origin_websocket_is_blocked_before_handshake (test_ui.BrowserAcceptanceTests) ... ok
+test_explicit_local_api_origin_is_allowed (test_ui.BrowserAcceptanceTests) ... ok
+test_navigation_off_localhost_stops_contract (test_ui.BrowserAcceptanceTests) ... ok
+test_real_click_changes_ui_then_screenshot (test_ui.BrowserAcceptanceTests) ... ok
+test_same_origin_path_navigation_is_allowed (test_ui.BrowserAcceptanceTests) ... ok
+test_screenshot_only_is_captured_not_passed (test_ui.BrowserAcceptanceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 110 tests in 19.055s
+
+OK
+{
+  "installed": [
+    {
+      "target": "/Users/aiden/dev/tmp8bswc2xz/one/donghe-construction-team",
+      "previous": "/Users/aiden/dev/tmp8bswc2xz/backups/20260905-203626-7b2daf0c/0.previous"
+    }
+  ],
+  "backup": "/Users/aiden/dev/tmp8bswc2xz/backups/20260905-203626-7b2daf0c"
+}

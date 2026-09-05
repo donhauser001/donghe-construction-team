@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "synthetic": false,
+  "upstreamVersion": "0.8.1",
+  "buildPolicy": "source-extension-v2-full",
+  "coverage": "upstream-supported-within-policy",
+  "projects": [
+    {
+      "name": "Forms",
+      "source": "/Users/aiden/dev/donghe-governance-forms",
+      "generation": "1788610012671710000-88166",
+      "files": 966,
+      "nodes": 10554,
+      "edges": 29532,
+      "excludedCount": 0,
+      "query": "GFFormDisplay",
+      "queryMode": "graph",
+      "verifiedSourceLocations": 1,
+      "unchangedRefreshReused": true
+    },
+    {
+      "name": "medical",
+      "source": "/Users/aiden/dev/donghe-governance-medical",
+      "generation": "1788610014505258000-88166",
+      "files": 888,
+      "nodes": 12868,
+      "edges": 27617,
+      "excludedCount": 0,
+      "query": "MetricExtractionCandidate",
+      "queryMode": "graph",
+      "verifiedSourceLocations": 1,
+      "unchangedRefreshReused": true
+    }
+  ],
+  "notes": [
+    "No source text or full graph data is included.",
+    "Each clone was indexed once; the second refresh reused the existing generation."
+  ]
+}
