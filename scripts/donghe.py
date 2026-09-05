@@ -199,19 +199,149 @@ class Project:
         return {'executable': str(resolved), 'sha256': digest(resolved.read_bytes()), 'platform': sys.platform,
                 'scope': 'Selected input bytes and executable only; other environment and external dependencies are not covered.'}
 
-    def receipt(self, relative):
-        if not relative.startswith(DOC + '/证据/') or not relative.endswith('/receipt.json'):
+    def validate_fingerprints(self, value):
+        if not isinstance(value, dict) or any(
+            not isinstance(k, str) or not k or Path(k).is_absolute() or '..' in Path(k).parts or '\\' in k
+            or not isinstance(v, str) or (v != 'directory' and not re.fullmatch('[0-9a-f]{64}', v))
+            for k, v in value.items()
+        ):
+            raise ValueError('invalid fingerprint map')
+        return value
+
+    def load_fingerprints(self, reference):
+        if not isinstance(reference, str) or not re.fullmatch('[0-9a-f]{64}', reference):
+            raise ValueError('invalid fingerprint reference')
+        data = self.path(DOC + '/证据/指纹/' + reference + '.json').read_bytes()
+        if digest(data) != reference:
+            raise ValueError('fingerprint digest mismatch: ' + reference)
+        return self.validate_fingerprints(json.loads(data))
+
+    def store_fingerprints(self, value):
+        """Publish one immutable, canonical object; never repair an existing object."""
+        data = encode(self.validate_fingerprints(value)).encode('utf-8')
+        reference = digest(data)
+        path = self.path(DOC + '/证据/指纹/' + reference + '.json')
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd, temp = tempfile.mkstemp(prefix='.donghe-', dir=path.parent)
+        try:
+            with os.fdopen(fd, 'wb') as handle:
+                handle.write(data)
+                handle.flush()
+                os.fsync(handle.fileno())
+            with contextlib.suppress(OSError):
+                os.chmod(temp, 0o444)
+            try:
+                os.link(temp, path)
+            except FileExistsError:
+                pass
+            self.load_fingerprints(reference)
+        finally:
+            os.unlink(temp)
+        return reference
+
+    def compact_receipt(self, record):
+        """Encode normalized evidence without modifying its record or old receipts."""
+        compact = dict(record)
+        for field in ['before', 'after']:
+            value = compact.pop(field)
+            compact[field + 'Ref'] = None if value is None else self.store_fingerprints(value)
+        compact['formatVersion'] = 2
+        return compact
+
+    def _load_receipt(self, relative):
+        if not isinstance(relative, str) or not relative.startswith(DOC + '/证据/') or not relative.endswith('/receipt.json'):
             raise ValueError('invalid receipt location')
         path = self.path(relative)
         folder = path.parent
         manifest = json.loads(self.path(str(folder.relative_to(self.root) / 'manifest.json')).read_text())
-        if set(manifest) != {'receipt.json', 'stdout.txt', 'stderr.txt'}:
+        if not isinstance(manifest, dict) or set(manifest) != {'receipt.json', 'stdout.txt', 'stderr.txt'}:
             raise ValueError('invalid receipt manifest')
+        output = {}
+        record = None
         for name, checksum in manifest.items():
             file = self.path(str(folder.relative_to(self.root) / name))
-            if digest(file.read_bytes()) != checksum:
+            if name == 'receipt.json':
+                data = file.read_bytes()
+                actual = digest(data)
+                record = json.loads(data)
+            else:
+                hasher, preview, size = hashlib.sha256(), b'', 0
+                with file.open('rb') as handle:
+                    for chunk in iter(lambda: handle.read(65536), b''):
+                        hasher.update(chunk)
+                        size += len(chunk)
+                        preview += chunk[:max(0, 4096 - len(preview))]
+                actual = hasher.hexdigest()
+                output[name[:-4]] = {'path': file.relative_to(self.root).as_posix(),
+                                     'preview': preview.decode('utf-8', errors='replace').encode('utf-8')[:4096].decode('utf-8', errors='ignore'),
+                                     'truncated': size > 4096, 'bytes': size}
+            if actual != checksum:
                 raise ValueError('receipt digest mismatch')
-        return json.loads(path.read_text())
+        if not isinstance(record, dict):
+            raise ValueError('invalid receipt record')
+        version = record.get('formatVersion', 1)
+        if type(version) is not int or version not in [1, 2]:
+            raise ValueError('unsupported receipt format version')
+        if version == 2:
+            if 'before' in record or 'after' in record:
+                raise ValueError('v2 receipt must use fingerprint references')
+            for field in ['before', 'after']:
+                reference = record[field + 'Ref']
+                record[field] = None if reference is None else self.load_fingerprints(reference)
+        else:
+            for field in ['before', 'after']:
+                if record[field] is not None:
+                    self.validate_fingerprints(record[field])
+        for field in ['taskId', 'criterionId', 'startedAt', 'finishedAt', 'exitCode', 'error', 'argv']:
+            if field not in record:
+                raise ValueError('receipt field missing: ' + field)
+        identifier(record['taskId'])
+        identifier(record['criterionId'])
+        if record['exitCode'] is not None and type(record['exitCode']) is not int:
+            raise ValueError('invalid receipt exitCode')
+        if record['error'] is not None and not isinstance(record['error'], str):
+            raise ValueError('invalid receipt error')
+        argv = record['argv']
+        if not isinstance(argv, list) or not argv or any(not isinstance(arg, str) or '\0' in arg for arg in argv) or not argv[0]:
+            raise ValueError('invalid receipt argv')
+        for field in ['startedAt', 'finishedAt']:
+            if not isinstance(record[field], str):
+                raise ValueError('invalid receipt ' + field)
+            try:
+                dt.datetime.fromisoformat(record[field])
+            except ValueError:
+                raise ValueError('invalid receipt ' + field)
+        contract = record.get('contractHash')
+        if not isinstance(contract, str) or not re.fullmatch('[0-9a-f]{64}', contract):
+            raise ValueError('invalid receipt contractHash')
+        if 'environment' not in record:
+            raise ValueError('receipt field missing: environment')
+        environment = record['environment']
+        if environment is not None and (
+            not isinstance(environment, dict)
+            or any(not isinstance(environment.get(key), str) or not environment[key]
+                   for key in ['executable', 'sha256', 'platform', 'scope'])
+            or not re.fullmatch('[0-9a-f]{64}', environment['sha256'])
+        ):
+            raise ValueError('invalid receipt environment')
+        return record, output
+
+    def receipt(self, relative):
+        return self._load_receipt(relative)[0]
+
+    def receipt_summary(self, relative):
+        result = {'path': relative, 'integrity': 'invalid', 'error': None,
+                  'summary': None, 'output': {}, 'rawPath': relative}
+        try:
+            record, output = self._load_receipt(relative)
+            summary = {key: record[key] for key in ['taskId', 'criterionId', 'startedAt', 'finishedAt', 'exitCode', 'error', 'argv']}
+            summary.update(formatVersion=record.get('formatVersion', 1),
+                           inputCounts={key: len(record[key] or {}) for key in ['before', 'after']},
+                           inputChanged=record['before'] != record['after'])
+            result.update(integrity='valid', summary=summary, output=output)
+        except (ValueError, OSError, KeyError, TypeError) as exc:
+            result['error'] = str(exc)
+        return result
 
     def candidates(self, task_id, criterion_id):
         base = self.path(DOC + '/证据')
@@ -292,7 +422,7 @@ class Project:
             folder_rel = DOC + '/证据/' + task_id + '--' + criterion_id + '--' + dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S%f') + '--' + uuid.uuid4().hex
             folder = self.path(folder_rel)
             folder.mkdir(parents=True, exist_ok=False)
-            files = {'receipt.json': encode(r).encode(), 'stdout.txt': stdout, 'stderr.txt': stderr}
+            files = {'receipt.json': encode(self.compact_receipt(r)).encode(), 'stdout.txt': stdout, 'stderr.txt': stderr}
             files['manifest.json'] = encode({k: digest(v) for k, v in files.items()}).encode()
             for name, content in files.items():
                 with (folder / name).open('xb') as out:
@@ -479,6 +609,9 @@ def serve(project, port):
             try:
                 if parsed.path == '/api/state':
                     content, kind = encode(project.status()).encode(), 'application/json; charset=utf-8'
+                elif parsed.path == '/api/receipt':
+                    rel = parse_qs(parsed.query).get('path', [''])[0]
+                    content, kind = encode(project.receipt_summary(rel)).encode(), 'application/json; charset=utf-8'
                 elif parsed.path == '/api/source':
                     rel = parse_qs(parsed.query).get('path', [''])[0]
                     if not rel.startswith(DOC + '/'):
@@ -528,6 +661,8 @@ def main(argv=None):
     verify = sub.add_parser('verify')
     verify.add_argument('task_id')
     verify.add_argument('criterion_id')
+    receipt = sub.add_parser('receipt', help='read a bounded, integrity-checked receipt summary')
+    receipt.add_argument('path')
     finish = sub.add_parser('finish')
     finish.add_argument('task_id')
     abort = sub.add_parser('abort')
@@ -546,6 +681,8 @@ def main(argv=None):
             result = p.create(json.loads(Path(args.spec).read_text()))
         elif args.command == 'verify':
             result = p.verify(args.task_id, args.criterion_id)
+        elif args.command == 'receipt':
+            result = p.receipt_summary(args.path)
         elif args.command == 'finish':
             result = p.finish(args.task_id)
         elif args.command == 'abort':
@@ -555,7 +692,7 @@ def main(argv=None):
             if args.command == 'next':
                 result = result['decision']
         print(encode(result))
-        return 1 if args.command == 'verify' and result['state'] != 'passed' else 0
+        return 1 if (args.command == 'verify' and result['state'] != 'passed') or (args.command == 'receipt' and result['integrity'] != 'valid') else 0
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
         print(encode({'error': str(exc)}), file=sys.stderr)
         return 1

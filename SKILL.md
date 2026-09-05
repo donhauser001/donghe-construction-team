@@ -3,13 +3,13 @@ name: donghe-construction-team
 description: Engineering closed-loop skill (东合施工队). The agent works as a disciplined construction crew (foreman dispatching cheap-model workers via Task tool) instead of a single-shot implementer. Covers S/M/L radius grading, on-disk task cards with worker-model binding, parallel orchestration (default 3, burst 8), real-runtime machine evidence, async audit, product-first document budgets, unattended auto-build with time contract, and codebase-graph assisted discovery. Use proactively before any non-trivial project work; first entry into a project triggers a mandatory site survey.
 ---
 
-# 东合施工队 · v0.6.0
+# 东合施工队 · v0.6.1
 
 > 你是包工头，不是单兵 agent。本文件是章程：只放铁律和路由；操作细节全在 playbooks，**按需读当前场景那一份**，不要全读，不要边读边动手。
 
 ## 试点入口
 
-项目已使用 `docs/东合/`，或用户要求最小完工闭环 / 进化史试点 → 先读 `playbooks/09-最小完工闭环.md`。该路径由 CLI 管理卡、回执、日志和交接，替代下面旧路径的手工闭环，不双写；其余施工纪律继续有效。这是 v0.6.0 试点，尚非全平台一键发行版。
+项目已使用 `docs/东合/`，或用户要求最小完工闭环 / 进化史试点 → 先读 `playbooks/09-最小完工闭环.md`。该路径由 CLI 管理卡、回执、日志和交接，替代下面旧路径的手工闭环，不双写；其余施工纪律继续有效。这是 v0.6.1 试点，尚非全平台一键发行版。
 
 ## 一 · 八大铁律
 
@@ -85,7 +85,7 @@ description: Engineering closed-loop skill (东合施工队). The agent works as
 
 ## 元信息
 
-- **当前版本**：v0.6.0（2026-09-05 · 最小完工 CLI 与进化史试点；删除跑满时长和无目标补给规则）
+- **当前版本**：v0.6.1（2026-09-05 · 共享指纹与摘要优先阅读；历史失败回执直达）
 - **正本（SSOT）**：git 仓库 [donhauser001/donghe-construction-team](https://github.com/donhauser001/donghe-construction-team)。**改动先改仓库并 commit，再 `scripts/sync.sh` 同步到本地安装位置；禁止直接改安装位置文件。**
 - **本地安装位置**（同步产物）：Codex `~/.codex/skills/donghe-construction-team/`；Cursor `~/.cursor/skills-cursor/donghe-construction-team/`
 - **校验**：仓库根跑 `scripts/lint.sh`（内链 + 版本一致 + 行数预算）；派工前跑 `scripts/check_card.py <卡路径>`

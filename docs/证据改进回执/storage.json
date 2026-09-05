@@ -1,0 +1,76 @@
+{
+  "experiment": "same-data re-encoding; no commands rerun; no source rewritten",
+  "receiptCount": 9,
+  "oldBytes": 2940068,
+  "newBytesIncludingSharedInputs": 678667,
+  "reductionPercent": 76.92,
+  "uniqueInputObjects": 4,
+  "roundtripEquivalent": true,
+  "outputBytesPreserved": true,
+  "receipts": [
+    {
+      "receipt": "docs/东合/证据/FORMS001--browser--20260905T100548090838--49856ee069c44df493446277db188503/receipt.json",
+      "exitCode": 1,
+      "oldReceiptBytes": 322054,
+      "compactReceiptBytes": 1100,
+      "summaryBytes": 3169
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--browser--20260905T100946471244--2bade9d96a5e40e1b1dcb2011395cb55/receipt.json",
+      "exitCode": 1,
+      "oldReceiptBytes": 322054,
+      "compactReceiptBytes": 1100,
+      "summaryBytes": 4837
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--browser--20260905T101235635816--177012a3da2b480fb9e0d44729583e88/receipt.json",
+      "exitCode": 1,
+      "oldReceiptBytes": 322516,
+      "compactReceiptBytes": 1100,
+      "summaryBytes": 5783
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--browser--20260905T101410779657--eac8652f93124224a5b5c61b070efb85/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 323610,
+      "compactReceiptBytes": 1100,
+      "summaryBytes": 3526
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--lifecycle--20260905T101504250823--6dd7f82b6f1645469b71111ccbad75b0/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 323330,
+      "compactReceiptBytes": 820,
+      "summaryBytes": 5441
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--syntax--20260905T100541525271--171022442c0442e59bf5d85a85a30cbf/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 321848,
+      "compactReceiptBytes": 894,
+      "summaryBytes": 1187
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--syntax--20260905T100917918444--2266b73413fe4969aaeeb337abeadf1f/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 321848,
+      "compactReceiptBytes": 894,
+      "summaryBytes": 1187
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--syntax--20260905T101224710211--4df43a77387f43fc80ccdd280ce69e55/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 322310,
+      "compactReceiptBytes": 894,
+      "summaryBytes": 1187
+    },
+    {
+      "receipt": "docs/东合/证据/FORMS001--syntax--20260905T101400622240--738f14bf03b44129819e07fc96b98134/receipt.json",
+      "exitCode": 0,
+      "oldReceiptBytes": 323404,
+      "compactReceiptBytes": 894,
+      "summaryBytes": 1187
+    }
+  ],
+  "sourceUnchanged": true
+}

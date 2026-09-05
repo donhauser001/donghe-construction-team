@@ -2,6 +2,11 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills-cursor/donghe-construction-team/`。禁止直接改安装位置的文件。
 
+## v0.6.1 · 2026-09-05（证据去重与历史回执）
+
+新增按内容摘要复用指纹对象、v1/v2兼容读取和有界回执摘要；进化史可从历史失败直接打开对应回执与输出。
+合并每份回执重复的前后文件清单，默认阅读改为摘要；旧回执不改写、不删除。旧版程序不保证可读新版格式，试点和回滚继续隔离。
+
 ## v0.6.0 · 2026-09-05（最小完工与进化史试点）
 
 新增标准目录 CLI、输入指纹回执、可恢复完工和只读进化史。验收范围见试点回执，不宣称全平台安装与完整资料治理已交付。
