@@ -1,0 +1,19 @@
+[
+  {
+    "passed": true,
+    "checks": [
+      "explicit idea-direction-task links",
+      "upstream feedback",
+      "preview is read-only",
+      "archive bytes preserved",
+      "archived original source via browser",
+      "type filter",
+      "cold catalog",
+      "receipt still accessible",
+      "390px no overflow",
+      "restore bytes exact",
+      "no new work",
+      "no pageerror"
+    ]
+  }
+]

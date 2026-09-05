@@ -588,10 +588,20 @@ class Project:
             path = STATE + '/maintenance.json'
             prior = json.loads(self.read(path) or '{}')
             if prior.get('month') == month:
-                return {'checked': month}
-            proposed = archive.plan(self)
-            result = archive.apply(self, proposed)
-            self.write(path, encode({'month': month, 'checkedAt': now()}))
+                return prior
+            # Optional maintenance must not turn an accepted completion into a
+            # failed command. Keep a visible, bounded diagnostic; explicit archive
+            # remains strict and is the repair/retry entrypoint.
+            try:
+                proposed = archive.plan(self)
+                if proposed.get('issues'):
+                    result = {'state': 'blocked', 'issues': proposed['issues']}
+                else:
+                    result = {'state': 'checked', 'result': archive.apply(self, proposed)}
+            except (ValueError, OSError) as exc:
+                result = {'state': 'blocked', 'issues': [{'code': 'maintenance_failed', 'message': str(exc)}]}
+            result.update({'month': month, 'checkedAt': now()})
+            self.write(path, encode(result))
             return result
 
     def status(self):
@@ -634,7 +644,8 @@ class Project:
         archive_status.pop('candidates', None)
         return {'projectRoot': str(self.root), 'generatedAt': now(), 'decision': decision, 'tasks': tasks,
                 'handoffPath': DOC + '/工作交接.md', 'logPaths': sorted(p for p in archive.logical_files(self, DOC + '/开发日志') if p.endswith('.md')),
-                'knowledge': records.catalog(self), 'archive': archive_status}
+                'knowledge': records.catalog(self), 'archive': archive_status,
+                'maintenance': json.loads(self.read(STATE + '/maintenance.json') or '{}')}
 
 
 def serve(project, port):

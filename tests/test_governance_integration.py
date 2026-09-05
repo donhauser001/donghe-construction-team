@@ -64,3 +64,27 @@ class GovernanceIntegration(unittest.TestCase):
             marker=p.read('.donghe/state/maintenance.json')
             p.init()
             self.assertEqual(p.read('.donghe/state/maintenance.json'),marker)
+
+    def test_invalid_metadata_does_not_fail_init_or_accepted_finish(self):
+        with tempfile.TemporaryDirectory() as root:
+            p=donghe.Project(Path(root).resolve())
+            bad='docs/东合/资料/knowledge/BAD.md'
+            p.write(bad,'# Broken source\n```donghe-meta\nnot json\n```\n')
+            state=p.init()
+            self.assertEqual(state['maintenance']['state'],'blocked')
+            self.assertTrue(state['knowledge']['issues'])
+            marker=p.read('.donghe/state/maintenance.json')
+            p.init()
+            self.assertEqual(p.read('.donghe/state/maintenance.json'),marker)
+            (p.root/'source.txt').write_text('real fixture input')
+            p.create({'id':'T1','title':'Unaffected task','authorization':'test',
+                      'criteria':[{'id':'check','label':'Actual command','command':[sys.executable,'-c','print("ok")'],
+                                   'inputs':['source.txt'],'reuse':True}]})
+            p.verify('T1','check')
+            # Exercise maintenance during finish, rather than only reuse init's marker.
+            p.path('.donghe/state/maintenance.json').unlink()
+            state=p.finish('T1')
+            self.assertEqual(state['tasks'][0]['status'],'completed')
+            self.assertEqual(state['maintenance']['state'],'blocked')
+            self.assertEqual(state['decision']['action'],'stop')
+            with self.assertRaises(ValueError): archive.apply(p,archive.plan(p))

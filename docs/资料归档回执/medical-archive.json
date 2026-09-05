@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "month": "2026-08",
+  "fixture": "K-MED-ARCHIVE",
+  "fixtureIsExplicitlySynthetic": true,
+  "sha256": "e6761b400de289bb80bc55929658af6ae9c806269da1e31299551e3296aa56fe",
+  "previewCount": 1,
+  "archiveOperation": "6ea2df5ae745d740c180f086cf2fa61025f9077ee9f16076e77649a7856b2a7d",
+  "restoreOperation": "61883e0e810da02e2d16ddd6d154ab2040f40a148da07c019a739b0ce3d901f2",
+  "coldReadVerified": true,
+  "restoredByteExact": true,
+  "archiveCopyAbsentAfterRestore": true,
+  "realHistoricalDatesModified": false
+}

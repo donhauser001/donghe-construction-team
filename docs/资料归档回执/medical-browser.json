@@ -1,0 +1,13 @@
+[
+  {
+    "passed": true,
+    "checks": [
+      "relation source opens",
+      "MED001 task source opens",
+      "historical receipt opens",
+      "synthetic archive cold read and byte-exact restore",
+      "catalog has no issues",
+      "no pageerror"
+    ]
+  }
+]

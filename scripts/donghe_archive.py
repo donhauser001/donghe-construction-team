@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import tempfile
+import uuid
 
 
 DOC = "docs/东合"
@@ -219,17 +220,17 @@ def _write_json(path, value):
 
 
 def _operation(project, kind, month, candidates):
-    canonical = json.dumps({"kind": kind, "month": month, "candidates": candidates}, ensure_ascii=False,
-                           sort_keys=True, separators=(",", ":")).encode()
-    op_id = hashlib.sha256(canonical).hexdigest()
-    path = _safe(project, f"{STATE}/{kind}-{op_id}.json")
-    if path.exists():
-        op = json.loads(path.read_text())
-        if op.get("candidates") != candidates or op.get("kind") != kind:
-            raise ValueError("archive operation identity conflict")
-    else:
-        op = {"id": op_id, "kind": kind, "month": month, "state": "prepared", "candidates": candidates, "moved": []}
-        _write_json(path, op)
+    while True:
+        attempt_id = uuid.uuid4().hex
+        canonical = json.dumps({"kind": kind, "month": month, "candidates": candidates, "attemptId": attempt_id}, ensure_ascii=False,
+                               sort_keys=True, separators=(",", ":")).encode()
+        op_id = hashlib.sha256(canonical).hexdigest()
+        path = _safe(project, f"{STATE}/{kind}-{op_id}.json")
+        if not path.exists():
+            break
+    op = {"id": op_id, "attemptId": attempt_id, "kind": kind, "month": month,
+          "state": "prepared", "candidates": candidates, "moved": []}
+    _write_json(path, op)
     return path, op
 
 
@@ -242,7 +243,13 @@ def _validate_operation(project, op_path, op):
         _validate_requested_month(month, current)
     if not isinstance(candidates, list) or not isinstance(op.get("moved"), list):
         raise ValueError("invalid archive operation record: " + op_path.name)
-    canonical = json.dumps({"kind": kind, "month": month, "candidates": candidates}, ensure_ascii=False,
+    identity = {"kind": kind, "month": month, "candidates": candidates}
+    attempt_id = op.get("attemptId")
+    if attempt_id is not None:
+        if not isinstance(attempt_id, str) or not re.fullmatch(r"[0-9a-f]{32}", attempt_id):
+            raise ValueError("invalid archive operation attempt identity: " + op_path.name)
+        identity["attemptId"] = attempt_id
+    canonical = json.dumps(identity, ensure_ascii=False,
                            sort_keys=True, separators=(",", ":")).encode()
     expected_id = hashlib.sha256(canonical).hexdigest()
     if op.get("id") != expected_id or op_path.name != f"{kind}-{expected_id}.json":

@@ -1,4 +1,5 @@
 import datetime as dt
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -118,6 +119,42 @@ class ArchiveTest(unittest.TestCase):
         self.assertEqual(result["state"], "committed")
         self.assertTrue((self.project.root / "docs/东合/任务卡/T1.md").exists())
 
+    def test_repeated_archive_restore_cycles_keep_distinct_history(self):
+        original = archive.plan(self.project, self.old)
+        first_archive = archive.apply(self.project, original)
+        first_restore = archive.restore(self.project, self.old)
+        second_plan = archive.plan(self.project, self.old)
+        second_archive = archive.apply(self.project, second_plan)
+        second_restore = archive.restore(self.project, self.old)
+
+        self.assertNotEqual(first_archive["operationId"], second_archive["operationId"])
+        self.assertNotEqual(first_restore["operationId"], second_restore["operationId"])
+        self.assertEqual(second_restore["integrity"], "archive-journal")
+        self.assertEqual(len(list((self.project.root / ".donghe/state/archive").glob("*.json"))), 4)
+        for item in original["candidates"]:
+            self.assertTrue((self.project.root / item["source"]).is_file())
+            self.assertFalse((self.project.root / item["target"]).exists())
+
+    def test_second_cycle_interruptions_resume_without_overwriting_history(self):
+        archive.apply(self.project, archive.plan(self.project, self.old))
+        archive.restore(self.project, self.old)
+        history = {path.name: path.read_bytes()
+                   for path in (self.project.root / ".donghe/state/archive").glob("*.json")}
+
+        with mock.patch.dict(os.environ, {"DONGHE_TEST_FAIL_AFTER_ARCHIVE_MOVE": "2"}):
+            with self.assertRaisesRegex(RuntimeError, "injected"):
+                archive.apply(self.project, archive.plan(self.project, self.old))
+        archive.apply(self.project, archive.plan(self.project, self.old))
+        with mock.patch.dict(os.environ, {"DONGHE_TEST_FAIL_AFTER_ARCHIVE_MOVE": "2"}):
+            with self.assertRaisesRegex(RuntimeError, "injected"):
+                archive.restore(self.project, self.old)
+        result = archive.restore(self.project, self.old)
+
+        self.assertEqual(result["integrity"], "archive-journal")
+        for name, content in history.items():
+            self.assertEqual((self.project.root / ".donghe/state/archive" / name).read_bytes(), content)
+        self.assertEqual(len(list((self.project.root / ".donghe/state/archive").glob("*.json"))), 4)
+
     def test_restore_refuses_live_conflict(self):
         archive.apply(self.project, archive.plan(self.project, self.old))
         live = self.write("docs/东合/任务卡/T1.md", "new live copy\n")
@@ -162,6 +199,25 @@ class ArchiveTest(unittest.TestCase):
         self.assertEqual(result["integrity"], "transport-only")
         self.assertEqual(result["unverified"], [logical])
         self.assertEqual((self.project.root / logical).read_text(), "cold bytes\n")
+
+    def test_legacy_deterministic_archive_journal_remains_readable(self):
+        logical = "docs/东合/开发日志/2019-01-02.md"
+        physical = f"docs/东合/档案/2019-01/{logical}"
+        cold = self.write(physical, "legacy cold bytes\n")
+        candidate = {"source": logical, "target": physical, "sha256": archive._hash(cold)}
+        identity = {"kind": "archive", "month": "2019-01", "candidates": [candidate]}
+        op_id = hashlib.sha256(json.dumps(identity, ensure_ascii=False, sort_keys=True,
+                                          separators=(",", ":")).encode()).hexdigest()
+        operation = {"id": op_id, **identity, "state": "committed", "moved": [logical]}
+        state = self.project.root / ".donghe/state/archive"
+        state.mkdir(parents=True)
+        (state / f"archive-{op_id}.json").write_text(json.dumps(operation))
+
+        result = archive.restore(self.project, "2019-01")
+
+        self.assertEqual(result["integrity"], "archive-journal")
+        self.assertEqual(result["unverified"], [])
+        self.assertEqual((self.project.root / logical).read_text(), "legacy cold bytes\n")
 
     def test_corrupt_pending_journal_cannot_move_ungoverned_file(self):
         state = self.project.root / ".donghe/state/archive"

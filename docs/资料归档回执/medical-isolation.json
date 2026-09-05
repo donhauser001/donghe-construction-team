@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "cloneCommand": "git clone --no-hardlinks /Users/aiden/dev/donghe-dual-pilot/medical /Users/aiden/dev/donghe-governance-medical",
+  "sourcePilot": {
+    "commitBeforeAndAfter": "5458cb23d8901cfa687d168e97a466a52d638b30",
+    "worktreeCleanBeforeAndAfter": true,
+    "med001TaskSha256BeforeAndAfter": "1e8ba0a587963d5474a720c0b70ea9e3123b58d47c62b685bba1207bfb84858f",
+    "handoffSha256BeforeAndAfter": "759acf3ed13c108788fc92a7692431ab920711a258af2b35569b4dc10fbefa35",
+    "logSha256BeforeAndAfter": "53066b9497dff3fee149aa1d1baa5d8c2526db7b972fac67a43556e73fc93984"
+  },
+  "originalProject": {
+    "path": "/Users/aiden/Documents/app/超级病历本",
+    "commitAfter": "982a680a9e1953bad1282a683542ed7af7e05612",
+    "worktreeCleanAfter": true,
+    "writesPerformed": false
+  },
+  "businessTestsRerun": false,
+  "historicalReceiptRead": {"taskId": "MED001", "criterionId": "ios-ui", "integrity": "valid", "exitCode": 0},
+  "currentCloneVerification": "stale"
+}

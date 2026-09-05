@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "project": "/Users/aiden/dev/donghe-governance-medical",
+  "sourceCommit": "5458cb23d8901cfa687d168e97a466a52d638b30",
+  "records": ["B-MED001", "N-MED-FOCUS4"],
+  "relations": [
+    {"source": "B-MED001", "target": "N-MED-FOCUS4", "type": "derived_from"},
+    {"source": "B-MED001", "target": "task:MED001", "type": "implements"}
+  ],
+  "feedback": {
+    "taskId": "MED001",
+    "completedAt": "2026-09-05T11:06:03.863658+00:00",
+    "updated": ["B-MED001", "N-MED-FOCUS4"]
+  },
+  "catalogIssues": [],
+  "note": "record/link/catalog used the public CLI; historical feedback used the same donghe_records.feedback implementation directly because the CLI exposes feedback only through finish, while cloned historical receipts are correctly stale and business tests were not rerun."
+}

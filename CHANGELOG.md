@@ -2,7 +2,7 @@
 
 > **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
 
-## v0.7.0-rc.1 · 2026-09-05（资料关系与月度归档候选）
+## v0.7.0 · 2026-09-05（资料关系与月度归档候选）
 
 - 新增文件级稳定ID、显式关系、上游完工反馈，界面呈现方向到任务关系；不预建空资料。
 - 合并资料变动与完工收口，替代事后重复抄录；反馈不推断整项方向完成。

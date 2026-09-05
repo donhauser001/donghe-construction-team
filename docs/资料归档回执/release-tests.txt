@@ -1,0 +1,83 @@
+test_apply_preserves_bytes_cold_reads_and_is_idempotent (test_archive.ArchiveTest) ... ok
+test_cold_restore_without_journal_reports_transport_only (test_archive.ArchiveTest) ... ok
+test_conflict_and_changed_source_are_rejected_without_overwrite (test_archive.ArchiveTest) ... ok
+test_corrupt_pending_journal_cannot_move_ungoverned_file (test_archive.ArchiveTest) ... ok
+test_duplicate_logical_path_and_symlink_escape_are_rejected (test_archive.ArchiveTest) ... ok
+test_future_and_current_month_are_rejected (test_archive.ArchiveTest) ... ok
+test_interrupted_apply_retries_only_the_same_prepared_operation (test_archive.ArchiveTest) ... ok
+test_interrupted_restore_resumes_prepared_operation (test_archive.ArchiveTest) ... ok
+test_legacy_deterministic_archive_journal_remains_readable (test_archive.ArchiveTest) ... ok
+test_live_and_archived_directories_merge_without_directory_conflict (test_archive.ArchiveTest) ... ok
+test_plan_is_read_only_and_selects_closed_records_and_receipts (test_archive.ArchiveTest) ... ok
+test_repeated_archive_restore_cycles_keep_distinct_history (test_archive.ArchiveTest) ... ok
+test_restore_refuses_live_conflict (test_archive.ArchiveTest) ... ok
+test_restore_rejects_archive_bytes_changed_since_recorded_move (test_archive.ArchiveTest) ... ok
+test_restore_reverses_month_and_keeps_operation_evidence (test_archive.ArchiveTest) ... ok
+test_second_cycle_interruptions_resume_without_overwriting_history (test_archive.ArchiveTest) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.231s
+
+OK
+test_abort_after_evidence_drift_then_reverify (test_donghe.CompletionTests) ... ok
+test_abort_conflict_preserves_user_edit (test_donghe.CompletionTests) ... ok
+test_backend_pass_ui_missing_blocks (test_donghe.CompletionTests) ... ok
+test_command_can_query_status_without_lock_deadlock (test_donghe.CompletionTests) ... ok
+test_completed_project_clone_requires_review_instead_of_work (test_donghe.CompletionTests) ... ok
+test_completed_task_can_reverify_after_source_drift (test_donghe.CompletionTests) ... ok
+test_concurrent_finish_is_idempotent (test_donghe.CompletionTests) ... ok
+test_directory_membership_and_symlink_inputs (test_donghe.CompletionTests) ... ok
+test_failed_and_timeout_receipts_are_preserved (test_donghe.CompletionTests) ... ok
+test_failures_and_input_mutation_preserved (test_donghe.CompletionTests) ... ok
+test_http_state_source_and_confinement (test_donghe.CompletionTests) ... ok
+test_issues_stop_next (test_donghe.CompletionTests) ... ok
+test_journal_cross_project_and_path_tampering_blocked (test_donghe.CompletionTests) ... ok
+test_legacy_receipt_and_completion_are_read_without_rewrite (test_donghe.CompletionTests) ... ok
+test_missing_input_records_null_references_and_failure (test_donghe.CompletionTests) ... ok
+test_missing_receipt_and_hash_valid_malformed_blob_fail_closed (test_donghe.CompletionTests) ... ok
+test_new_active_task_remains_authorized_work (test_donghe.CompletionTests) ... ok
+test_no_goal_stops_without_execution (test_donghe.CompletionTests) ... ok
+test_normal_completion_and_duplicate_finish (test_donghe.CompletionTests) ... ok
+test_object_publish_is_concurrent_and_does_not_repair_corruption (test_donghe.CompletionTests) ... ok
+test_partial_completion_recovers (test_donghe.CompletionTests) ... ok
+test_paths_and_empty_criteria_rejected (test_donghe.CompletionTests) ... ok
+test_receipt_cli_returns_bounded_summary_and_invalid_exit (test_donghe.CompletionTests) ... ok
+test_recovery_preserves_conflicting_human_edit (test_donghe.CompletionTests) ... ok
+test_self_consistent_manifest_does_not_accept_malformed_core_types (test_donghe.CompletionTests) ... ok
+test_shared_tamper_invalidates_every_reference_without_cache (test_donghe.CompletionTests) ... ok
+test_stale_source_blocks_finish (test_donghe.CompletionTests) ... ok
+test_status_flip_and_missing_log_do_not_prove_completion (test_donghe.CompletionTests) ... ok
+test_summary_previews_are_bounded_and_streams_are_checked (test_donghe.CompletionTests) ... ok
+test_tamper_detected_and_preserved (test_donghe.CompletionTests) ... ok
+test_task_edit_during_command_is_not_overwritten (test_donghe.CompletionTests) ... ok
+test_unchanged_reuse_does_not_execute (test_donghe.CompletionTests) ... ok
+test_unknown_versions_and_unsafe_or_missing_references_rejected (test_donghe.CompletionTests) ... ok
+test_v2_shares_objects_across_receipts_and_phases (test_donghe.CompletionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 2.222s
+
+OK
+test_invalid_metadata_does_not_fail_init_or_accepted_finish (test_governance_integration.GovernanceIntegration) ... ok
+test_read_only_status_does_not_archive_and_once_monthly_check (test_governance_integration.GovernanceIntegration) ... ok
+test_task_feedback_archive_cold_read_and_restore (test_governance_integration.GovernanceIntegration) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.280s
+
+OK
+test_archived_feedback_skips_existing_but_requires_restore_when_missing (test_records.RecordTests) ... ok
+test_bad_metadata_missing_targets_and_cycles_are_diagnosed (test_records.RecordTests) ... ok
+test_create_read_catalog_and_global_duplicate (test_records.RecordTests) ... ok
+test_feedback_propagates_only_through_explicit_derived_from (test_records.RecordTests) ... ok
+test_feedback_requires_completed_and_relation (test_records.RecordTests) ... ok
+test_feedback_uses_completed_fact_and_is_idempotent (test_records.RecordTests) ... ok
+test_link_reverse_index_and_idempotence (test_records.RecordTests) ... ok
+test_schema_and_timestamps_are_strict (test_records.RecordTests) ... ok
+test_task_target_validation_and_unsafe_values (test_records.RecordTests) ... ok
+test_update_preserves_identity_creation_and_feedback (test_records.RecordTests) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.025s
+
+OK
