@@ -3,6 +3,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -161,11 +162,33 @@ class CompletionTests(unittest.TestCase):
         self.project.verify('T1', 'backend')
         self.project.finish('T1')
         (self.root / 'input.txt').write_text('revision')
-        self.assertEqual(self.project.status()['tasks'][0]['status'], 'active')
+        drifted = self.project.status()
+        self.assertEqual(drifted['tasks'][0]['status'], 'active')
+        self.assertNotEqual(drifted['tasks'][0]['verification'], 'passed')
+        self.assertEqual(drifted['decision']['action'], 'stop')
+        self.assertIn('历史完工', drifted['decision']['reason'])
         self.project.verify('T1', 'backend')
+        reopened = self.project.status()
+        self.assertEqual(reopened['tasks'][0]['declaredStatus'], 'active')
+        self.assertEqual(reopened['decision']['action'], 'work')
         self.assertEqual(self.project.finish('T1')['tasks'][0]['status'], 'completed')
         log = self.project.status()['logPaths'][0]
         self.assertEqual(self.project.read(log).count('## T1'), 2)
+
+    def test_completed_project_clone_requires_review_instead_of_work(self):
+        self.create()
+        self.project.verify('T1', 'backend')
+        self.project.finish('T1')
+        with tempfile.TemporaryDirectory() as parent:
+            clone_root = Path(parent).resolve() / 'clone'
+            shutil.copytree(self.root, clone_root)
+            cloned = donghe.Project(clone_root)
+            state = cloned.status()
+        self.assertEqual(state['tasks'][0]['declaredStatus'], 'completed')
+        self.assertNotEqual(state['tasks'][0]['status'], 'completed')
+        self.assertNotEqual(state['tasks'][0]['verification'], 'passed')
+        self.assertEqual(state['decision']['action'], 'stop')
+        self.assertIn('历史完工', state['decision']['reason'])
 
     def test_abort_after_evidence_drift_then_reverify(self):
         self.create()
@@ -208,10 +231,17 @@ class CompletionTests(unittest.TestCase):
         self.project.write(self.project.task_path('T1'), self.project.render(task))
         self.assertEqual(self.project.status()['tasks'][0]['verification'], 'invalid')
         self.assertEqual(self.project.status()['tasks'][0]['status'], 'active')
+        self.assertEqual(self.project.status()['decision']['action'], 'stop')
         state = self.project.finish('T1')
         self.assertEqual(state['tasks'][0]['status'], 'completed')
         self.project.path(state['logPaths'][0]).unlink()
         self.assertEqual(self.project.status()['tasks'][0]['status'], 'active')
+
+    def test_new_active_task_remains_authorized_work(self):
+        self.create()
+        state = self.project.status()
+        self.assertEqual(state['tasks'][0]['declaredStatus'], 'active')
+        self.assertEqual(state['decision']['action'], 'work')
 
     def test_failed_and_timeout_receipts_are_preserved(self):
         self.create(command=[sys.executable, '-c', "import sys; print('error', file=sys.stderr); sys.exit(3)"])

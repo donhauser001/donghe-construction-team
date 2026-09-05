@@ -581,6 +581,7 @@ class Project:
 
     def _status(self):
         pending = self.pending()
+        recoverable_pending = [(rel, op) for rel, op in pending if op.get('projectRoot') == str(self.root)]
         pending_ids = {op['taskId'] for _, op in pending}
         tasks = []
         base = self.path(DOC + '/任务卡')
@@ -593,10 +594,21 @@ class Project:
                 task_status = 'completed' if task['id'] not in pending_ids and self.closed(task) else 'active'
                 if task['status'] == 'completed' and task_status != 'completed' and verification == 'passed':
                     verification = 'invalid'
-                tasks.append({**{k: task[k] for k in ['id', 'title', 'authorization', 'issues', 'events']}, 'status': task_status,
+                tasks.append({**{k: task[k] for k in ['id', 'title', 'authorization', 'issues', 'events']},
+                              'declaredStatus': task['status'], 'status': task_status,
                               'verification': verification, 'sourcePath': self.task_path(task['id']), 'criteria': criteria})
-        active = [t for t in tasks if t['status'] == 'active' and t['authorization'] and not t['issues']]
-        decision = {'action': 'recover', 'reason': '完成事务待恢复；执行 finish ' + pending[0][1]['taskId']} if pending else {'action': 'work', 'reason': '存在已授权的未完成任务'} if active else {'action': 'stop', 'reason': '没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务'}
+        active = [t for t in tasks if t['declaredStatus'] == 'active' and t['authorization'] and not t['issues']]
+        review = [t for t in tasks if t['declaredStatus'] == 'completed' and t['status'] != 'completed']
+        if recoverable_pending:
+            decision = {'action': 'recover', 'reason': '完成事务待恢复；执行 finish ' + recoverable_pending[0][1]['taskId']}
+        elif pending:
+            decision = {'action': 'stop', 'reason': '历史完工事务属于其他项目路径，不能恢复或视为新施工授权；停止并人工复核'}
+        elif active:
+            decision = {'action': 'work', 'reason': '存在已授权的未完成任务'}
+        elif review:
+            decision = {'action': 'stop', 'reason': '历史完工记录的当前证据未通过，不能视为新施工授权；停止并显式复核，必要时执行 verify 重开'}
+        else:
+            decision = {'action': 'stop', 'reason': '没有可施工的已授权任务，或任务存在待解决问题；停止，不运行测试或自行扩展任务'}
         logs = self.path(DOC + '/开发日志')
         return {'projectRoot': str(self.root), 'generatedAt': now(), 'decision': decision, 'tasks': tasks,
                 'handoffPath': DOC + '/工作交接.md', 'logPaths': [p.relative_to(self.root).as_posix() for p in sorted(logs.glob('*.md'))] if logs.exists() else []}
