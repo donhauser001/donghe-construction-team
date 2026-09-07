@@ -3,7 +3,7 @@ name: donghe-construction-team
 description: "Engineering discipline (东合施工队) for implementing and fixing code: evidence-backed completion, scoped writes, shared-workspace coordination and parallel support work. Use for coding, 开工/施工 or authorized unattended work. Pure questions and read-only decision lookup do not start construction workflows."
 ---
 
-# 东合施工队 · v0.8.2
+# 东合施工队 · v0.9.0
 
 核心：真实证据、明确写域、诚实汇报；以减少施工和接手成本为目标。
 
@@ -56,6 +56,12 @@ description: "Engineering discipline (东合施工队) for implementing and fixi
 - 自动摘要只能由唯一源派生；无法刷新则标记陈旧并回读来源。检查链接及章节锚点，不能把结构闸通过当作语义一致。
 - 遇到决策问题，可使用已提供的独立只读决策查询技能，或直接定位正本相关章节。返回依据、适用范围、例外和未裁定冲突；不为查询创建任务、复制知识正文、启动 CLI 或读取全量施工档案。没有查询技能也可继续。
 
+## 项目阅读入口
+
+- 用户在明确项目授权施工时，自动检查根目录 `东合项目进化史.html`；入口缺失或项目尚未注册时用 `bin/donghe --project <根> reader attach` 建立只读阅读入口，不让用户填路径、端口或执行命令。已接入且入口有效时不重复全量刷新。纯问题与只读查询不触发接入。
+- 阅读接入独立于 CLI 治理采用：不执行 init、不迁移旧资料、不创建第二套任务卡。沿用原有文档与明确任务线关系，无法确定归属的任务标待归类。
+- 用户从根 HTML 看快照，点击“连接实时资料”唤起包内助手，再用页面刷新/重建按钮读取已落盘资料。更新不依赖施工正常结束；中断和待裁决状态保持原文，未写入文件的会话状态不得猜测。读取策略与平台边界见 `playbooks/13-项目阅读入口.md`。
+
 ## 按需资源
 
 - 明确采用 CLI 的任务：playbooks/09-最小完工闭环.md。
@@ -66,4 +72,4 @@ description: "Engineering discipline (东合施工队) for implementing and fixi
 
 ## 发行
 
-版本 v0.8.2。正本为 donhauser001/donghe-construction-team 仓库；修改源码，再由 scripts/build_release.py 构建完整包、bin/install 同步 Codex/Cursor 并备份。不要直接编辑安装目录。运行时平台支持不因技能规则更新而扩大；版本史见 CHANGELOG.md。
+版本 v0.9.0。正本为 donhauser001/donghe-construction-team 仓库；修改源码，再由 scripts/build_release.py 构建完整包、bin/install 同步 Codex/Cursor 并备份。不要直接编辑安装目录。完整包安装同时注册本机阅读助手，无登录常驻服务；平台范围仍为 macOS arm64。版本史见 CHANGELOG.md。

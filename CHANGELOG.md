@@ -1,6 +1,13 @@
 # CHANGELOG · 东合施工队
 
-> **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再运行 `scripts/sync.sh` 同步到 `~/.codex/skills/donghe-construction-team/` 与 `~/.cursor/skills/donghe-construction-team/`。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
+> **SSOT 是 git 仓库**（github.com/donhauser001/donghe-construction-team）。任何改动先改仓库并 commit，再由 `scripts/build_release.py` 构建完整包、`bin/install` 安装到 Codex/Cursor 并备份。禁止直接改安装位置的文件。不要同步到 `~/.cursor/skills-cursor/`（Cursor 内置目录）。
+
+## v0.9.0 · 2026-09-07
+
+- 项目根目录生成只读 HTML 快照；完整包安装注册 macOS 阅读助手，页面连接后可自行刷新资料和重建文档索引，无须手动启动服务或等待施工收尾。
+- 新任务线视图按明确 parent_focus 归属展示任务流水、原文状态、当前/历史搜索和文档阅读；未知归属保留，不推断 Agent 运行或验收通过。
+- 阅读接入与 CLI 治理采用分开，不 init、不迁移、不执行测试或归档；单项目按需进程、会话令牌、来源校验与空闲退出。
+- 源资料为正本，HTML 与本机索引可重建；同名用户文件保护、扫描预算、刷新失败保留旧快照。
 
 ## v0.8.2 · 2026-09-06
 

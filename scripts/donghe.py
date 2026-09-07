@@ -809,8 +809,14 @@ def main(argv=None):
     abort.add_argument('task_id')
     http = sub.add_parser('serve')
     http.add_argument('--port', type=int, default=8765)
+    reader = sub.add_parser('reader', help='root HTML reader, independent of CLI governance adoption')
+    reader.add_argument('operation', choices=['attach', 'refresh', 'open', 'install-helper'])
     args = parser.parse_args(argv)
     try:
+        if args.command == 'reader':
+            import donghe_workspace
+            donghe_workspace.main([args.operation, '--project', args.project])
+            return 0
         p = Project(args.project)
         if args.command == 'serve':
             serve(p, args.port)

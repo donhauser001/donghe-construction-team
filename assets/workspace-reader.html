@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>东合项目进化史</title>
+  <!--DONGHE_STYLE-->
+</head>
+<body>
+  <header class="masthead">
+    <div><p class="eyebrow">东合施工队 · 项目进化史</p><h1 id="project-name">项目现场</h1></div>
+    <div class="connection"><span id="connection-state" class="badge">离线快照</span><p id="updated-at">正在读取快照</p></div>
+  </header>
+  <main>
+    <section class="toolbar" aria-label="资料操作">
+      <label class="search"><span>搜索</span><input id="search" type="search" placeholder="搜索任务、文档正文与证据路径" autocomplete="off"></label>
+      <div class="actions"><a id="connect" class="button primary" href="#">连接实时资料</a><button id="refresh" type="button">刷新资料</button><button id="reindex" type="button">重建索引</button></div>
+    </section>
+    <p id="notice" class="notice" role="status" aria-live="polite">读取中……</p>
+    <section id="diagnostics" aria-label="资料提示" hidden></section>
+    <nav class="tabs" aria-label="阅读范围">
+      <button id="tab-current" class="selected" aria-pressed="true" type="button">当前任务线 <span id="current-count">0</span></button>
+      <button id="tab-history" aria-pressed="false" type="button">历史资料 <span id="history-count">0</span></button>
+      <button id="tab-documents" aria-pressed="false" type="button">全部资料 <span id="document-count">0</span></button>
+    </nav>
+    <section id="overview" class="overview"></section>
+    <section id="lines" aria-label="任务线与流水"></section>
+    <section id="documents" aria-label="文档搜索结果" hidden></section>
+    <footer>状态来自已落盘的项目记录；“进行中”不表示此刻有 Agent 正在运行。原文是唯一正本，本页与索引均可重建。</footer>
+  </main>
+  <dialog id="reader" aria-labelledby="reader-title">
+    <header class="reader-header"><div><h2 id="reader-title">原文</h2><p id="reader-path"></p></div><button id="close-reader" type="button" aria-label="关闭原文">关闭</button></header>
+    <article id="reader-body"></article>
+  </dialog>
+  <!--DONGHE_DATA-->
+  <!--DONGHE_SCRIPT-->
+</body>
+</html>

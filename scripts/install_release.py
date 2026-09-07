@@ -114,7 +114,15 @@ def main():
             receipts.append({'target':str(target),'previous':str(previous) if had_previous else None})
             if os.environ.get('DONGHE_TEST_FAIL_AFTER_INSTALL_SWITCH') == str(index+1):
                 raise RuntimeError('injected install commit interruption')
-        _write_receipt(backup,{'state':'committed','platform':manifest['platform'],'targets':receipts})
+        # New complete packages provision the one machine-wide reader bridge.
+        # Existing/synthetic packages without this capability keep their old path.
+        helper = None
+        if (targets[0]/'scripts/donghe_workspace_install.py').is_file():
+            invoked = subprocess.run([str(targets[0]/'bin/donghe'), '--project', str(targets[0]),
+                                      'reader', 'install-helper'], check=True, capture_output=True, text=True)
+            helper = json.loads(invoked.stdout)
+        _write_receipt(backup,{'state':'committed','platform':manifest['platform'],'targets':receipts,
+                               'readerHelper':helper})
     except BaseException as exc:
         rollback_errors=[]
         rolled_back=[]
