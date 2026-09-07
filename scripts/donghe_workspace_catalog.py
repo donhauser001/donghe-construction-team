@@ -12,6 +12,10 @@ MAX_DOCUMENT_BYTES = 1024 * 1024
 MAX_TOTAL_BYTES = 32 * 1024 * 1024
 MAX_DOCUMENTS = 4000
 TASK_ORDER_NOTE = "任务按编号排列；不表示执行依赖，也不代表 Agent 正在运行。"
+METADATA_KEYS = ('编号', '签发', '状态', '半径', '规模', '下一步', 'parent_focus',
+                 'task_line', '前置', '后继', '验收伞卡', '伞卡', '用户授权',
+                 '负责人', '创建时间', '更新时间', '完成时间', '优先级', '写域')
+METADATA_KEY_PATTERN = '(?:' + '|'.join(re.escape(key) for key in METADATA_KEYS) + ')'
 
 
 def _plain(value):
@@ -26,11 +30,28 @@ def _title(content, fallback):
 
 
 def _field(content, key):
+    in_fence = False
     for line in content.splitlines():
-        line = line.lstrip('> -\t').replace('**', '').replace('`', '')
-        found = re.match(re.escape(key) + r'\s*[:：]\s*(.+)', line)
-        if found:
-            return found.group(1).strip()
+        if re.match(r'^\s*(`{3,}|~{3,})', line):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        line = line.strip().replace('**', '').replace('`', '')
+        table = re.match(r'^\|\s*' + re.escape(key) + r'\s*\|\s*(.*?)\s*\|\s*$', line)
+        if table:
+            return table.group(1).strip()
+        line = re.sub(r'^(?:>\s*)+', '', line)
+        line = re.sub(r'^[-*+]\s+', '', line)
+        # Metadata must begin with an explicit known key. A sentence merely
+        # mentioning “状态：” is not a task-status declaration.
+        if not re.match(r'^' + METADATA_KEY_PATTERN + r'\s*[:：]', line):
+            continue
+        fields = re.split(r'\s*·\s*(?=' + METADATA_KEY_PATTERN + r'\s*[:：])', line)
+        for field in fields:
+            found = re.match(re.escape(key) + r'\s*[:：]\s*(.+)', field)
+            if found:
+                return found.group(1).strip()
     return None
 
 

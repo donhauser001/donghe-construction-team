@@ -117,6 +117,22 @@ class WorkspaceCatalogTests(unittest.TestCase):
         self.assertEqual(len(result['lines'][0]['tasks']), 2)
         self.assertEqual(result['diagnostics'], [])
 
+    def test_inline_metadata_fields_preserve_status_prose(self):
+        self.write('docs/任务卡/S232.md', '# S232\n'
+                   '> 编号：S232 · 签发：2026-09-07 · **状态**：施工中 · 等待真机证据 · 半径：L\n'
+                   '> parent_focus：docs/下一阶段工作.md#p9-next · 下一步：检查首尾页\n')
+        task = catalog.scan_workspace(self.root)['lines'][0]['tasks'][0]
+        self.assertEqual(task['status'], '施工中 · 等待真机证据')
+        self.assertIn('检查首尾页', task['excerpt'])
+
+    def test_markdown_metadata_table_and_no_prose_or_code_match(self):
+        content = '# S1\n正文提到状态：已完成\n> 说明当前状态：已完成\n'
+        content += '```text\n状态：假完成\n```\n| **状态** | 待裁决 · 技术审计通过 |\n'
+        self.write('docs/任务卡/S1.md', content)
+        result = catalog.scan_workspace(self.root)
+        self.assertEqual(result['lines'][0]['tasks'][0]['status'], '待裁决 · 技术审计通过')
+        self.assertIsNone(catalog._field('需要记录 · 状态：完成\n- 检查状态：完成', '状态'))
+
 
 if __name__ == '__main__':
     unittest.main()

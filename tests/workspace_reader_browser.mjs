@@ -67,6 +67,13 @@ try {
   await page.goto(`${origin}/?token=${encodeURIComponent(session.token)}`);
   await page.waitForFunction(() => document.getElementById('connection-state').textContent.includes('实时资料已连接'));
   assert(await page.locator('#connect').isHidden());
+  assert((await page.locator('#tab-history').textContent()).includes('历史资料'));
+  const snapshotResponse = await page.request.get(`${origin}/api/snapshot`, { headers: { 'X-Donghe-Token': session.token } });
+  assert.equal(snapshotResponse.status(), 200);
+  const currentSnapshot = await snapshotResponse.json();
+  assert.equal(Number(await page.locator('#current-count').textContent()), currentSnapshot.lines.filter(line => line.id !== 'unclassified').length);
+  assert.equal(Number(await page.locator('#history-count').textContent()), currentSnapshot.documents.filter(doc => doc.archived).length);
+  for (const label of await page.locator('.line-heading .badge').allTextContents()) assert.notEqual(label, '状态未明');
   const initialLines = await page.locator('.line-card').count();
   assert(initialLines);
   for (const operation of ['refresh', 'reindex']) {
@@ -81,9 +88,16 @@ try {
   await page.locator('#refresh').click();
   await page.waitForFunction(() => document.getElementById('notice').textContent.includes('更新未完成'));
   assert.equal(await page.locator('.line-card').count(), initialLines);
+  assert(await page.locator('#connect').isVisible());
   await page.unroute('**/api/refresh');
   results.checks.push('failed refresh preserves last successful snapshot');
+  const recoveredResponse = page.waitForResponse(response => response.url() === `${origin}/api/refresh`);
+  await page.locator('#refresh').click();
+  assert.equal((await recoveredResponse).status(), 200);
+  await page.waitForFunction(() => document.getElementById('connection-state').textContent === '实时资料已连接' && !document.getElementById('refresh').disabled);
+  assert((await page.locator('#notice').textContent()).includes('已读取落盘资料'));
   const desktop = path.resolve(outputDir, 'workspace-desktop.png');
+  assert(await page.locator('#connect').isHidden());
   await page.screenshot({ path: desktop, fullPage: true }); results.screenshots.push(desktop);
   await page.setViewportSize({ width: 390, height: 844 });
   const overflow = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(element => element.getBoundingClientRect().right > innerWidth + 1).map(element => ({ tag: element.tagName, id: element.id, class: element.className, right: element.getBoundingClientRect().right })));

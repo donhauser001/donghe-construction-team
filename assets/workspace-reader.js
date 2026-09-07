@@ -242,7 +242,8 @@
       notice('已读取落盘资料。刷新不会续跑施工、登记完工或代替裁决。');
     } catch (error) {
       $('connection-state').textContent = '连接中断 · 保留快照';
-      notice(`更新未完成：${error.message}。当前仍展示上一次成功读取的资料。`, true);
+      $('connect').hidden = false;
+      notice(`更新未完成：${error.message}。当前仍展示上一次成功读取的资料；可点击“连接实时资料”重新唤起助手。`, true);
     } finally { busy = false; $('refresh').disabled = false; $('reindex').disabled = false; }
   }
   $('search').addEventListener('input', () => renderResults($('search').value));
